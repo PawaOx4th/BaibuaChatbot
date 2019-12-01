@@ -7,11 +7,13 @@ class Emty_PageNavigation extends StatefulWidget {
   _Emty_PageNavigationState createState() => _Emty_PageNavigationState();
 }
 
+
 class _Emty_PageNavigationState extends State<Emty_PageNavigation> {
   final String nameTab = "Tranning_01";
 
-  List<String> _list = ['XXX', 'YYY', 'ZZZ'];
-  List<Photo> photos ;
+//  List<String> _list = ['XXX', 'YYY', 'ZZZ'];
+  List<Photo> photos;
+
 
   @override
   Widget build(BuildContext context) {
@@ -53,8 +55,24 @@ class _Emty_PageNavigationState extends State<Emty_PageNavigation> {
               ),
               (photos != null)
                   ? Column(
-                      children: photos.map((photo) {
-                      return Text(photo.title);
+                      children: photos.getRange(0, 20).map((photo) {
+                      return Container(
+                        height: 100,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Card(
+                            elevation: 5,
+                            child: ListTile(
+                              title: Text(photo.title),
+                              leading: Image.network(
+                                photo.thumbnailUrl,
+                                width: 100,
+                                height: 100,
+                              ),
+                            ),
+                          ),
+                        ),
+                      );
                     }).toList())
                   : Container(),
             ],
@@ -64,3 +82,5 @@ class _Emty_PageNavigationState extends State<Emty_PageNavigation> {
     );
   }
 }
+
+

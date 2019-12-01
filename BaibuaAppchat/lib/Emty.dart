@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 
 class Emty_PageNavigation extends StatefulWidget {
@@ -9,6 +11,7 @@ class _Emty_PageNavigationState extends State<Emty_PageNavigation> {
   final String nameTab = "Tranning_01";
 
   List<String> _list = ['XXX', 'YYY', 'ZZZ'];
+  var user = {};
 
   @override
   Widget build(BuildContext context) {
@@ -23,12 +26,23 @@ class _Emty_PageNavigationState extends State<Emty_PageNavigation> {
           ),
         ),
         body: SafeArea(
-          child: Column(
-            children: _list.where((element) => element != 'YYY').map(
-              (element) {
-                return Text(element);
-              },
-            ).toList(),
+//          child: Column(
+//            children: _list.where((element) => element != 'YYY').map(
+//              (element) {
+//                return Text(element);
+//              },
+//            ).toList(),
+//          ),
+          child: RaisedButton(
+            onPressed: () {
+//              user['username'] = 'admin';
+//              user['password'] = '1234';
+//              print(user);
+//              String Json = json.encode(user);
+//              print(Json);
+            
+            },
+            child: Text("OK"),
           ),
         ),
       ),

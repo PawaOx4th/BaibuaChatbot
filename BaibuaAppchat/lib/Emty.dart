@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'Models/Login.dart';
 
 import 'package:flutter/material.dart';
 
@@ -11,11 +12,11 @@ class _Emty_PageNavigationState extends State<Emty_PageNavigation> {
   final String nameTab = "Tranning_01";
 
   List<String> _list = ['XXX', 'YYY', 'ZZZ'];
-  var user = {};
 
   @override
   Widget build(BuildContext context) {
-    String _ID = ModalRoute.of(context).settings.arguments;
+
+    List<String> _data = ModalRoute.of(context).settings.arguments;
 
     return SafeArea(
       child: Scaffold(
@@ -35,12 +36,21 @@ class _Emty_PageNavigationState extends State<Emty_PageNavigation> {
 //          ),
           child: RaisedButton(
             onPressed: () {
-//              user['username'] = 'admin';
-//              user['password'] = '1234';
-//              print(user);
-//              String Json = json.encode(user);
-//              print(Json);
-            
+//              Json Basic
+              //              user['username'] = 'admin';
+              //              user['password'] = '1234';
+              //              print(user);
+              //              String Json = json.encode(user);
+              //              print(Json);
+
+//            Medal Class
+//              print(_data);
+              var login = Login();
+              login.username =  _data[0];
+              login.password = _data[1];
+//              print(login.username);
+              String loginStr = loginToJson(login);
+              print(loginStr);
             },
             child: Text("OK"),
           ),

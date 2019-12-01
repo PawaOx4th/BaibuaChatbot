@@ -7,8 +7,8 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  TextEditingController _id =
-      new TextEditingController(); // มี new  หรือ ไม่มีก็ได้ หรือใช้ "var" แทน TextEditingController ก็ได้
+  var _id =  new TextEditingController(); // มี new  หรือ ไม่มีก็ได้ หรือใช้ "var" แทน TextEditingController ก็ได้
+  var _password = new TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -88,6 +88,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     fontSize: 18.0,
                                   ),
                                 ),
+                                controller: _password,
                               ),
                             ),
                           ),
@@ -124,12 +125,17 @@ class _LoginScreenState extends State<LoginScreen> {
                             color: Colors.green,
                             onPressed: () {
                               print(_id.text);
-                              Navigator.pushNamed(context, '/emty-page',
-                                  arguments: _id.text);// print input to console
-                              setState(() {
-                                _id.text = ""; // Clear Textfile ID
-                              });
-
+                              Navigator.pushNamed(
+                                context,
+                                '/emty-page',
+                                arguments: [ _id.text, _password.text],
+                              );
+                              setState(
+                                () {
+                                  _id.text = "";
+                                  _password.text = "";// Clear Textfile ID
+                                },
+                              );
                             },
                             elevation: 5,
                           ),

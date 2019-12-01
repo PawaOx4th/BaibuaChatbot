@@ -25,9 +25,10 @@ class _Emty_PageNavigationState extends State<Emty_PageNavigation> {
         body: SafeArea(
           child: Column(
             children: _list.map((element) {
-              return Text(element);
-// test Breanches
-//             Test 222
+              if (element == 'YYY')
+                return Container();
+              else
+                return Text(element);
             }).toList(),
           ),
         ),

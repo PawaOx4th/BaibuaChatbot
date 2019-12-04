@@ -8,16 +8,17 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   final formKey = GlobalKey<FormState>();
+  String _email, _password;
 
   TextEditingController _id = TextEditingController();
-  TextEditingController _pass = TextEditingController(); // มี new  หรือ ไม่มีก็ได้ หรือใช้ "var" แทน TextEditingController ก็ได้
+  TextEditingController _pass =  TextEditingController(); // มี new  หรือ ไม่มีก็ได้ หรือใช้ "var" แทน TextEditingController ก็ได้
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
 //        resizeToAvoidBottomPadding: false,
-        backgroundColor: Colors.lightBlueAccent,
+        backgroundColor: Colors.lightBlueAccent[400],
         body: Stack(
           fit: StackFit.expand,
           children: <Widget>[
@@ -40,9 +41,9 @@ class _LoginScreenState extends State<LoginScreen> {
                             padding: EdgeInsets.all(30),
                             child: Column(
                               children: <Widget>[
-                              idInput(),
-                              SizedBox(height: 18.0),
-                              passwordInput(),
+                                idInput(),
+                                SizedBox(height: 18.0),
+                                passwordInput(),
                               ],
                             ),
                           ),
@@ -60,170 +61,180 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
     );
   }
+
   //**************************************************************************//
   // Note : Widget ID  TextFormFeild
-  Widget idInput()  => Container(
-    padding: EdgeInsets.all(10),
-    decoration: BoxDecoration(
-      color: Colors.white,
-      borderRadius: BorderRadius.circular(20.0),
-      boxShadow: [
-        BoxShadow(
-          color: Color.fromRGBO(0, 0, 0, 0.1),
-          offset: Offset(0, 5),
+  Widget idInput() => Container(
+        padding: EdgeInsets.all(10),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(20.0),
+          boxShadow: [
+            BoxShadow(
+              color: Color.fromRGBO(0, 0, 0, 0.1),
+              offset: Offset(0, 5),
+            ),
+          ],
         ),
-      ],
-    ),
-    child: Padding(
-      padding: const EdgeInsets.only(
-          left: 10, right: 10),
-      child: TextFormField(
-        keyboardType: TextInputType.number,
-        decoration: InputDecoration(
-          hintText: "ID",
-          prefixIcon: Icon(Icons.people),
-          border: InputBorder.none,
-          hintStyle: TextStyle(
-            fontSize: 18.0,
+        child: Padding(
+          padding: const EdgeInsets.only(left: 10, right: 10),
+          child: TextFormField(
+            keyboardType: TextInputType.number,
+            decoration: InputDecoration(
+              hintText: "ID",
+              prefixIcon: Icon(Icons.people),
+              border: InputBorder.none,
+              hintStyle: TextStyle(
+                fontSize: 18.0,
+              ),
+            ),
+            controller: _id,
+            maxLength: 13,
+
+            //** Validator ID
+            validator: (String value) {
+              if (value.isEmpty) {
+                return "Please input ID";
+              } else {
+                if (value.length < 13) {
+                  return "Please Input ID 13 Character";
+                }
+              }
+            },
+            onSaved: (String value) {
+              _email = value.trim();
+            },
           ),
         ),
-        controller: _id,
-        maxLength: 13,
-        autofocus: true,
-        //** Validator ID
-        validator: (String value) {
-          if (value.isEmpty) {
-            return "Please input ID";
-          } else {
-            if (value.length < 13) {
-              return "Please Input ID 13 Character";
-            }
-          }
-        },
-      ),
-    ),
-  );
+      );
+
   //**************************************************************************//
 
   //**************************************************************************//
   // Note : Widget Password TextFeild
   Widget passwordInput() => Container(
-    padding: EdgeInsets.all(10),
-    decoration: BoxDecoration(
-      color: Colors.white,
-      borderRadius: BorderRadius.circular(20.0),
-      boxShadow: [
-        BoxShadow(
-          color: Color.fromRGBO(0, 0, 0, 0.1),
-          offset: Offset(0, 5),
+        padding: EdgeInsets.all(10),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(20.0),
+          boxShadow: [
+            BoxShadow(
+              color: Color.fromRGBO(0, 0, 0, 0.1),
+              offset: Offset(0, 5),
+            ),
+          ],
         ),
-      ],
-    ),
-    child: Padding(
-      padding: const EdgeInsets.only(left: 10, right: 10),
-      child: TextFormField(
-        maxLength: 6,
-        keyboardType: TextInputType.number,
-        decoration: InputDecoration(
-          hintText: "Password",
-          prefixIcon: Icon(Icons.vpn_key),
-          border: InputBorder.none,
-          hintStyle: TextStyle(
-            fontSize: 18.0,
+        child: Padding(
+          padding: const EdgeInsets.only(left: 10, right: 10),
+          child: TextFormField(
+            maxLength: 6,
+            keyboardType: TextInputType.number,
+            decoration: InputDecoration(
+              hintText: "Password",
+              prefixIcon: Icon(Icons.vpn_key),
+              border: InputBorder.none,
+              hintStyle: TextStyle(
+                fontSize: 18.0,
+              ),
+            ),
+            controller: _pass,
+            //** Validator ID
+            // ignore: missing_return
+            validator: (String value) {
+              if (value.isEmpty) {
+                return "Please input Password";
+              } else {
+                if (value.length < 6) {
+                  return "Please Input Password 6 Character";
+                }
+              }
+            },
+            onSaved: (String value) {
+              _password = value.trim();
+            },
           ),
         ),
-        controller: _pass,
-        //** Validator ID
-        // ignore: missing_return
-        validator: (String value) {
-          if (value.isEmpty) {
-            return "Please input Password";
-          } else {
-            if (value.length < 6) {
-              return "Please Input Password 6 Character";
-            }
-          }
-        },
-      ),
-    ),
-  );
+      );
+
   //**************************************************************************//
 
   //**************************************************************************//
   // Note : Widget Login Button TextFeild
   Widget loginBtn() => Padding(
-    padding: const EdgeInsets.only(
-      left: 30.0,
-      right: 30.0,
-    ),
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        Expanded(
-          child: Container(
+        padding: const EdgeInsets.only(
+          left: 30.0,
+          right: 30.0,
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Expanded(
+              child: Container(
 //                      width: 200.0,
-            height: 50.0,
+                height: 50.0,
 //                          Button => 'Register'
-            child: RaisedButton(
-              shape: new RoundedRectangleBorder(
-                borderRadius: new BorderRadius.circular(18.0),
-                side: BorderSide(color: Colors.green),
-              ),
-              child: Text(
-                "Login",
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 18.0,
+                child: RaisedButton(
+                  shape: new RoundedRectangleBorder(
+                    borderRadius: new BorderRadius.circular(18.0),
+                    side: BorderSide(color: Colors.lightGreenAccent[700]),
+                  ),
+                  child: Text(
+                    "Login",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 18.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  color: Colors.lightGreenAccent[700],
+                  onPressed: () {
+                    if (formKey.currentState.validate()) {
+                      formKey.currentState.save();
+                      print("Email : $_email");
+                      print("Password: $_password");
+                    }
+                  },
+                  elevation: 5,
                 ),
               ),
-              color: Colors.green,
-              onPressed: () {
-                if (formKey.currentState.validate()) {
-                  formKey.currentState.save();
-                }
-              },
-              elevation: 5,
             ),
-          ),
+          ],
         ),
-      ],
-    ),
-  );
+      );
+
   //**************************************************************************//
 
   //**************************************************************************//
   // Note : Widget ButtonBottom TextFeild
   Widget buttonBottom() => Container(
-    child: Padding(
-      padding: const EdgeInsets.only(left: 20, right: 20),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          FlatButton(
-            onPressed: () {},
-            child: Text(
-              "Forgot password",
-              style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.w300,
+        child: Padding(
+          padding: const EdgeInsets.only(left: 20, right: 20),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              FlatButton(
+                onPressed: () {},
+                child: Text(
+                  "Forgot password",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w300,
+                  ),
+                ),
               ),
-            ),
-          ),
-          FlatButton(
-            onPressed: () {},
-            child: Text(
-              "Register",
-              style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.w500,
+              FlatButton(
+                onPressed: () {},
+                child: Text(
+                  "Register",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
               ),
-            ),
+            ],
           ),
-        ],
-      ),
-    ),
-  );
-  //**************************************************************************//
+        ),
+      );
+//**************************************************************************//
 }
-
-

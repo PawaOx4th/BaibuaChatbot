@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "484531534485",
+    "firebase_url": "https://newagent-47c20.firebaseio.com",
+    "project_id": "newagent-47c20",
+    "storage_bucket": "newagent-47c20.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:484531534485:android:4e29a9ed777aa42a0f799c",
+        "android_client_info": {
+          "package_name": "com.baibua.chatbot"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "484531534485-3o0uo09vs2908j7pqgni5l7cpiisq8us.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDQfhhPFn-skw3VT2lrQhq2YCZSi67cI3g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "484531534485-iqimn7ejql3lnkn61d7thdk9a7snjl16.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

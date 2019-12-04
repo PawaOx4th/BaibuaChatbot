@@ -29,11 +29,13 @@ class _LoginScreenState extends State<LoginScreen> {
                 Column(
                   children: <Widget>[
                     Container(
+
                       padding: EdgeInsets.all(30),
                       child: Column(
                         children: <Widget>[
                           Container(
-                            padding: EdgeInsets.all(10),
+                            height: 100 ,
+//                            padding: EdgeInsets.all(10),
                             decoration: BoxDecoration(
                               color: Colors.white,
                               borderRadius: BorderRadius.circular(20.0),
@@ -44,21 +46,19 @@ class _LoginScreenState extends State<LoginScreen> {
                                 ),
                               ],
                             ),
-                            child: Padding(
-                              padding:
-                                  const EdgeInsets.only(left: 10, right: 10),
-                              child: TextField(
-                                keyboardType: TextInputType.number,
-                                decoration: InputDecoration(
-                                  hintText: "ID",
-                                  prefixIcon: Icon(Icons.people),
-                                  border: InputBorder.none,
-                                  hintStyle: TextStyle(
-                                    fontSize: 18.0,
-                                  ),
+                            child:  TextFormField(
+                              keyboardType: TextInputType.number,
+                              decoration: InputDecoration(
+                                hintText: "ID",
+                                prefixIcon: Icon(Icons.people),
+                                border: InputBorder.none,
+                                hintStyle: TextStyle(
+                                  fontSize: 18.0,
                                 ),
-                                controller: _id, // binding data
                               ),
+                              controller: _id,
+                              maxLength: 13,
+                              // binding data
                             ),
                           ),
                           SizedBox(

@@ -14,127 +14,131 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+//        resizeToAvoidBottomPadding: false,
         backgroundColor: Colors.lightBlueAccent,
         body: Stack(
           fit: StackFit.expand,
           children: <Widget>[
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                CircleAvatar(
-                  backgroundColor: Colors.white,
-                  radius: 80,
-                  child: Image.asset("img/logo.png"),
-                ),
-                Column(
+            SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.only(top: 50),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    Container(
+                    CircleAvatar(
+                      backgroundColor: Colors.white,
+                      radius: 80,
+                      child: Image.asset("img/logo.png"),
+                    ),
+                    Column(
+                      children: <Widget>[
+                        Container(
 
-                      padding: EdgeInsets.all(30),
-                      child: Column(
-                        children: <Widget>[
-                          Container(
-                            height: 100 ,
+                          padding: EdgeInsets.all(30),
+                          child: Column(
+                            children: <Widget>[
+                              Container(
+                                height: 100 ,
 //                            padding: EdgeInsets.all(10),
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(20.0),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Color.fromRGBO(0, 0, 0, 0.1),
-                                  offset: Offset(0, 5),
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(20.0),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Color.fromRGBO(0, 0, 0, 0.1),
+                                      offset: Offset(0, 5),
+                                    ),
+                                  ],
                                 ),
-                              ],
-                            ),
-                            child:  TextFormField(
-                              keyboardType: TextInputType.number,
-                              decoration: InputDecoration(
-                                hintText: "ID",
-                                prefixIcon: Icon(Icons.people),
-                                border: InputBorder.none,
-                                hintStyle: TextStyle(
-                                  fontSize: 18.0,
+                                child:  TextFormField(
+                                  keyboardType: TextInputType.number,
+                                  decoration: InputDecoration(
+                                    hintText: "ID",
+                                    prefixIcon: Icon(Icons.people),
+                                    border: InputBorder.none,
+                                    hintStyle: TextStyle(
+                                      fontSize: 18.0,
+                                    ),
+                                  ),
+                                  controller: _id,
+                                  maxLength: 13,
+                                  // binding data
                                 ),
                               ),
-                              controller: _id,
-                              maxLength: 13,
-                              // binding data
-                            ),
-                          ),
-                          SizedBox(
-                            height: 18.0,
-                          ),
-                          Container(
-                            padding: EdgeInsets.all(10),
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(20.0),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Color.fromRGBO(0, 0, 0, 0.1),
-                                  offset: Offset(0, 5),
+                              SizedBox(
+                                height: 18.0,
+                              ),
+                              Container(
+                                padding: EdgeInsets.all(10),
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(20.0),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Color.fromRGBO(0, 0, 0, 0.1),
+                                      offset: Offset(0, 5),
+                                    ),
+                                  ],
                                 ),
-                              ],
-                            ),
-                            child: Padding(
-                              padding:
-                                  const EdgeInsets.only(left: 10, right: 10),
-                              child: TextField(
-                                decoration: InputDecoration(
-                                  hintText: "Password",
-                                  prefixIcon: Icon(Icons.vpn_key),
-                                  border: InputBorder.none,
-                                  hintStyle: TextStyle(
-                                    fontSize: 18.0,
+                                child: Padding(
+                                  padding:
+                                      const EdgeInsets.only(left: 10, right: 10),
+                                  child: TextField(
+                                    decoration: InputDecoration(
+                                      hintText: "Password",
+                                      prefixIcon: Icon(Icons.vpn_key),
+                                      border: InputBorder.none,
+                                      hintStyle: TextStyle(
+                                        fontSize: 18.0,
+                                      ),
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(
-                    left: 30.0,
-                    right: 30.0,
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Expanded(
-                        child: Container(
-//                      width: 200.0,
-                          height: 50.0,
-//                          Button => 'Register'
-                          child: RaisedButton(
-                            shape: new RoundedRectangleBorder(
-                              borderRadius: new BorderRadius.circular(18.0),
-                              side: BorderSide(color: Colors.green),
-                            ),
-                            child: Text(
-                              "Register",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 18.0,
-                              ),
-                            ),
-                            color: Colors.green,
-                            onPressed: () {
-                              print(_id.text);
-                              Navigator.pushNamed(context, '/emty-page',
-                                  arguments: _id.text);// print input to console
-                              setState(() {
-                                _id.text = ""; // Clear Textfile ID
-                              });
-
-                            },
-                            elevation: 5,
+                            ],
                           ),
                         ),
+                      ],
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(
+                        left: 30.0,
+                        right: 30.0,
                       ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Expanded(
+                            child: Container(
+//                      width: 200.0,
+                              height: 50.0,
+//                          Button => 'Register'
+                              child: RaisedButton(
+                                shape: new RoundedRectangleBorder(
+                                  borderRadius: new BorderRadius.circular(18.0),
+                                  side: BorderSide(color: Colors.green),
+                                ),
+                                child: Text(
+                                  "Register",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 18.0,
+                                  ),
+                                ),
+                                color: Colors.green,
+                                onPressed: () {
+                                  print(_id.text);
+                                  Navigator.pushNamed(context, '/emty-page',
+                                      arguments: _id.text);// print input to console
+                                  setState(() {
+                                    _id.text = ""; // Clear Textfile ID
+                                  });
+
+                                },
+                                elevation: 5,
+                              ),
+                            ),
+                          ),
 //                    Container(
 //                      width: 130.0,
 //                      height: 50.0,
@@ -155,11 +159,13 @@ class _LoginScreenState extends State<LoginScreen> {
 //                        elevation: 5,
 //                      ),
 //                    ),
-                    ],
-                  ),
+                        ],
+                      ),
+                    ),
+                    FlatButton(onPressed: () {}, child: Text("Forgot password")),
+                  ],
                 ),
-                FlatButton(onPressed: () {}, child: Text("Forgot password")),
-              ],
+              ),
             ),
           ],
         ),

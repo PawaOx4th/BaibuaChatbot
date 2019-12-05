@@ -204,6 +204,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         print('error Signing in');
                       } else {
                         print('Signed in');
+                        Navigator.pushNamed(context,"/emty-page" );
                         print(result.uid);
                       }
                     }

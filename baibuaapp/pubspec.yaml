@@ -25,6 +25,8 @@ dependencies:
   cupertino_icons: ^0.1.2
   flutter_dialogflow: ^0.1.0
   tts: ^1.0.1
+  firebase_auth: ^0.15.1
+  cloud_firestore: ^0.12.11
 
 dev_dependencies:
   flutter_test:

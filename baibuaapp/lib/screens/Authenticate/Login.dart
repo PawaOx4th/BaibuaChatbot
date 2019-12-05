@@ -1,8 +1,8 @@
 import 'dart:ffi';
-
-import 'package:baibuaapp/Authenticate/autu.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+import 'autu.dart';
 
 class LoginScreen extends StatefulWidget {
   @override

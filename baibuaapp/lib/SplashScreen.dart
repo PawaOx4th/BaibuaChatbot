@@ -1,8 +1,8 @@
 import 'dart:async';
+import 'package:baibuaapp/screens/wrapper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'BaibuaChatroom.dart';
-import 'Authenticate/Login.dart';
+
 
 
 
@@ -20,7 +20,7 @@ class _SplashScreenState extends State<SplashScreen> {
       Navigator.push(
         context,
 //        MaterialPageRoute(builder: (context) => ChatroomBaibua()),
-        MaterialPageRoute(builder: (context) => LoginScreen()),
+        MaterialPageRoute(builder: (context) => Wrapper()),
       );
     });
   }

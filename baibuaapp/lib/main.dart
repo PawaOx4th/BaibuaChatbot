@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'screens/BaibuaChatroom.dart';
 import 'screens/Emty.dart';
-import 'SplashScreen.dart';
+import 'screens/SplashScreen.dart';
 
 void main() => runApp(new MyApp());
 

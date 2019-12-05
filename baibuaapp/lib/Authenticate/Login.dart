@@ -1,5 +1,6 @@
 import 'dart:ffi';
 
+import 'package:baibuaapp/Authenticate/autu.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -9,11 +10,15 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  //  ****************************************************** //
+  // Call AuthService =>  autu.dart
+  final AuthService _authService = AuthService();
 
+  //  ****************************************************** //
 
   final formKey = GlobalKey<FormState>();
 
-  String _email, _password ;
+  String _email, _password;
 
   TextEditingController _id = TextEditingController();
   TextEditingController _pass =
@@ -21,7 +26,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     return SafeArea(
       child: Scaffold(
 //        resizeToAvoidBottomPadding: false,
@@ -88,7 +92,7 @@ class _LoginScreenState extends State<LoginScreen> {
           child: TextFormField(
             keyboardType: TextInputType.emailAddress,
             decoration: InputDecoration(
-              hintText: "ID",
+              hintText: "E-mail",
               prefixIcon: Icon(Icons.people),
               border: InputBorder.none,
               hintStyle: TextStyle(
@@ -104,8 +108,7 @@ class _LoginScreenState extends State<LoginScreen> {
               } else {
                 if (value.contains("@") && value.contains(".")) {
                   return null;
-                }
-                else {
+                } else {
                   return "Please Input ID 13 Character";
                 }
               }
@@ -190,11 +193,19 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                   color: Colors.green,
-                  onPressed: () {
+                  onPressed: () async {
                     if (formKey.currentState.validate()) {
                       formKey.currentState.save();
                       print(_id.text);
                       print(_pass.text);
+                      // Call _authService function
+                      dynamic result = await _authService.signInAnon();
+                      if(result == null){
+                        print('error Signing in');
+                      }else {
+                        print('Signed in');
+                        print(result.toString());
+                      }
 
                     }
                   },

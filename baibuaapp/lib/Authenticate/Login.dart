@@ -100,7 +100,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ),
             controller: _id,
-            autofocus: true,
+//            autofocus: true,
             //** Validator ID
             validator: (String value) {
               if (value.isEmpty) {
@@ -196,17 +196,16 @@ class _LoginScreenState extends State<LoginScreen> {
                   onPressed: () async {
                     if (formKey.currentState.validate()) {
                       formKey.currentState.save();
-                      print(_id.text);
-                      print(_pass.text);
+//                      print(_id.text);
+//                      print(_pass.text);
                       // Call _authService function
                       dynamic result = await _authService.signInAnon();
-                      if(result == null){
+                      if (result == null) {
                         print('error Signing in');
-                      }else {
+                      } else {
                         print('Signed in');
-                        print(result.toString());
+                        print(result.uid);
                       }
-
                     }
                   },
                   elevation: 5,

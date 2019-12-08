@@ -1,4 +1,3 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:baibuaapp/screens/Authenticate/register.dart';
@@ -13,6 +12,7 @@ class _LoginScreenState extends State<LoginScreen> {
   //  ****************************************************** //
   // Call AuthService =>  autu.dart
   final AuthService _authService = AuthService();
+  String error = '';
 
   //  ****************************************************** //
 
@@ -20,9 +20,9 @@ class _LoginScreenState extends State<LoginScreen> {
 
   String _email, _password;
 
+  // มี new  หรือ ไม่มีก็ได้ หรือใช้ "var" แทน TextEditingController ก็ได้
   TextEditingController _id = TextEditingController();
-  TextEditingController _pass =
-      TextEditingController(); // มี new  หรือ ไม่มีก็ได้ หรือใช้ "var" แทน TextEditingController ก็ได้
+  TextEditingController _pass = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -60,6 +60,13 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                         ],
                       ),
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Text(
+                      error,
+                      style: TextStyle(color: Colors.red, fontSize: 16),
                     ),
                     loginBtn(),
                     buttonBottom(),
@@ -110,8 +117,6 @@ class _LoginScreenState extends State<LoginScreen> {
               } else {
                 if (value.contains("@") && value.contains(".com")) {
                   return null;
-                } else {
-                  return "Please Input ID 13 Character";
                 }
               }
             },
@@ -199,22 +204,23 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   color: Colors.green,
                   onPressed: () async {
-                    Navigator.push(context, MaterialPageRoute(builder:  (context) => Register()));
-                    print(_email +":"+ _password);
-//                    if (formKey.currentState.validate()) {
-//                      formKey.currentState.save();
-////                      print(_id.text);
-////                      print(_pass.text);
-//                      // Call _authService function
-//                      dynamic result = await _authService.signInAnon();
-//                      if (result == null) {
-//                        print('error Signing in');
-//                      } else {
-//                        print('Signed in');
-//                        Navigator.pushNamed(context, "/emty-page");
-//                        print(result.uid);
-//                      }
-//                    }
+                    print(_email + ":" + _password);
+                    if (formKey.currentState.validate()) {
+                      formKey.currentState.save();
+                      dynamic result = await _authService
+                          .loginWithEmailAndPassword(_email, _password);
+                      print(_id.text);
+                      print(_pass.text);
+                      if (result == null) {
+                        setState(() {
+                          error = 'please supply a valid email.';
+                        });
+                      }else{
+                        Navigator.pushNamed(context, '/emty-page');
+                      }
+                      // Call _authService function
+
+                    }
                   },
                   elevation: 5,
                 ),
@@ -245,7 +251,10 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
               FlatButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => Register()));
+                },
                 child: Text(
                   "Register",
                   style: TextStyle(

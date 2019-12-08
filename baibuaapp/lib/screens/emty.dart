@@ -7,6 +7,7 @@ class Emty_PageNavigation extends StatefulWidget {
   _Emty_PageNavigationState createState() => _Emty_PageNavigationState();
 }
 
+// ignore: camel_case_types
 class _Emty_PageNavigationState extends State<Emty_PageNavigation> {
   final String nameTab = "Main Screen";
   final AuthService _authService = AuthService();

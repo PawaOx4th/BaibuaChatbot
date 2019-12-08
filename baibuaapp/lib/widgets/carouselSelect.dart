@@ -2,15 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_dialogflow/v2/message.dart';
 
-
 class ItemCarouselWidget extends StatefulWidget {
   final ItemCarousel item;
   final Function clickItem;
-  ItemCarouselWidget({Key key,this.item, this.clickItem}) : super(key: key);
+
+  ItemCarouselWidget({Key key, this.item, this.clickItem}) : super(key: key);
 
   @override
   _ItemCarouselWidget createState() => _ItemCarouselWidget();
 }
+
 class _ItemCarouselWidget extends State<ItemCarouselWidget> {
   @override
   Widget build(BuildContext context) {
@@ -49,11 +50,9 @@ class _ItemCarouselWidget extends State<ItemCarouselWidget> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      new Text(
-                        widget.item.title,
-                        style: TextStyle(
-                            fontSize: 20.0, fontWeight: FontWeight.bold),
-                      ),
+                      new Text(widget.item.title,
+                          style: TextStyle(
+                              fontSize: 20.0, fontWeight: FontWeight.bold)),
                       new Container(
                         margin: const EdgeInsets.only(top: 5.0),
                         child: new Text(widget.item.description),
@@ -78,7 +77,6 @@ class CarouselSelectWidget extends StatefulWidget {
   _CarouselSelectWidget createState() => _CarouselSelectWidget();
 }
 
-
 class _CarouselSelectWidget extends State<CarouselSelectWidget> {
   List<Widget> listItems() {
     List<Widget> items = [];
@@ -89,6 +87,7 @@ class _CarouselSelectWidget extends State<CarouselSelectWidget> {
     }
     return items;
   }
+
   @override
   Widget build(BuildContext context) {
     return new Container(

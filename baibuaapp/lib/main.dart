@@ -3,8 +3,8 @@ import 'package:baibuaapp/models/user.dart';
 import 'package:baibuaapp/screens/Authenticate/autu.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'screens/BaibuaChatroom.dart';
-import 'screens/Emty.dart';
+import 'screens/baibuaChatroom.dart';
+import 'screens/emty.dart';
 import 'screens/SplashScreen.dart';
 
 void main() => runApp(new MyApp());

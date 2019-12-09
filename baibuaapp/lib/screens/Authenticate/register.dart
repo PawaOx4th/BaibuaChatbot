@@ -69,6 +69,9 @@ class _RegisterState extends State<Register> {
                                   ),
                                   studentIdInput(),
                                   emailInput(),
+                                  Text(error,
+                                      style: TextStyle(
+                                          color: Colors.red, fontSize: 14.0),),
                                   SizedBox(
                                     height: 16,
                                   ),
@@ -81,11 +84,10 @@ class _RegisterState extends State<Register> {
                                     height: 5,
                                   ),
                                   registerBtn(btnname: "Register Now"),
-                                  Text(
-                                    error,
-                                    style: TextStyle(
-                                        color: Colors.red, fontSize: 14.0),
+                                  SizedBox(
+                                    height: 5,
                                   ),
+
                                 ],
                               ),
                             ),
@@ -220,7 +222,7 @@ class _RegisterState extends State<Register> {
 //                          Button => 'Register'
                 child: RaisedButton(
                   shape: new RoundedRectangleBorder(
-                    borderRadius: new BorderRadius.circular(18.0),
+                    borderRadius: new BorderRadius.circular(10.0),
                     side: BorderSide(color: Colors.lightBlue[300]),
                   ),
                   child: Text(
@@ -232,9 +234,9 @@ class _RegisterState extends State<Register> {
                   ),
                   color: Colors.lightBlue[300],
                   onPressed: () async {
-                    print("stuId : $_stuIdRegister");
-                    print("email : $_emailRegister");
-                    print("password : $_passwordRegister");
+//                    print("stuId : $_stuIdRegister");
+//                    print("email : $_emailRegister");
+//                    print("password : $_passwordRegister");
 //                    Navigator.push(context,
 //                        MaterialPageRoute(builder: (context) => Register()));
 //                    if (formKey.currentState.validate()) {
@@ -273,7 +275,6 @@ class _RegisterState extends State<Register> {
         ),
       );
 
-
 //  ****************************************************************************  //
 //  ******************** Validate condition ********************
   String validateEmail(String value) {
@@ -310,10 +311,6 @@ class _RegisterState extends State<Register> {
     // ignore: unrelated_type_equality_checks
     if (value == pass) {
       return "Please re-input Password";
-    } else {
-      if (value.length < 6) {
-        return "Please Input Password 6 Character";
-      }
     }
   }
 //  ****************************************************************************  //

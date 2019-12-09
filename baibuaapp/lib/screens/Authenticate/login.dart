@@ -216,7 +216,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           error = 'please supply a valid email.';
                         });
                       }else{
-                        Navigator.pushNamed(context, '/emty-page');
+                        Navigator.pushNamed(context, '/Chatroom-page');
                       }
                       // Call _authService function
 

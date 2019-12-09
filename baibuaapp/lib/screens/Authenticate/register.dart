@@ -263,7 +263,7 @@ class _RegisterState extends State<Register> {
                           error = "please supply a valid email";
                         });
                       } else {
-                        Navigator.pushNamed(context, '/emty-page');
+                        Navigator.pushNamed(context,'/Login-page');
                       }
                     }
                   },

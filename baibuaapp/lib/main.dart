@@ -1,5 +1,7 @@
 import 'package:baibuaapp/models/user.dart';
 import 'package:baibuaapp/screens/Authenticate/autu.dart';
+import 'package:baibuaapp/screens/Authenticate/login.dart';
+import 'package:baibuaapp/screens/baibuaChatroom.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'screens/emty.dart';
@@ -20,7 +22,9 @@ class MyApp extends StatelessWidget {
           ),
           home: new SplashScreen(),
           routes: {
-            '/emty-page': (context) => Emty_PageNavigation(),
+            '/Login-page' : (context) => LoginScreen(),
+            '/emty-page': (context) => Emty_PageNavigation(), // test-page
+            '/Chatroom-page' : (context) => ChatroomBaibua(), // ChatRooms
           }
 //      new MyHomePage(title: 'Baibua Chatbot'),
           ),

@@ -15,15 +15,6 @@ class _HomePageDialogflowV2 extends State<ChatroomBaibua> {
   final List<ChatMessage> _messages = <ChatMessage>[];
   final TextEditingController _textController = new TextEditingController();
 
-  Choice _selectedChoice = choices[0]; // The app's "state"
-
-  void _select(Choice choice) {
-    // Causes the app to rebuild with the new _selectedChoice.
-    setState(() {
-      _selectedChoice = choice;
-    });
-  }
-
   Widget _buildTextComposer() {
     return new IconTheme(
       data: new IconThemeData(color: Theme.of(context).accentColor),
@@ -63,7 +54,7 @@ class _HomePageDialogflowV2 extends State<ChatroomBaibua> {
     ChatMessage message = new ChatMessage(
       text: response.getMessage() ??
           new TypeMessage(response.getListMessage()[0]).platform,
-      name: "Bot",
+      name: "Baibua",
       type: false,
     );
     setState(() {
@@ -92,19 +83,68 @@ class _HomePageDialogflowV2 extends State<ChatroomBaibua> {
         title: Text("Baibuachatbot"),
         leading: Icon(Icons.chat),
         actions: <Widget>[
-          PopupMenuButton<Choice>(
-            icon: Icon(Icons.keyboard_arrow_down),
-            onSelected: _select,
+          PopupMenuButton(
+            offset: Offset(0, 100),
+            elevation: 10,
+            //** (val) => value property in PopupMenuItem **//
+            onSelected: (val) {
+              Navigator.pushNamed(context, val);
+            },
+            icon: Icon(
+              Icons.keyboard_arrow_down,
+              size: 40,
+            ),
             itemBuilder: (BuildContext context) {
-              return choices.map((Choice choice) {
-                return PopupMenuItem<Choice>(
-                  value: choice,
-                  child: new ListTile(
-                    title: Text(choice.title),
-                    leading: Icon(choice.icon, size: 36,),
+              return [
+                PopupMenuItem(
+                  //** value => 'routes/...' **//
+                  value: '/emty-page',
+                  child: Row(
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.only(right: 10),
+                        child: Icon(Icons.fiber_new),
+                      ),
+                      Text(
+                        "Setting",
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      )
+                    ],
                   ),
-                );
-              }).toList();
+                ),
+                PopupMenuItem(
+                  //** value => 'routes/...' **//
+                  value: '/emty-page',
+                  child: Row(
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.only(right: 10),
+                        child: Icon(Icons.settings),
+                      ),
+                      Text(
+                        "Setting",
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      )
+                    ],
+                  ),
+                ),
+                PopupMenuItem(
+                  //** value => 'routes/...' **//
+                  value: '/emty-page',
+                  child: Row(
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.only(right: 10),
+                        child: Icon(Icons.map),
+                      ),
+                      Text(
+                        "Map",
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      )
+                    ],
+                  ),
+                ),
+              ];
             },
           ),
         ],
@@ -204,18 +244,3 @@ class ChatMessage extends StatelessWidget {
     );
   }
 }
-
-class Choice {
-  const Choice({this.title, this.icon});
-
-  final String title;
-  final IconData icon;
-}
-
-const List<Choice> choices = const <Choice>[
-  const Choice(title: 'News', icon: Icons.fiber_new),
-  const Choice(title: 'Map', icon: Icons.map),
-  const Choice(title: 'Setting', icon: Icons.settings),
-  const Choice(title: 'Logout', icon: Icons.cancel),
-
-];

@@ -1,3 +1,4 @@
+import 'package:baibuaapp/screens/baibuaChatroom.dart';
 import 'package:baibuaapp/screens/emty.dart' show Emty_PageNavigation;
 import 'package:baibuaapp/screens/splashscreen.dart';
 import 'package:baibuaapp/models/user.dart' show User;
@@ -15,7 +16,7 @@ class Wrapper extends StatelessWidget {
     if (user == null) {
       return LoginScreen();
     } else {
-      return Emty_PageNavigation();
+      return ChatroomBaibua();
     }
   }
 }

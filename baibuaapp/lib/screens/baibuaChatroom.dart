@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dialogflow/dialogflow_v2.dart';
 
@@ -13,6 +14,15 @@ class ChatroomBaibua extends StatefulWidget {
 class _HomePageDialogflowV2 extends State<ChatroomBaibua> {
   final List<ChatMessage> _messages = <ChatMessage>[];
   final TextEditingController _textController = new TextEditingController();
+
+  Choice _selectedChoice = choices[0]; // The app's "state"
+
+  void _select(Choice choice) {
+    // Causes the app to rebuild with the new _selectedChoice.
+    setState(() {
+      _selectedChoice = choice;
+    });
+  }
 
   Widget _buildTextComposer() {
     return new IconTheme(
@@ -79,7 +89,25 @@ class _HomePageDialogflowV2 extends State<ChatroomBaibua> {
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
-        title: new Text("Baibua Chatbot"),
+        title: Text("Baibuachatbot"),
+        leading: Icon(Icons.chat),
+        actions: <Widget>[
+          PopupMenuButton<Choice>(
+            icon: Icon(Icons.keyboard_arrow_down),
+            onSelected: _select,
+            itemBuilder: (BuildContext context) {
+              return choices.map((Choice choice) {
+                return PopupMenuItem<Choice>(
+                  value: choice,
+                  child: new ListTile(
+                    title: Text(choice.title),
+                    leading: Icon(choice.icon, size: 36,),
+                  ),
+                );
+              }).toList();
+            },
+          ),
+        ],
       ),
       body: new Column(children: <Widget>[
         new Flexible(
@@ -176,3 +204,18 @@ class ChatMessage extends StatelessWidget {
     );
   }
 }
+
+class Choice {
+  const Choice({this.title, this.icon});
+
+  final String title;
+  final IconData icon;
+}
+
+const List<Choice> choices = const <Choice>[
+  const Choice(title: 'News', icon: Icons.fiber_new),
+  const Choice(title: 'Map', icon: Icons.map),
+  const Choice(title: 'Setting', icon: Icons.settings),
+  const Choice(title: 'Logout', icon: Icons.cancel),
+
+];

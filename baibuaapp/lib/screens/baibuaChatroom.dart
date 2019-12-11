@@ -63,7 +63,7 @@ class _HomePageDialogflowV2 extends State<ChatroomBaibua> {
   }
 
   void _handleSubmitted(String text) {
-    String _textname = "Boom";
+    String _textname = "User";
     _textController.clear();
     ChatMessage message = new ChatMessage(
       text: text,
@@ -86,6 +86,7 @@ class _HomePageDialogflowV2 extends State<ChatroomBaibua> {
           PopupMenuButton(
             offset: Offset(0, 100),
             elevation: 10,
+            color: Colors.blue,
             //** (val) => value property in PopupMenuItem **//
             onSelected: (val) {
               Navigator.pushNamed(context, val);
@@ -103,11 +104,19 @@ class _HomePageDialogflowV2 extends State<ChatroomBaibua> {
                     children: <Widget>[
                       Padding(
                         padding: const EdgeInsets.only(right: 10),
-                        child: Icon(Icons.fiber_new),
+                        child: Icon(
+                          Icons.fiber_new,
+                          color: Colors.white,
+                        ),
                       ),
                       Text(
-                        "Setting",
-                        style: TextStyle(fontWeight: FontWeight.bold),
+                        "ข่าวสาร",
+                        style: TextStyle(
+                          fontFamily: 'FC Lamoon',
+                          fontWeight: FontWeight.bold,
+                          fontSize: 22,
+                          color: Colors.white,
+                        ),
                       )
                     ],
                   ),
@@ -119,11 +128,19 @@ class _HomePageDialogflowV2 extends State<ChatroomBaibua> {
                     children: <Widget>[
                       Padding(
                         padding: const EdgeInsets.only(right: 10),
-                        child: Icon(Icons.settings),
+                        child: Icon(
+                          Icons.settings,
+                          color: Colors.white,
+                        ),
                       ),
                       Text(
-                        "Setting",
-                        style: TextStyle(fontWeight: FontWeight.bold),
+                        "ตั้งค่า",
+                        style: TextStyle(
+                          fontFamily: 'FC Lamoon',
+                          fontWeight: FontWeight.bold,
+                          fontSize: 22,
+                          color: Colors.white,
+                        ),
                       )
                     ],
                   ),
@@ -135,11 +152,19 @@ class _HomePageDialogflowV2 extends State<ChatroomBaibua> {
                     children: <Widget>[
                       Padding(
                         padding: const EdgeInsets.only(right: 10),
-                        child: Icon(Icons.map),
+                        child: Icon(
+                          Icons.map,
+                          color: Colors.white,
+                        ),
                       ),
                       Text(
-                        "Map",
-                        style: TextStyle(fontWeight: FontWeight.bold),
+                        "แผนที่",
+                        style: TextStyle(
+                          fontFamily: 'FC Lamoon',
+                          fontWeight: FontWeight.bold,
+                          fontSize: 22,
+                          color: Colors.white,
+                        ),
                       )
                     ],
                   ),
@@ -150,13 +175,16 @@ class _HomePageDialogflowV2 extends State<ChatroomBaibua> {
         ],
       ),
       body: new Column(children: <Widget>[
-        new Flexible(
+        Container(
+          child: new Flexible(
             child: new ListView.builder(
-          padding: new EdgeInsets.all(8.0),
-          reverse: true,
-          itemBuilder: (_, int index) => _messages[index],
-          itemCount: _messages.length,
-        )),
+              padding: new EdgeInsets.all(8.0),
+              reverse: true,
+              itemBuilder: (_, int index) => _messages[index],
+              itemCount: _messages.length,
+            ),
+          ),
+        ),
         new Divider(height: 1.0),
         new Container(
           decoration: new BoxDecoration(color: Theme.of(context).cardColor),

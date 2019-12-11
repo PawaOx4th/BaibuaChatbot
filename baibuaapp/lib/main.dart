@@ -1,4 +1,5 @@
 import 'package:baibuaapp/models/user.dart';
+import 'package:baibuaapp/screens/%E0%B9%8CMenu%20Button/news.dart';
 import 'package:baibuaapp/screens/Authenticate/autu.dart';
 import 'package:baibuaapp/screens/Authenticate/login.dart';
 import 'package:baibuaapp/screens/baibuaChatroom.dart';
@@ -22,13 +23,13 @@ class MyApp extends StatelessWidget {
           ),
           home: new SplashScreen(),
           routes: {
-            '/Login-page' : (context) => LoginScreen(),
+            '/Login-page': (context) => LoginScreen(),
             '/emty-page': (context) => Emty_PageNavigation(), // test-page
-            '/Chatroom-page' : (context) => ChatroomBaibua(), // ChatRooms
+            '/Chatroom-page': (context) => ChatroomBaibua(), // ChatRooms
+            '/News-page': (context) => News(),
           }
 //      new MyHomePage(title: 'Baibua Chatbot'),
           ),
     );
   }
 }
-

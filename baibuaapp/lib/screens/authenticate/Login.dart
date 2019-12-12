@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:baibuaapp/screens/Authenticate/register.dart';
-import 'autu.dart';
+import 'package:baibuaapp/screens/Authenticate/Register.dart';
+import 'Autu.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -10,7 +10,7 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   //  ****************************************************** //
-  // Call AuthService =>  autu.dart
+  // Call AuthService =>  Autu.dart
   final AuthService _authService = AuthService();
   String error = '';
 

@@ -1,12 +1,11 @@
 import 'package:baibuaapp/models/user.dart';
-import 'package:baibuaapp/screens/%E0%B9%8CMenu%20Button/news.dart';
-import 'package:baibuaapp/screens/Authenticate/autu.dart';
-import 'package:baibuaapp/screens/Authenticate/login.dart';
-import 'package:baibuaapp/screens/baibuaChatroom.dart';
+import 'package:baibuaapp/screens/Authenticate/Autu.dart';
+import 'package:baibuaapp/screens/Authenticate/Login.dart';
+import 'package:baibuaapp/screens/BaibuaChatroom.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'screens/emty.dart';
-import 'screens/SplashScreen.dart';
+import 'screens/Pagefortest.dart';
+import 'screens/Splashscreen.dart';
 
 void main() => runApp(new MyApp());
 
@@ -24,9 +23,9 @@ class MyApp extends StatelessWidget {
           home: new SplashScreen(),
           routes: {
             '/Login-page': (context) => LoginScreen(),
-            '/emty-page': (context) => Emty_PageNavigation(), // test-page
+            '/emty-page': (context) => Pagefortest(), // test-page
             '/Chatroom-page': (context) => ChatroomBaibua(), // ChatRooms
-            '/News-page': (context) => News(),
+//            '/News-page': (context) => News(),
           }
 //      new MyHomePage(title: 'Baibua Chatbot'),
           ),

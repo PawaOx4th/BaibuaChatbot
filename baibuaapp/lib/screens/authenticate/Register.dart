@@ -1,4 +1,4 @@
-import 'package:baibuaapp/screens/Authenticate/autu.dart';
+import 'package:baibuaapp/screens/Authenticate/Autu.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 

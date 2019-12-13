@@ -6,7 +6,7 @@ import 'package:http/http.dart' as http;
 class testapi {
   Future<Apitestmodel> test() async {
 
-    String url = "http://192.168.20.142:1010/users/1159104003432/";
+    String url = "http://10.118.1.171:1010/users/1159104003432/";
     try {
       http.Response res = await http
           .get(Uri.encodeFull(url), headers: {"Accept": "application/json"});

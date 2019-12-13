@@ -123,7 +123,7 @@ class _HomePageDialogflowV2 extends State<ChatroomBaibua> {
                 ),
                 PopupMenuItem(
                   //** value => 'routes/...' **//
-                  value: '/emty-page',
+                  value: '/Setting-page',
                   child: Row(
                     children: <Widget>[
                       Padding(

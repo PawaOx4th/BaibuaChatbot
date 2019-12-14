@@ -13,7 +13,28 @@ class _Setting_PageState extends State<Setting_Page> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: Text(
+          "Application Setting",
+          style: TextStyle(
+            fontSize: 28,
+            fontWeight: FontWeight.bold,
+            fontFamily: 'FC Lamoon',
+          ),
+        ),
+         actions: <Widget>[
+           Hero(
+             tag: "setting",
+             child: Padding(
+               padding: const EdgeInsets.only(right: 10),
+               child: Icon(
+                 Icons.settings,
+                 color: Colors.white,
+               ),
+             ),
+           ),
+         ],
+      ),
       body: LayoutStart(),
     );
   }
@@ -26,9 +47,6 @@ class LayoutStart extends StatefulWidget {
 }
 
 class _LayoutStartState extends State<LayoutStart> {
-  String imgUrl =
-      'https://images.unsplash.com/photo-1568274602483-355d7fbba69c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1055&q=80';
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,15 +55,7 @@ class _LayoutStartState extends State<LayoutStart> {
           children: <Widget>[
             Column(
               children: <Widget>[
-                Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height / 5,
-//              color: Colors.orange,
-                  child: Image.network(
-                    imgUrl,
-                    fit: BoxFit.cover,
-                  ),
-                ),
+                CoverImage(),
                 Container(
                   width: MediaQuery.of(context).size.width,
                   height: MediaQuery.of(context).size.height,
@@ -56,80 +66,9 @@ class _LayoutStartState extends State<LayoutStart> {
                       padding: const EdgeInsets.all(8.0),
                       child: Column(
                         children: <Widget>[
-                          Container(
-                            height: MediaQuery.of(context).size.height / 15,
-                            color: Colors.transparent,
-                            child: Row(
-                              children: <Widget>[
-                                Text(
-                                  "115910400XXX-2",
-                                  style: TextStyle(
-                                    fontSize: 50,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.blue,
-                                    fontFamily: 'FC Lamoon',
-                                  ),
-                                )
-                              ],
-                            ),
-                          ),
-                          Container(
-                            padding: EdgeInsets.only(left: 5),
-                            height: MediaQuery.of(context).size.height / 28,
-//                            color: Colors.green,
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Text(
-                                  "xxxxxxx xxxx",
-                                  style: TextStyle(
-                                    fontSize: 30,
-//                                    fontWeight: FontWeight.bold,
-                                    color: Colors.blue,
-                                    fontFamily: 'FC Lamoon',
-                                  ),
-                                )
-                              ],
-                            ),
-                          ),
-                          Container(
-                            padding: EdgeInsets.only(left: 5),
-                            height: MediaQuery.of(context).size.height / 50,
-//                            color: Colors.green,
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Text(
-                                  "คณะวิศวกรรมศาสตร์",
-                                  style: TextStyle(
-                                    fontSize: 20,
-//                                    fontWeight: FontWeight.bold,
-                                    color: Colors.blue,
-                                    fontFamily: 'FC Lamoon',
-                                  ),
-                                )
-                              ],
-                            ),
-                          ),
-                          Container(
-                            padding: EdgeInsets.only(left: 5),
-                            height: MediaQuery.of(context).size.height / 28,
-//                            color: Colors.green,
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Text(
-                                  "ภาควิชาวิศวกรรมคอมพิวเตอร์",
-                                  style: TextStyle(
-                                    fontSize: 20,
-//                                    fontWeight: FontWeight.bold,
-                                    color: Colors.blue,
-                                    fontFamily: 'FC Lamoon',
-                                  ),
-                                )
-                              ],
-                            ),
-                          ),
+                          StudentId(),
+                          Faculty(),
+                          Branch(),
                         ],
                       ),
                     ),
@@ -144,7 +83,105 @@ class _LayoutStartState extends State<LayoutStart> {
     );
   }
 }
+//*****************************************************************************//
 
+// *********************** Cover Image ****************************************//
+class CoverImage extends StatelessWidget {
+  String imgUrl =
+      'https://images.unsplash.com/photo-1568274602483-355d7fbba69c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1055&q=80';
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: MediaQuery.of(context).size.width,
+      height: MediaQuery.of(context).size.height / 5,
+//              color: Colors.orange,
+      child: Image.network(
+        imgUrl,
+        fit: BoxFit.cover,
+      ),
+    );
+  }
+}
+//*****************************************************************************//
+
+//****************************** Student ID ***********************************//
+class StudentId extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: MediaQuery.of(context).size.height / 15,
+      color: Colors.transparent,
+      child: Row(
+        children: <Widget>[
+          Text(
+            "115910400XXX-2",
+            style: TextStyle(
+              fontSize: 50,
+              fontWeight: FontWeight.bold,
+              color: Colors.blue,
+              fontFamily: 'FC Lamoon',
+            ),
+          )
+        ],
+      ),
+    );
+  }
+}
+//*****************************************************************************//
+
+// **************************** Faculty ***************************************//
+class Faculty extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.only(left: 5),
+      height: MediaQuery.of(context).size.height / 50,
+//                            color: Colors.green,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(
+            "คณะวิศวกรรมศาสตร์",
+            style: TextStyle(
+              fontSize: 20,
+//                                    fontWeight: FontWeight.bold,
+              color: Colors.blue,
+              fontFamily: 'FC Lamoon',
+            ),
+          )
+        ],
+      ),
+    );
+  }
+}
+//*****************************************************************************//
+
+//******************************** Branch *************************************//
+class Branch extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.only(left: 5),
+      height: MediaQuery.of(context).size.height / 28,
+//                            color: Colors.green,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(
+            "ภาควิชาวิศวกรรมคอมพิวเตอร์",
+            style: TextStyle(
+              fontSize: 20,
+//                                    fontWeight: FontWeight.bold,
+              color: Colors.blue,
+              fontFamily: 'FC Lamoon',
+            ),
+          )
+        ],
+      ),
+    );
+  }
+}
 //*****************************************************************************//
 
 // *************************** Menu Tab Section *******************************//
@@ -202,7 +239,7 @@ class _MenuContainerState extends State<MenuContainer> {
         gradient: LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
-          colors: [Colors.lightBlue[100],Colors.blueAccent],
+          colors: [Colors.lightBlue[100], Colors.blueAccent],
         ),
       ),
       child: Column(
@@ -264,104 +301,9 @@ class _MenuContainerState extends State<MenuContainer> {
                   scrollDirection: Axis.horizontal,
                   child: Row(
                     children: <Widget>[
-                      Container(
-                        margin: EdgeInsets.only(right: 20),
-                        width: sheetItemHeight,
-                        height: sheetItemHeight,
-                        padding: EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(15)),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: <Widget>[
-                            IconButton(
-                              icon: Icon(
-                                Icons.add_alert,
-                                size: 35,
-                                color: Colors.blue,
-                              ),
-                              onPressed: () {
-                                print("Click Alert");
-                              },
-                            ),
-//                            Icon(
-//                              Icons.add_alert,
-//                              size: 40,
-//                              color: Colors.blue,
-//
-//                            ),
-                            Text(
-                              settingmodel.alert,
-                              style: TextStyle(
-                                color: Colors.blue,
-                                fontWeight: FontWeight.w600,
-                                fontSize: 16,
-                                fontFamily: 'FC Lamoon',
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Container(
-                        margin: EdgeInsets.only(right: 20),
-                        width: sheetItemHeight,
-                        height: sheetItemHeight,
-                        padding: EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(15)),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: <Widget>[
-                            Icon(
-                              Icons.folder_shared,
-                              size: 40,
-                              color: Colors.blue,
-                            ),
-                            Text(
-                              settingmodel.dataUser,
-                              style: TextStyle(
-                                color: Colors.blue,
-                                fontWeight: FontWeight.w600,
-                                fontSize: 16,
-                                fontFamily: 'FC Lamoon',
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Container(
-                        margin: EdgeInsets.only(right: 20),
-                        width: sheetItemHeight,
-                        height: sheetItemHeight,
-                        padding: EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(15)),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: <Widget>[
-                            Icon(
-                              Icons.event_note,
-                              size: 40,
-                              color: Colors.blue,
-                            ),
-                            Text(
-                              settingmodel.timeTable,
-                              style: TextStyle(
-                                color: Colors.blue,
-                                fontWeight: FontWeight.w600,
-                                fontSize: 16,
-                                fontFamily: 'FC Lamoon',
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
+                      AlertButton(),
+                      UserDatail(),
+                      TimeTable(),
                     ],
                   ),
                 ),
@@ -373,93 +315,9 @@ class _MenuContainerState extends State<MenuContainer> {
                   scrollDirection: Axis.horizontal,
                   child: Row(
                     children: <Widget>[
-                      Container(
-                        margin: EdgeInsets.only(right: 20),
-                        width: sheetItemHeight,
-                        height: sheetItemHeight,
-                        padding: EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(15)),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: <Widget>[
-                            Icon(
-                              Icons.control_point,
-                              size: 40,
-                              color: Colors.blue,
-                            ),
-                            Text(
-                              settingmodel.addWork,
-                              style: TextStyle(
-                                color: Colors.blue,
-                                fontWeight: FontWeight.w600,
-                                fontSize: 16,
-                                fontFamily: 'FC Lamoon',
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Container(
-                        margin: EdgeInsets.only(right: 20),
-                        width: sheetItemHeight,
-                        height: sheetItemHeight,
-                        padding: EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(15)),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: <Widget>[
-                            Icon(
-                              Icons.developer_mode,
-                              size: 40,
-                              color: Colors.blue,
-                            ),
-                            Text(
-                              settingmodel.about,
-                              style: TextStyle(
-                                color: Colors.blue,
-                                fontWeight: FontWeight.w600,
-                                fontSize: 16,
-                                fontFamily: 'FC Lamoon',
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Container(
-                        margin: EdgeInsets.only(right: 20),
-                        width: sheetItemHeight,
-                        height: sheetItemHeight,
-                        padding: EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(15)),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: <Widget>[
-                            Icon(
-                              Icons.vpn_key,
-                              size: 40,
-                              color: Colors.blue,
-                            ),
-                            Text(
-                              settingmodel.logOut,
-                              style: TextStyle(
-                                color: Colors.blue,
-                                fontWeight: FontWeight.w600,
-                                fontSize: 16,
-                                fontFamily: 'FC Lamoon',
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
+                      AddWork(),
+                      About(),
+                      LogOut(),
                     ],
                   ),
                 ),
@@ -472,3 +330,224 @@ class _MenuContainerState extends State<MenuContainer> {
   }
 }
 // ***************************************************************************//
+
+class AlertButton extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.only(right: 20),
+      width: 90,
+      height: 90,
+      padding: EdgeInsets.all(10),
+      decoration: BoxDecoration(
+          color: Colors.white, borderRadius: BorderRadius.circular(15)),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          IconButton(
+            icon: Icon(
+              Icons.add_alert,
+              size: 35,
+              color: Colors.blue,
+            ),
+            onPressed: () {
+              print("Click Alert");
+            },
+          ),
+          Text(
+            "การแจ้งเตือน",
+            style: TextStyle(
+              color: Colors.blue,
+              fontWeight: FontWeight.w600,
+              fontSize: 16,
+              fontFamily: 'FC Lamoon',
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class UserDatail extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.only(right: 20),
+      width: 90,
+      height: 90,
+      padding: EdgeInsets.all(10),
+      decoration: BoxDecoration(
+          color: Colors.white, borderRadius: BorderRadius.circular(15)),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          IconButton(
+              icon: Icon(
+                Icons.folder_shared,
+                size: 35,
+                color: Colors.blue,
+              ),
+              onPressed: () => print("Click UserData")),
+          Text(
+            "ข้อมูลส่วนตัว",
+            style: TextStyle(
+              color: Colors.blue,
+              fontWeight: FontWeight.w600,
+              fontSize: 16,
+              fontFamily: 'FC Lamoon',
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class TimeTable extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.only(right: 20),
+      width: 90,
+      height: 90,
+      padding: EdgeInsets.all(10),
+      decoration: BoxDecoration(
+          color: Colors.white, borderRadius: BorderRadius.circular(15)),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          IconButton(
+            icon: Icon(
+              Icons.event_note,
+              size: 35,
+              color: Colors.blue,
+            ),
+            onPressed: () => print("Click TimeTable"),
+          ),
+          Text(
+            "ตารางเรียน",
+            style: TextStyle(
+              color: Colors.blue,
+              fontWeight: FontWeight.w600,
+              fontSize: 16,
+              fontFamily: 'FC Lamoon',
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class AddWork extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.only(right: 20),
+      width: 90,
+      height: 90,
+      padding: EdgeInsets.all(10),
+      decoration: BoxDecoration(
+          color: Colors.white, borderRadius: BorderRadius.circular(15)),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          IconButton(
+              icon: Icon(
+                Icons.control_point,
+                size: 35,
+                color: Colors.blue,
+              ),
+              onPressed: () => print("Click Add Work")),
+          Text(
+            "เพิ่มงาน",
+            style: TextStyle(
+              color: Colors.blue,
+              fontWeight: FontWeight.w600,
+              fontSize: 16,
+              fontFamily: 'FC Lamoon',
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class About extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.only(right: 20),
+      width: 90,
+      height: 90,
+      padding: EdgeInsets.all(10),
+      decoration: BoxDecoration(
+          color: Colors.white, borderRadius: BorderRadius.circular(15)),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          IconButton(
+              icon: Icon(
+                Icons.developer_mode,
+                size: 35,
+                color: Colors.blue,
+              ),
+              onPressed: () => print("Click About")),
+          Text(
+            "เกี่ยวกับ",
+            style: TextStyle(
+              color: Colors.blue,
+              fontWeight: FontWeight.w600,
+              fontSize: 16,
+              fontFamily: 'FC Lamoon',
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class LogOut extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.only(right: 20),
+      width: 90,
+      height: 90,
+      padding: EdgeInsets.all(10),
+      decoration: BoxDecoration(
+          color: Colors.white, borderRadius: BorderRadius.circular(15)),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          IconButton(
+            icon: Icon(
+              Icons.vpn_key,
+              size: 35,
+              color: Colors.blue,
+            ),
+            onPressed: () => print("Click Log out"),
+          ),
+          Text(
+            "ออกจากระบบ",
+            style: TextStyle(
+              color: Colors.blue,
+              fontWeight: FontWeight.w600,
+              fontSize: 16,
+              fontFamily: 'FC Lamoon',
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}

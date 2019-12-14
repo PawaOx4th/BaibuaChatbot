@@ -126,11 +126,14 @@ class _HomePageDialogflowV2 extends State<ChatroomBaibua> {
                   value: '/Setting-page',
                   child: Row(
                     children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.only(right: 10),
-                        child: Icon(
-                          Icons.settings,
-                          color: Colors.white,
+                      Hero(
+                        tag: "setting",
+                        child: Padding(
+                          padding: const EdgeInsets.only(right: 10),
+                          child: Icon(
+                            Icons.settings,
+                            color: Colors.white,
+                          ),
                         ),
                       ),
                       Text(

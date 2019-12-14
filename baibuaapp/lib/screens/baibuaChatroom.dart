@@ -172,6 +172,30 @@ class _HomePageDialogflowV2 extends State<ChatroomBaibua> {
                     ],
                   ),
                 ),
+                PopupMenuItem(
+                  //** value => 'routes/...' **//
+                  value: '/emty-page',
+                  child: Row(
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.only(right: 10),
+                        child: Icon(
+                          Icons.add_box,
+                          color: Colors.white,
+                        ),
+                      ),
+                      Text(
+                        "เพิ่มงาน",
+                        style: TextStyle(
+                          fontFamily: 'FC Lamoon',
+                          fontWeight: FontWeight.bold,
+                          fontSize: 22,
+                          color: Colors.white,
+                        ),
+                      )
+                    ],
+                  ),
+                ),
               ];
             },
           ),

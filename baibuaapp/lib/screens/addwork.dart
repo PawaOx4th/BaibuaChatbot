@@ -23,36 +23,40 @@ class _AddworkPageState extends State<AddworkPage> {
         body: Stack(
           fit: StackFit.expand,
           children: <Widget>[
-            Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Flexible(
-                  flex: 1,
-                  child: SelectSubject(),
+            Container(
+              color: Colors.lightBlue[50],
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Flexible(
+                    flex: 1,
+                    child: SelectSubject(),
 //                  Container(
 //                    color: Colors.lightGreenAccent,
 //                  ),
-                ),
-                Flexible(
-                  flex: 2,
-                  child: Container(
-                    color: Colors.greenAccent,
                   ),
-                ),
-                Flexible(
-                  flex: 1,
-                  child: Container(
-                    color: Colors.cyan,
+                  Flexible(
+                    flex: 2,
+                    child: DetailOfWork(),
+//                  Container(
+//                    color: Colors.greenAccent,
+//                  ),
                   ),
-                ),
-                Flexible(
-                  flex: 1,
-                  child: Container(
-                    color: Colors.amber,
+                  Flexible(
+                    flex: 1,
+                    child: Container(
+                      color: Colors.cyan,
+                    ),
                   ),
-                ),
-              ],
+                  Flexible(
+                    flex: 1,
+                    child: Container(
+                      color: Colors.amber,
+                    ),
+                  ),
+                ],
+              ),
             ),
           ],
         ),
@@ -120,6 +124,7 @@ class _SelectSubjectState extends State<SelectSubject> {
     );
   }
 
+  // *************************** DropdowSelect Subject  *************************//
   String dropdownValue = '';
   String _currentItemSelected = 'คอมพิวเตอร์โปรแกรมมิ่ง';
 
@@ -144,7 +149,11 @@ class _SelectSubjectState extends State<SelectSubject> {
           child: Text(
             dropDownStringItem,
             overflow: TextOverflow.ellipsis,
-            style: TextStyle(color: Colors.blue),
+            style: TextStyle(
+              color: Colors.blue,
+              fontSize: 20,
+              fontFamily: 'FC Lamoon',
+            ),
           ),
         );
       }).toList(),
@@ -161,6 +170,62 @@ class _SelectSubjectState extends State<SelectSubject> {
 }
 // ***************************************************************************//
 
-// *************************** DropdowSelect Subject  *************************//
+// ************************* Detail Of Work **********************************//
+class DetailOfWork extends StatefulWidget {
+  @override
+  _DetailOfWorkState createState() => _DetailOfWorkState();
+}
 
-// ***************************************************************************//
+class _DetailOfWorkState extends State<DetailOfWork> {
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisSize: MainAxisSize.max,
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: <Widget>[
+        Expanded(
+          flex: 1,
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.only(left: 24),
+                child: Text(
+                  "รายละเอียด",
+                  style: Header,
+                ),
+              ),
+            ],
+          ),
+        ),
+        Expanded(
+          flex: 5,
+          child: Container(
+//            color: Colors.blue[50],
+            decoration: BoxDecoration(
+              border: Border.all(
+                color: Colors.blue,
+                width: 2,
+              ),
+              color: Colors.white70,
+            ),
+            margin: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+            padding: EdgeInsets.symmetric(horizontal: 10,vertical: 10),
+            child: TextField(
+              style: TextStyle(
+                color: Colors.black45,
+                fontSize: 20,
+              ),
+              decoration: InputDecoration(
+                border: InputBorder.none,
+              ),
+              maxLines: null,
+              keyboardType: TextInputType.multiline,
+              maxLength: 180,
+            ),
+          ),
+        )
+      ],
+    );
+  }
+}

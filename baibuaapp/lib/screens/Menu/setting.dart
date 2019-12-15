@@ -198,19 +198,19 @@ class _MenuTabState extends State<MenuTab> {
   @override
   Widget build(BuildContext context) {
     return Positioned(
-//      top: sheettop,
-      top: 300,
+      top: sheettop,
+//      top: 300,
       left: 0,
-      child: MenuContainer(),
-//      child: GestureDetector(
-//        onTap: () {
-//          setState(() {
-//            isExpanded ? sheettop = 400 : sheettop = minSheettop;
-//            isExpanded = !isExpanded;
-//          });
-//        },
-//        child: MenuContainer(),
-//      ),
+//      child: MenuContainer(),
+      child: GestureDetector(
+        onTap: () {
+          setState(() {
+            isExpanded ? sheettop = 400 : sheettop = minSheettop;
+            isExpanded = !isExpanded;
+          });
+        },
+        child: MenuContainer(),
+      ),
     );
   }
 }

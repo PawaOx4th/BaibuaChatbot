@@ -17,7 +17,7 @@ class _Setting_PageState extends State<Setting_Page> {
         title: Text(
           "Application Setting",
           style: TextStyle(
-            fontSize: 28,
+            fontSize: 22,
             fontWeight: FontWeight.bold,
 
           ),
@@ -117,7 +117,7 @@ class StudentId extends StatelessWidget {
           Text(
             "115910400XXX-2",
             style: TextStyle(
-              fontSize: 50,
+              fontSize: 24,
               fontWeight: FontWeight.bold,
               color: Colors.blue,
 
@@ -136,7 +136,7 @@ class Faculty extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.only(left: 5),
-      height: MediaQuery.of(context).size.height / 50,
+      height: MediaQuery.of(context).size.height / 30,
 //                            color: Colors.green,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -357,7 +357,7 @@ class AlertButton extends StatelessWidget {
             style: TextStyle(
               color: Colors.blue,
               fontWeight: FontWeight.w600,
-              fontSize: 16,
+              fontSize: 12,
             ),
           ),
         ],
@@ -392,7 +392,7 @@ class UserDatail extends StatelessWidget {
             style: TextStyle(
               color: Colors.blue,
               fontWeight: FontWeight.w600,
-              fontSize: 16,
+              fontSize: 12,
             ),
           ),
         ],
@@ -407,7 +407,7 @@ class TimeTable extends StatelessWidget {
     return Container(
       margin: EdgeInsets.only(right: 20),
       width: 90,
-      height: 90,
+      height: 100,
       padding: EdgeInsets.all(10),
       decoration: BoxDecoration(
           color: Colors.white, borderRadius: BorderRadius.circular(15)),
@@ -418,7 +418,7 @@ class TimeTable extends StatelessWidget {
           IconButton(
             icon: Icon(
               Icons.event_note,
-              size: 35,
+              size: 30,
               color: Colors.blue,
             ),
             onPressed: () => print("Click TimeTable"),
@@ -428,7 +428,7 @@ class TimeTable extends StatelessWidget {
             style: TextStyle(
               color: Colors.blue,
               fontWeight: FontWeight.w600,
-              fontSize: 16,
+              fontSize: 14,
             ),
           ),
         ],
@@ -534,7 +534,7 @@ class LogOut extends StatelessWidget {
             style: TextStyle(
               color: Colors.blue,
               fontWeight: FontWeight.w600,
-              fontSize: 16,
+              fontSize: 12,
             ),
           ),
         ],

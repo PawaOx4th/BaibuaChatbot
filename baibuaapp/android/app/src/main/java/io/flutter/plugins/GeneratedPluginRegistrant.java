@@ -4,7 +4,7 @@ import io.flutter.plugin.common.PluginRegistry;
 import io.flutter.plugins.firebase.cloudfirestore.CloudFirestorePlugin;
 import io.flutter.plugins.firebaseauth.FirebaseAuthPlugin;
 import io.flutter.plugins.firebase.core.FirebaseCorePlugin;
-import com.benzneststudios.flutter_rounded_date_picker.FlutterRoundedDatePickerPlugin;
+import io.flutter.plugins.pathprovider.PathProviderPlugin;
 import com.blounty.tts.TtsPlugin;
 
 /**
@@ -18,7 +18,7 @@ public final class GeneratedPluginRegistrant {
     CloudFirestorePlugin.registerWith(registry.registrarFor("io.flutter.plugins.firebase.cloudfirestore.CloudFirestorePlugin"));
     FirebaseAuthPlugin.registerWith(registry.registrarFor("io.flutter.plugins.firebaseauth.FirebaseAuthPlugin"));
     FirebaseCorePlugin.registerWith(registry.registrarFor("io.flutter.plugins.firebase.core.FirebaseCorePlugin"));
-    FlutterRoundedDatePickerPlugin.registerWith(registry.registrarFor("com.benzneststudios.flutter_rounded_date_picker.FlutterRoundedDatePickerPlugin"));
+    PathProviderPlugin.registerWith(registry.registrarFor("io.flutter.plugins.pathprovider.PathProviderPlugin"));
     TtsPlugin.registerWith(registry.registrarFor("com.blounty.tts.TtsPlugin"));
   }
 

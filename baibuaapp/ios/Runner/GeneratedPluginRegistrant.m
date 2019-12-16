@@ -22,6 +22,12 @@
 @import firebase_core;
 #endif
 
+#if __has_include(<flutter_rounded_date_picker/FlutterRoundedDatePickerPlugin.h>)
+#import <flutter_rounded_date_picker/FlutterRoundedDatePickerPlugin.h>
+#else
+@import flutter_rounded_date_picker;
+#endif
+
 #if __has_include(<tts/TtsPlugin.h>)
 #import <tts/TtsPlugin.h>
 #else
@@ -34,6 +40,7 @@
   [FLTCloudFirestorePlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTCloudFirestorePlugin"]];
   [FLTFirebaseAuthPlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTFirebaseAuthPlugin"]];
   [FLTFirebaseCorePlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTFirebaseCorePlugin"]];
+  [FlutterRoundedDatePickerPlugin registerWithRegistrar:[registry registrarForPlugin:@"FlutterRoundedDatePickerPlugin"]];
   [TtsPlugin registerWithRegistrar:[registry registrarForPlugin:@"TtsPlugin"]];
 }
 

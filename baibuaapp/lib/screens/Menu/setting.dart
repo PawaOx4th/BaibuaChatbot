@@ -19,21 +19,21 @@ class _Setting_PageState extends State<Setting_Page> {
           style: TextStyle(
             fontSize: 28,
             fontWeight: FontWeight.bold,
-            fontFamily: 'FC Lamoon',
+
           ),
         ),
-         actions: <Widget>[
-           Hero(
-             tag: "setting",
-             child: Padding(
-               padding: const EdgeInsets.only(right: 10),
-               child: Icon(
-                 Icons.settings,
-                 color: Colors.white,
-               ),
-             ),
-           ),
-         ],
+        actions: <Widget>[
+          Hero(
+            tag: "setting",
+            child: Padding(
+              padding: const EdgeInsets.only(right: 10),
+              child: Icon(
+                Icons.settings,
+                color: Colors.white,
+              ),
+            ),
+          ),
+        ],
       ),
       body: LayoutStart(),
     );
@@ -120,7 +120,7 @@ class StudentId extends StatelessWidget {
               fontSize: 50,
               fontWeight: FontWeight.bold,
               color: Colors.blue,
-              fontFamily: 'FC Lamoon',
+
             ),
           )
         ],
@@ -147,7 +147,6 @@ class Faculty extends StatelessWidget {
               fontSize: 20,
 //                                    fontWeight: FontWeight.bold,
               color: Colors.blue,
-              fontFamily: 'FC Lamoon',
             ),
           )
         ],
@@ -174,7 +173,6 @@ class Branch extends StatelessWidget {
               fontSize: 20,
 //                                    fontWeight: FontWeight.bold,
               color: Colors.blue,
-              fontFamily: 'FC Lamoon',
             ),
           )
         ],
@@ -281,7 +279,6 @@ class _MenuContainerState extends State<MenuContainer> {
               "Option Setting",
               style: TextStyle(
                 color: Colors.white,
-                fontFamily: 'FC Lamoon',
                 fontSize: 30,
                 fontWeight: FontWeight.w700,
               ),
@@ -361,7 +358,6 @@ class AlertButton extends StatelessWidget {
               color: Colors.blue,
               fontWeight: FontWeight.w600,
               fontSize: 16,
-              fontFamily: 'FC Lamoon',
             ),
           ),
         ],
@@ -397,7 +393,6 @@ class UserDatail extends StatelessWidget {
               color: Colors.blue,
               fontWeight: FontWeight.w600,
               fontSize: 16,
-              fontFamily: 'FC Lamoon',
             ),
           ),
         ],
@@ -434,7 +429,6 @@ class TimeTable extends StatelessWidget {
               color: Colors.blue,
               fontWeight: FontWeight.w600,
               fontSize: 16,
-              fontFamily: 'FC Lamoon',
             ),
           ),
         ],
@@ -470,7 +464,6 @@ class AddWork extends StatelessWidget {
               color: Colors.blue,
               fontWeight: FontWeight.w600,
               fontSize: 16,
-              fontFamily: 'FC Lamoon',
             ),
           ),
         ],
@@ -506,7 +499,6 @@ class About extends StatelessWidget {
               color: Colors.blue,
               fontWeight: FontWeight.w600,
               fontSize: 16,
-              fontFamily: 'FC Lamoon',
             ),
           ),
         ],
@@ -543,7 +535,6 @@ class LogOut extends StatelessWidget {
               color: Colors.blue,
               fontWeight: FontWeight.w600,
               fontSize: 16,
-              fontFamily: 'FC Lamoon',
             ),
           ),
         ],

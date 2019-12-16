@@ -112,9 +112,8 @@ class _HomePageDialogflowV2 extends State<ChatroomBaibua> {
                       Text(
                         "ข่าวสาร",
                         style: TextStyle(
-                          fontFamily: 'FC Lamoon',
                           fontWeight: FontWeight.bold,
-                          fontSize: 22,
+                          fontSize: 16,
                           color: Colors.white,
                         ),
                       )
@@ -139,9 +138,8 @@ class _HomePageDialogflowV2 extends State<ChatroomBaibua> {
                       Text(
                         "ตั้งค่า",
                         style: TextStyle(
-                          fontFamily: 'FC Lamoon',
                           fontWeight: FontWeight.bold,
-                          fontSize: 22,
+                          fontSize: 16,
                           color: Colors.white,
                         ),
                       )
@@ -163,9 +161,8 @@ class _HomePageDialogflowV2 extends State<ChatroomBaibua> {
                       Text(
                         "แผนที่",
                         style: TextStyle(
-                          fontFamily: 'FC Lamoon',
                           fontWeight: FontWeight.bold,
-                          fontSize: 22,
+                          fontSize: 16,
                           color: Colors.white,
                         ),
                       )
@@ -187,9 +184,8 @@ class _HomePageDialogflowV2 extends State<ChatroomBaibua> {
                       Text(
                         "เพิ่มงาน",
                         style: TextStyle(
-                          fontFamily: 'FC Lamoon',
                           fontWeight: FontWeight.bold,
-                          fontSize: 22,
+                          fontSize: 16,
                           color: Colors.white,
                         ),
                       )
@@ -244,6 +240,7 @@ class ChatMessage extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                   color: Colors.lightBlue,
                   fontSize: 20,
+
                 )),
             new Container(
               margin: const EdgeInsets.only(top: 5.0),

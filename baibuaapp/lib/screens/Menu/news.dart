@@ -54,7 +54,7 @@ class _NewsState extends State<News> {
     double fullWidth = MediaQuery.of(context).size.width * 100;
 
     TextStyle Headline = TextStyle(
-      fontFamily: 'FC Lamoon',
+
       fontWeight: FontWeight.bold,
       fontSize: 32,
       color: Colors.white,
@@ -81,7 +81,7 @@ class _NewsState extends State<News> {
                   Text(
                     "เลือกรับประเภทข่าวสาร",
                     style: TextStyle(
-                      fontFamily: 'FC Lamoon',
+
                       fontWeight: FontWeight.bold,
                       fontSize: 36,
                       color: Colors.blue,
@@ -123,7 +123,7 @@ class _NewsState extends State<News> {
                                   Text(
                                     _evantName[0],
                                     style: TextStyle(
-                                      fontFamily: 'FC Lamoon',
+
                                       fontSize: 20,
                                     ),
                                   ),
@@ -161,7 +161,7 @@ class _NewsState extends State<News> {
                                   Text(
                                     _evantName[1],
                                     style: TextStyle(
-                                      fontFamily: 'FC Lamoon',
+
                                       fontSize: 20,
                                     ),
                                   ),
@@ -199,7 +199,7 @@ class _NewsState extends State<News> {
                                   Text(
                                     _evantName[2],
                                     style: TextStyle(
-                                      fontFamily: 'FC Lamoon',
+
                                       fontSize: 20,
                                     ),
                                   ),
@@ -237,7 +237,7 @@ class _NewsState extends State<News> {
                                   Text(
                                     _evantName[3],
                                     style: TextStyle(
-                                      fontFamily: 'FC Lamoon',
+
                                       fontSize: 20,
                                     ),
                                   ),

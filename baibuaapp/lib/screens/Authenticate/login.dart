@@ -215,7 +215,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         setState(() {
                           error = 'please supply a valid email.';
                         });
-                      }else{
+                      } else {
                         Navigator.pushNamed(context, '/Chatroom-page');
                       }
                       // Call _authService function
@@ -261,7 +261,6 @@ class _LoginScreenState extends State<LoginScreen> {
                     fontSize: 16,
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
-//                    fontFamily: 'FC Knomphing',
                   ),
                 ),
               ),

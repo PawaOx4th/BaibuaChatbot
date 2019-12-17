@@ -88,7 +88,7 @@ class _LayoutStartState extends State<LayoutStart> {
 // *********************** Cover Image ****************************************//
 class CoverImage extends StatelessWidget {
   String imgUrl =
-      'https://images.unsplash.com/photo-1568274602483-355d7fbba69c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1055&q=80';
+      'https://images.unsplash.com/photo-1507608869274-d3177c8bb4c7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80';
 
   @override
   Widget build(BuildContext context) {

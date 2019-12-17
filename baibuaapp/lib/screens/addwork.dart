@@ -4,11 +4,12 @@ import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
 import 'package:baibuaapp/widgets/datetime_picker_formfield.dart';
 
+// ignore: non_constant_identifier_names
 TextStyle Header = TextStyle(
-    fontSize: 26,
-    fontFamily: 'FCLamoon',
-    fontWeight: FontWeight.bold,
-    color: Colors.blueAccent);
+    fontSize: 18, fontWeight: FontWeight.bold, color: Colors.blueAccent);
+
+TextStyle subHeader = TextStyle(
+    fontSize: 14, fontWeight: FontWeight.bold, color: Colors.blueAccent);
 
 class AddworkPage extends StatefulWidget {
   @override
@@ -17,6 +18,9 @@ class AddworkPage extends StatefulWidget {
 
 // ***************************** Main Layout *********************************//
 class _AddworkPageState extends State<AddworkPage> {
+  final String imgBg =
+      "https://images.unsplash.com/photo-1504941214544-9c1c44559ab4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80";
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -26,7 +30,16 @@ class _AddworkPageState extends State<AddworkPage> {
           fit: StackFit.expand,
           children: <Widget>[
             Container(
-              color: Colors.lightBlue[50],
+              decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                      begin: Alignment.topRight,
+                      end: Alignment.bottomLeft,
+                      colors: [Colors.white, Colors.blue])
+//                image: DecorationImage(
+//                  image: NetworkImage(imgBg),
+//                  fit: BoxFit.cover,
+//                ),
+              ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -55,7 +68,25 @@ class _AddworkPageState extends State<AddworkPage> {
                   Flexible(
                     flex: 1,
                     child: Container(
-                      color: Colors.amber,
+                      alignment: Alignment.center,
+//                      color: Colors.amber,
+                      child: Container(
+                        width: 200,
+                        height: 60,
+                        child: RaisedButton(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(18.0),
+                            side: BorderSide(color: Colors.blue),
+                          ),
+                          color: Colors.blue,
+                          child: Text(
+                            "ยืนยัน",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          elevation: 5,
+                          onPressed: () {},
+                        ),
+                      ),
                     ),
                   ),
                 ],
@@ -152,11 +183,7 @@ class _SelectSubjectState extends State<SelectSubject> {
           child: Text(
             dropDownStringItem,
             overflow: TextOverflow.ellipsis,
-            style: TextStyle(
-              color: Colors.blue,
-              fontSize: 20,
-
-            ),
+            style: subHeader,
           ),
         );
       }).toList(),
@@ -278,8 +305,6 @@ class _DateTimeSelectState extends State<DateTimeSelect> {
   }
 }
 
-// ***************************************************************************//
-
 class DateTimeForm extends StatefulWidget {
   @override
   _DateTimeFormState createState() => _DateTimeFormState();
@@ -306,11 +331,19 @@ class _DateTimeFormState extends State<DateTimeForm> {
           Column(
             children: <Widget>[
               RaisedButton(
-                child: Text('Reset'),
+                color: Colors.amber,
+                child: Text(
+                  'Reset',
+                  style: TextStyle(color: Colors.white),
+                ),
                 onPressed: () => formKey.currentState.reset(),
               ),
               RaisedButton(
-                child: Text('Save'),
+                color: Colors.lightGreenAccent[700],
+                child: Text(
+                  'Save',
+                  style: TextStyle(color: Colors.white),
+                ),
                 onPressed: () => {
                   formKey.currentState.save(),
                 },
@@ -373,3 +406,5 @@ class BasicDateField extends StatelessWidget {
     );
   }
 }
+
+// ***************************************************************************//

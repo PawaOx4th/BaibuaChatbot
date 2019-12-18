@@ -11,6 +11,13 @@ TextStyle Header = TextStyle(
 TextStyle subHeader = TextStyle(
     fontSize: 14, fontWeight: FontWeight.bold, color: Colors.blueAccent);
 
+//********************** Variable  On Page ***********************************//
+String _subjectSelect;
+TextEditingController _workDetail = TextEditingController();
+TextEditingController _datePicker = TextEditingController();
+String _DatePicker;
+//****************************************************************************//
+
 class AddworkPage extends StatefulWidget {
   @override
   _AddworkPageState createState() => _AddworkPageState();
@@ -18,9 +25,6 @@ class AddworkPage extends StatefulWidget {
 
 // ***************************** Main Layout *********************************//
 class _AddworkPageState extends State<AddworkPage> {
-  final String imgBg =
-      "https://images.unsplash.com/photo-1504941214544-9c1c44559ab4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80";
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -31,14 +35,11 @@ class _AddworkPageState extends State<AddworkPage> {
           children: <Widget>[
             Container(
               decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                      begin: Alignment.topRight,
-                      end: Alignment.bottomLeft,
-                      colors: [Colors.white, Colors.blue])
-//                image: DecorationImage(
-//                  image: NetworkImage(imgBg),
-//                  fit: BoxFit.cover,
-//                ),
+                gradient: LinearGradient(
+                  begin: Alignment.topRight,
+                  end: Alignment.bottomLeft,
+                  colors: [Color.fromRGBO(109, 213, 250, 1), Colors.white],
+                ),
               ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -47,23 +48,14 @@ class _AddworkPageState extends State<AddworkPage> {
                   Flexible(
                     flex: 1,
                     child: SelectSubject(),
-//                  Container(
-//                    color: Colors.lightGreenAccent,
-//                  ),
                   ),
                   Flexible(
                     flex: 2,
                     child: DetailOfWork(),
-//                  Container(
-//                    color: Colors.greenAccent,
-//                  ),
                   ),
                   Flexible(
                     flex: 2,
                     child: DateTimeSelect(),
-//                    Container(
-//                      color: Colors.cyan,
-//                    ),
                   ),
                   Flexible(
                     flex: 1,
@@ -81,10 +73,19 @@ class _AddworkPageState extends State<AddworkPage> {
                           color: Colors.blue,
                           child: Text(
                             "ยืนยัน",
-                            style: TextStyle(color: Colors.white),
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18),
                           ),
                           elevation: 5,
-                          onPressed: () {},
+                          onPressed: () {
+                            print("*******************************************");
+                            print("Subject : " + _subjectSelect);
+                            print("Detail : " + _workDetail.text);
+                            print("Date Picker : " +_datePicker.text);
+                            print("*******************************************");
+                          },
                         ),
                       ),
                     ),
@@ -184,6 +185,7 @@ class _SelectSubjectState extends State<SelectSubject> {
             dropDownStringItem,
             overflow: TextOverflow.ellipsis,
             style: subHeader,
+            softWrap: true,
           ),
         );
       }).toList(),
@@ -191,7 +193,11 @@ class _SelectSubjectState extends State<SelectSubject> {
         // Your Code to execute, when a menu item is selected from drop down
         setState(() {
           this._currentItemSelected = newValueSelect;
-          print(_currentItemSelected);
+
+          //*********** Set Subject select ***********
+          _subjectSelect = newValueSelect;
+          print(_subjectSelect);
+          //******************************************
         });
       },
       value: _currentItemSelected,
@@ -242,6 +248,7 @@ class _DetailOfWorkState extends State<DetailOfWork> {
             margin: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
             padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
             child: TextField(
+              controller: _workDetail,
               style: TextStyle(
                 color: Colors.black45,
                 fontSize: 20,
@@ -391,7 +398,7 @@ class BasicDateField extends StatelessWidget {
                 hintText: format.pattern,
               ),
               format: format,
-              controller: null,
+              controller: _datePicker,
               onShowPicker: (context, currentValue) {
                 return showDatePicker(
                     context: context,

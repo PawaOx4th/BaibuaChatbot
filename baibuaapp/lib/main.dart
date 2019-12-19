@@ -4,6 +4,7 @@ import 'package:baibuaapp/screens/Authenticate/login.dart';
 import 'package:baibuaapp/screens/Menu/news.dart';
 import 'package:baibuaapp/screens/Menu/setting.dart';
 import 'package:baibuaapp/screens/Menu/addwork.dart';
+import 'package:baibuaapp/screens/Menu/viewwork.dart';
 import 'package:baibuaapp/screens/baibuaChatroom.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -38,6 +39,7 @@ class MyApp extends StatelessWidget {
           '/News-page': (context) => News(), //News
           '/Setting-page': (context) => Setting_Page(), //Setting
           '/AddWork-page': (context) => AddworkPage(), //Addwork Page
+          '/ViewWork-page': (context) => ViewWork(), //Addwork Page
         },
         localizationsDelegates: [
           // ... app-specific localization delegate[s] here

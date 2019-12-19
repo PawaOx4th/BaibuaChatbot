@@ -192,6 +192,29 @@ class _HomePageDialogflowV2 extends State<ChatroomBaibua> {
                     ],
                   ),
                 ),
+                PopupMenuItem(
+                  //** value => 'routes/...' **//
+                  value: '/ViewWork-page',
+                  child: Row(
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.only(right: 10),
+                        child: Icon(
+                          Icons.work,
+                          color: Colors.white,
+                        ),
+                      ),
+                      Text(
+                        "ดูงาน",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                          color: Colors.white,
+                        ),
+                      )
+                    ],
+                  ),
+                ),
               ];
             },
           ),

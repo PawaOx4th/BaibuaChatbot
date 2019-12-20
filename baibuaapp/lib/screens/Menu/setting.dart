@@ -19,21 +19,9 @@ class _Setting_PageState extends State<Setting_Page> {
           style: TextStyle(
             fontSize: 22,
             fontWeight: FontWeight.bold,
-
           ),
         ),
-        actions: <Widget>[
-          Hero(
-            tag: "setting",
-            child: Padding(
-              padding: const EdgeInsets.only(right: 10),
-              child: Icon(
-                Icons.settings,
-                color: Colors.white,
-              ),
-            ),
-          ),
-        ],
+        actions: <Widget>[],
       ),
       body: LayoutStart(),
     );
@@ -120,7 +108,6 @@ class StudentId extends StatelessWidget {
               fontSize: 24,
               fontWeight: FontWeight.bold,
               color: Colors.blue,
-
             ),
           )
         ],
@@ -331,36 +318,39 @@ class _MenuContainerState extends State<MenuContainer> {
 class AlertButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.only(right: 20),
-      width: 90,
-      height: 90,
-      padding: EdgeInsets.all(10),
-      decoration: BoxDecoration(
-          color: Colors.white, borderRadius: BorderRadius.circular(15)),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          IconButton(
-            icon: Icon(
-              Icons.add_alert,
-              size: 35,
-              color: Colors.blue,
+    return InkWell(
+      onTap: () => print("Click Alert"),
+      child: Container(
+        margin: EdgeInsets.only(right: 20),
+        width: 90,
+        height: 90,
+        padding: EdgeInsets.all(10),
+        decoration: BoxDecoration(
+            color: Colors.white, borderRadius: BorderRadius.circular(15)),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            IconButton(
+              icon: Icon(
+                Icons.add_alert,
+                size: 35,
+                color: Colors.blue,
+              ),
+              onPressed: () {
+                print("Click Alert");
+              },
             ),
-            onPressed: () {
-              print("Click Alert");
-            },
-          ),
-          Text(
-            "การแจ้งเตือน",
-            style: TextStyle(
-              color: Colors.blue,
-              fontWeight: FontWeight.w600,
-              fontSize: 12,
+            Text(
+              "การแจ้งเตือน",
+              style: TextStyle(
+                color: Colors.blue,
+                fontWeight: FontWeight.w600,
+                fontSize: 12,
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -510,34 +500,37 @@ class About extends StatelessWidget {
 class LogOut extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.only(right: 20),
-      width: 90,
-      height: 90,
-      padding: EdgeInsets.all(10),
-      decoration: BoxDecoration(
-          color: Colors.white, borderRadius: BorderRadius.circular(15)),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          IconButton(
-            icon: Icon(
-              Icons.vpn_key,
-              size: 35,
-              color: Colors.blue,
+    return InkWell(
+      onTap: () => print("Click Log out"),
+      child: Container(
+        margin: EdgeInsets.only(right: 20),
+        width: 90,
+        height: 90,
+        padding: EdgeInsets.all(10),
+        decoration: BoxDecoration(
+            color: Colors.white, borderRadius: BorderRadius.circular(15)),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            IconButton(
+              icon: Icon(
+                Icons.vpn_key,
+                size: 35,
+                color: Colors.blue,
+              ),
+              onPressed: () => print("Click Log out"),
             ),
-            onPressed: () => print("Click Log out"),
-          ),
-          Text(
-            "ออกจากระบบ",
-            style: TextStyle(
-              color: Colors.blue,
-              fontWeight: FontWeight.w600,
-              fontSize: 12,
+            Text(
+              "ออกจากระบบ",
+              style: TextStyle(
+                color: Colors.blue,
+                fontWeight: FontWeight.w600,
+                fontSize: 12,
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class MyMapPageState extends StatefulWidget {
   @override
@@ -39,6 +40,15 @@ class _MyMapPageStateState extends State<MyMapPageState> {
     );
   }
 
+  Future _enoRoom() async {
+    final GoogleMapController controller = await _controller.future;
+    controller.animateCamera(
+      CameraUpdate.newCameraPosition(
+        CameraPosition(target: LatLng(14.036362, 100.724414), zoom: 18),
+      ),
+    );
+  }
+
   BitmapDescriptor customIcon;
 
   Future _createMarkerImageFromAsset(BuildContext context) async {
@@ -52,6 +62,7 @@ class _MyMapPageStateState extends State<MyMapPageState> {
     }
   }
 
+
   @override
   Widget build(BuildContext context) {
     _createMarkerImageFromAsset(context);
@@ -61,7 +72,7 @@ class _MyMapPageStateState extends State<MyMapPageState> {
           mapType: MapType.hybrid,
           myLocationEnabled: true,
           initialCameraPosition: CameraPosition(
-            target: LatLng(14.0363362,100.7248359),
+            target: LatLng(14.0363362, 100.7248359),
             zoom: 16,
           ),
           onMapCreated: (GoogleMapController controller) {
@@ -69,22 +80,27 @@ class _MyMapPageStateState extends State<MyMapPageState> {
           },
           markers: {
             Marker(
-                markerId: MarkerId("ตึก ENO"),
-                position: LatLng(14.036339, 100.726138),
-                infoWindow: InfoWindow(
-                    title: "อาคารเรียนรวมคณะวิศวกรรมศาสตร์ (EN)",
-                    snippet: "ตึก EN")),
+              markerId: MarkerId("ตึก ENO"),
+              position: LatLng(14.036339, 100.726138),
+              infoWindow: InfoWindow(
+                  title: "อาคารเรียนรวมคณะวิศวกรรมศาสตร์ (EN)",
+                  snippet: "ตึก EN"),
+            ),
             Marker(
-                icon: customIcon,
-                markerId: MarkerId("กองพัฒนานักศึกษา"),
-                position: LatLng(14.036362, 100.724414),
-                infoWindow: InfoWindow(
-                    title: "กองพัฒนานักศึกษา",
-                    snippet: "อาคารกิจการนักศึกษา กองพัฒนานักศึกษา")),
+              icon: customIcon,
+              markerId: MarkerId("กองพัฒนานักศึกษา"),
+              position: LatLng(14.036362, 100.724414),
+              visible: true,
+              infoWindow: InfoWindow(
+                title: "กองพัฒนานักศึกษา",
+                snippet: "อาคารกิจการนักศึกษา กองพัฒนานักศึกษา",
+//                onTap: _openOnGoogleMapApp(14.0363362, 100.7248359),
+              ),
+            ),
           },
         ),
-        floatingActionButton: FloatingActionButton.extended(
-          onPressed: _goToMe,
+        floatingActionButton:  FloatingActionButton.extended(
+          onPressed: _enoRoom,
           label: Text('My location'),
           icon: Icon(Icons.near_me),
         ),

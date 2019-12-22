@@ -1,0 +1,76 @@
+[
+  {
+    "LocationEN" : [
+      {
+        "latitude" : "14.036339",
+        "longitude" : "100.726138"
+      }
+    ],
+    "LocationBA" : [
+      {
+        "latitude" : "14.0368765",
+        "longitude" : "100.7307845"
+      }
+    ],
+    "LocationHT" : [
+      {
+        "latitude" : "14.037252",
+        "longitude" : "100.728780"
+      }
+    ],
+    "LocationFA" : [
+      {
+        "latitude" : "14.037249",
+        "longitude" : "100.727544"
+      }
+    ],
+    "LocationAT" : [
+      {
+        "latitude" : "13.969284",
+        "longitude" : "100.6151239"
+      }
+    ],
+    "LocationTE" : [
+      {
+        "latitude" : "14.0365526",
+        "longitude" : "100.799837"
+      }
+    ],
+    "LocationAR" : [
+      {
+        "latitude" : "14.0379079",
+        "longitude" : "100.7297923"
+      }
+    ],
+    "LocationST" : [
+      {
+        "latitude" : "14.039464",
+        "longitude" : "100.728787"
+      }
+    ],
+    "LocationMT" : [
+      {
+        "latitude" : "14.0391852",
+        "longitude" : "100.7270293"
+      }
+    ],
+    "LocationLA" : [
+      {
+        "latitude" : "14.0377848",
+        "longitude" : "100.7284142"
+      }
+    ],
+    "LocationTC" : [
+      {
+        "latitude" : "13.9692376",
+        "longitude" : "100.6156007"
+      }
+    ],
+    "LocationNURSE" : [
+      {
+        "latitude" : "14.00363113",
+        "longitude" : "100.7285058"
+      }
+    ]
+  }
+]

@@ -295,14 +295,14 @@ class _MyMapPageStateState extends State<MyMapPageState> {
             ),
             Marker(
               markerId: MarkerId("TE"),
-              position: LatLng(14.0365526, 100.799837),
+              position: LatLng(14.0365329, 100.7316493),
               infoWindow: InfoWindow(
                   title: "คณะครุศาสตร์อุตสาหกรรม (TE)",
                   snippet: "อาคารคณะครุศาสตร์อุตสาหกรรม รหัสห้อง TE"),
             ),
             Marker(
               markerId: MarkerId("AR"),
-              position: LatLng(14.0379079, 100.7297923),
+              position: LatLng(14.0379097, 100.7297923),
               infoWindow: InfoWindow(
                   title: "คณะสถาปัตยกรรมศาสตร์ (TE)",
                   snippet: "อาคารคณะสถาปัตยกรรมศาสตร์ รหัสห้อง TE"),
@@ -379,7 +379,7 @@ class _MyMapPageStateState extends State<MyMapPageState> {
 //              onTap: () => _goToMe(),
 //            ),
             SpeedDialChild(
-              child: Icon(Icons.brush),
+              child: Icon(Icons.local_offer),
               backgroundColor: Colors.blue,
               label: 'EN',
               labelStyle: TextStyle(fontSize: 18.0),
@@ -389,7 +389,7 @@ class _MyMapPageStateState extends State<MyMapPageState> {
 //              onTap: () => _enoRoom(latitude: 14.036339, longitude: 100.726138),
             ),
             SpeedDialChild(
-              child: Icon(Icons.keyboard_voice),
+              child: Icon(Icons.local_offer),
               backgroundColor: Colors.green,
               label: 'BA',
               labelStyle: TextStyle(fontSize: 18.0),
@@ -398,7 +398,7 @@ class _MyMapPageStateState extends State<MyMapPageState> {
                   longitude: maplocations[1].longitude),
             ),
             SpeedDialChild(
-              child: Icon(Icons.keyboard_voice),
+              child: Icon(Icons.local_offer),
               backgroundColor: Colors.green,
               label: 'HT',
               labelStyle: TextStyle(fontSize: 18.0),
@@ -408,7 +408,7 @@ class _MyMapPageStateState extends State<MyMapPageState> {
               ),
             ),
             SpeedDialChild(
-              child: Icon(Icons.keyboard_voice),
+              child: Icon(Icons.local_offer),
               backgroundColor: Colors.green,
               label: 'FA',
               labelStyle: TextStyle(fontSize: 18.0),
@@ -418,7 +418,7 @@ class _MyMapPageStateState extends State<MyMapPageState> {
               ),
             ),
             SpeedDialChild(
-              child: Icon(Icons.keyboard_voice),
+              child: Icon(Icons.local_offer),
               backgroundColor: Colors.green,
               label: 'AT',
               labelStyle: TextStyle(fontSize: 18.0),
@@ -428,7 +428,7 @@ class _MyMapPageStateState extends State<MyMapPageState> {
               ),
             ),
             SpeedDialChild(
-              child: Icon(Icons.keyboard_voice),
+              child: Icon(Icons.local_offer),
               backgroundColor: Colors.green,
               label: 'TE',
               labelStyle: TextStyle(fontSize: 18.0),
@@ -438,7 +438,7 @@ class _MyMapPageStateState extends State<MyMapPageState> {
               ),
             ),
             SpeedDialChild(
-              child: Icon(Icons.keyboard_voice),
+              child: Icon(Icons.local_offer),
               backgroundColor: Colors.green,
               label: 'AR',
               labelStyle: TextStyle(fontSize: 18.0),
@@ -448,7 +448,7 @@ class _MyMapPageStateState extends State<MyMapPageState> {
               ),
             ),
             SpeedDialChild(
-              child: Icon(Icons.keyboard_voice),
+              child: Icon(Icons.local_offer),
               backgroundColor: Colors.green,
               label: 'ST',
               labelStyle: TextStyle(fontSize: 18.0),
@@ -458,7 +458,7 @@ class _MyMapPageStateState extends State<MyMapPageState> {
               ),
             ),
             SpeedDialChild(
-              child: Icon(Icons.keyboard_voice),
+              child: Icon(Icons.local_offer),
               backgroundColor: Colors.green,
               label: 'MT',
               labelStyle: TextStyle(fontSize: 18.0),
@@ -468,7 +468,7 @@ class _MyMapPageStateState extends State<MyMapPageState> {
                   longitude: maplocations[8].longitude),
             ),
             SpeedDialChild(
-              child: Icon(Icons.keyboard_voice),
+              child: Icon(Icons.local_offer),
               backgroundColor: Colors.green,
               label: 'LA',
               labelStyle: TextStyle(fontSize: 18.0),
@@ -478,7 +478,7 @@ class _MyMapPageStateState extends State<MyMapPageState> {
                   longitude: maplocations[9].longitude),
             ),
             SpeedDialChild(
-              child: Icon(Icons.keyboard_voice),
+              child: Icon(Icons.local_offer),
               backgroundColor: Colors.green,
               label: 'TC',
               labelStyle: TextStyle(fontSize: 18.0),
@@ -488,7 +488,7 @@ class _MyMapPageStateState extends State<MyMapPageState> {
                   longitude: maplocations[10].longitude),
             ),
             SpeedDialChild(
-              child: Icon(Icons.keyboard_voice),
+              child: Icon(Icons.local_offer),
               backgroundColor: Colors.green,
               label: 'NURSE',
               labelStyle: TextStyle(fontSize: 18.0),

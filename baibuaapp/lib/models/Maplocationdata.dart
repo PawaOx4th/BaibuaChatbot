@@ -43,13 +43,13 @@ List maplocations = [
   //5
   MaplocationData(
     nameLocation: "LocationTE",
-    latitude: 14.0365526,
-    longitude: 100.799837,
+    latitude: 14.0365329,
+    longitude: 100.7316493,
   ),
   //6
   MaplocationData(
     nameLocation: "LocationAR",
-    latitude: 14.0379079,
+    latitude: 14.0379097,
     longitude: 100.7297923,
   ),
   //7

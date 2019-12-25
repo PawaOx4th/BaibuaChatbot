@@ -1,6 +1,7 @@
 import 'package:baibuaapp/models/user.dart';
 import 'package:baibuaapp/screens/Authenticate/autu.dart';
 import 'package:baibuaapp/screens/Authenticate/login.dart';
+import 'package:baibuaapp/screens/Menu/groupselect.dart';
 import 'package:baibuaapp/screens/Menu/map.dart';
 import 'package:baibuaapp/screens/Menu/news.dart';
 import 'package:baibuaapp/screens/Menu/setting.dart';
@@ -42,6 +43,7 @@ class MyApp extends StatelessWidget {
           '/AddWork-page': (context) => AddworkPage(), //Addwork Page
           '/ViewWork-page': (context) => ViewWork(), //Addwork Page
           '/Map-page': (context) => MyMapPageState(), //Addwork Page
+          '/GroupSelect-page': (context) => Groupselected(), //Addwork Page
         },
         localizationsDelegates: [
           // ... app-specific localization delegate[s] here

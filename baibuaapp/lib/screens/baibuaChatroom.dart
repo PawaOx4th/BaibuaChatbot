@@ -99,18 +99,18 @@ class _HomePageDialogflowV2 extends State<ChatroomBaibua> {
               return [
                 PopupMenuItem(
                   //** value => 'routes/...' **//
-                  value: '/News-page',
+                  value: '/GroupSelect-page',
                   child: Row(
                     children: <Widget>[
                       Padding(
                         padding: const EdgeInsets.only(right: 10),
                         child: Icon(
-                          Icons.fiber_new,
+                          Icons.library_books,
                           color: Colors.white,
                         ),
                       ),
                       Text(
-                        "ข่าวสาร",
+                        "กลุ่ม",
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 16,

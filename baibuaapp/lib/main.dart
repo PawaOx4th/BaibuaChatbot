@@ -1,4 +1,5 @@
 import 'package:baibuaapp/models/user.dart';
+import 'package:baibuaapp/debug%20push%20Notification/push_messaging.dart';
 import 'package:baibuaapp/screens/Authenticate/autu.dart';
 import 'package:baibuaapp/screens/Authenticate/login.dart';
 import 'package:baibuaapp/screens/Menu/map.dart';
@@ -26,13 +27,21 @@ class MyApp extends StatelessWidget {
         title: 'Example Dialogflow Flutter',
         theme: new ThemeData(
           primarySwatch: Colors.blue,
+          //******************************************************************//
+          // Set font Default
           textTheme: GoogleFonts.k2DTextTheme(Theme.of(context).textTheme),
           primaryTextTheme: GoogleFonts.k2DTextTheme(
             Theme.of(context)
                 .primaryTextTheme, // ถ้าไม่ใส่ มันจะตั้งค่า Default ทุกอย่างตาม ThemeData.light().textTheme
           ),
+          //******************************************************************//
         ),
         home: new SplashScreen(),
+
+        //***********************************************//
+        // Debug Push Notification
+//      home: MainPage(),
+        //***********************************************//
         routes: {
           '/Login-page': (context) => LoginScreen(),
           '/emty-page': (context) => Emty_PageNavigation(), // test-page
@@ -54,8 +63,20 @@ class MyApp extends StatelessWidget {
           const Locale('es'), // Spanish
           const Locale('fr'), // French
           const Locale('zh'), // Chinese
+          const Locale('th'), // thailand
         ],
       ),
     );
   }
 }
+
+//class MainPage extends StatelessWidget {
+//
+//  @override
+//  Widget build(BuildContext context) => Scaffold(
+//    appBar: AppBar(
+//      title: Text("Push Message"),
+//    ),
+//    body: MessagingWidget(),
+//  );
+//}

@@ -29,8 +29,8 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.blue,
           //******************************************************************//
           // Set font Default
-          textTheme: GoogleFonts.k2DTextTheme(Theme.of(context).textTheme),
-          primaryTextTheme: GoogleFonts.k2DTextTheme(
+          textTheme: GoogleFonts.robotoTextTheme(Theme.of(context).textTheme),
+          primaryTextTheme: GoogleFonts.robotoTextTheme(
             Theme.of(context)
                 .primaryTextTheme, // ถ้าไม่ใส่ มันจะตั้งค่า Default ทุกอย่างตาม ThemeData.light().textTheme
           ),

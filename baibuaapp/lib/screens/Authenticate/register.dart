@@ -1,6 +1,9 @@
 import 'package:baibuaapp/screens/Authenticate/autu.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:giffy_dialog/giffy_dialog.dart';
 
 class Register extends StatefulWidget {
   @override
@@ -13,19 +16,39 @@ class _RegisterState extends State<Register> {
   final AuthService _authService = AuthService();
 
 //  Variable  form  Email Input, Student-id Input and Password Input
-  String _stuIdRegister, _emailRegister, _passwordRegister;
+  String _stuIdRegister, _emailRegister, _passwordRegister,_repasswordRegister ;
+  bool isRegister = false;
 
-//
+  static const List<Key> keys = [
+    Key("Network"),
+    Key("NetworkDialog"),
+    Key("Flare"),
+    Key("FlareDialog"),
+    Key("Asset"),
+    Key("AssetDialog")
+  ];
+
+//Error
   String error = '';
 
+// BoxDecoration Style
+  BoxDecoration _boxDecorationInput = BoxDecoration(
+    color: Color.fromRGBO(240, 244, 248, 1),
+    borderRadius: BorderRadius.circular(50.0),
+  );
+
 //  TextController
-  TextEditingController stuId, email, pass;
+  TextEditingController stuId, email, pass, re_pass;
 
   @override
   Widget build(BuildContext context) {
+    ScreenUtil.instance = ScreenUtil.getInstance()..init(context);
+    ScreenUtil.instance =
+        ScreenUtil(width: 1080, height: 2160, allowFontScaling: true)
+          ..init(context);
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Colors.lightBlueAccent,
+        backgroundColor: Colors.white,
         body: Stack(
           fit: StackFit.expand,
           children: <Widget>[
@@ -38,12 +61,8 @@ class _RegisterState extends State<Register> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      CircleAvatar(
-                        radius: 60,
-                        child: Image.asset('img/user.png'),
-                      ),
                       SizedBox(
-                        height: 20,
+                        height: ScreenUtil.getInstance().setHeight(20),
                       ),
                       Form(
                         key: formKeyRegister,
@@ -53,41 +72,48 @@ class _RegisterState extends State<Register> {
                               padding: EdgeInsets.only(top: 36.0, bottom: 10.0),
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(20.0),
-                                  color: Colors.white),
+                                  color: Colors.transparent),
                               child: Column(
                                 children: <Widget>[
                                   Padding(
                                     padding: const EdgeInsets.only(bottom: 20),
                                     child: Text(
-                                      "Register",
+                                      "Create Account",
                                       style: TextStyle(
-                                        color: Colors.cyanAccent[700],
+                                        color: Colors.lightBlue,
                                         fontSize: 22,
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
                                   ),
+                                  SizedBox(
+                                    height: 16,
+                                  ),
                                   studentIdInput(),
+                                  SizedBox(
+                                    height: 16,
+                                  ),
                                   emailInput(),
-                                  Text(error,
-                                      style: TextStyle(
-                                          color: Colors.red, fontSize: 14.0),),
                                   SizedBox(
                                     height: 16,
                                   ),
                                   passwordInput(),
                                   SizedBox(
-                                    height: 5,
+                                    height: 16,
                                   ),
                                   re_passwordInput(),
                                   SizedBox(
-                                    height: 5,
+                                    height: 16,
                                   ),
-                                  registerBtn(btnname: "Register Now"),
+                                  Text(
+                                    error,
+                                    style: TextStyle(
+                                        color: Colors.red, fontSize: 14.0),
+                                  ),
+                                  registerBtn(btnname: "Sign Up"),
                                   SizedBox(
                                     height: 5,
                                   ),
-
                                 ],
                               ),
                             ),
@@ -105,106 +131,119 @@ class _RegisterState extends State<Register> {
     );
   }
 
-  Widget studentIdInput() => Padding(
-      padding: const EdgeInsets.symmetric(vertical: 0.00, horizontal: 18),
-      child: TextFormField(
-        maxLength: 13,
-        keyboardType: TextInputType.number,
-        decoration: InputDecoration(
-          hintText: "Student ID",
-          prefixIcon: Icon(Icons.perm_contact_calendar),
+  Widget studentIdInput() => Container(
+        decoration: _boxDecorationInput,
+        child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 18),
+            child: TextFormField(
+              maxLength: 13,
+              keyboardType: TextInputType.number,
+              decoration: InputDecoration(
+                border: InputBorder.none,
+                counterStyle: TextStyle(
+                  height: double.minPositive,
+                ),
+                counterText: "",
+                hintText: "รหัสนักศึกษา",
+                prefixIcon: Icon(Icons.payment),
 //              border: InputBorder.none,
-          hintStyle: TextStyle(fontSize: 14.0, color: Colors.black38),
-          filled: true,
-          fillColor: Colors.white,
-          enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.cyan[100], width: 2),
-          ),
-        ),
-        //** Validator ID
-        validator: validateStudentId,
-        controller: stuId,
+                hintStyle: GoogleFonts.kanit(
+                  textStyle: TextStyle(color: Colors.black38, fontSize: 14.0),
+                ),
+              ),
+              //** Validator ID
+              validator: validateStudentId,
+              controller: stuId,
 //        controller: ,
-        onChanged: (val) {
-          setState(() {
-            _stuIdRegister = val;
-          });
-        },
-      ));
+              onChanged: (val) {
+                setState(() {
+                  _stuIdRegister = val;
+                });
+              },
+            )),
+      );
 
-  Widget emailInput() => Padding(
-        padding: EdgeInsets.symmetric(vertical: 5, horizontal: 18),
-        child: TextFormField(
-          keyboardType: TextInputType.emailAddress,
-          decoration: InputDecoration(
-            hintText: "E-mail",
-            prefixIcon: Icon(Icons.email),
-//            border: InputBorder.none,
-            hintStyle: TextStyle(fontSize: 14.0, color: Colors.black38),
-            filled: true,
-            fillColor: Colors.white,
-            enabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.cyan[100], width: 2),
+  Widget emailInput() => Container(
+        decoration: _boxDecorationInput,
+        child: Padding(
+          padding: EdgeInsets.symmetric(vertical: 5, horizontal: 18),
+          child: TextFormField(
+            keyboardType: TextInputType.emailAddress,
+            decoration: InputDecoration(
+              hintText: "Email",
+              prefixIcon: Icon(Icons.email),
+              border: InputBorder.none,
+              hintStyle: GoogleFonts.kanit(
+                textStyle: TextStyle(color: Colors.black38, fontSize: 14.0),
+              ),
             ),
+            validator: validateEmail,
+            controller: email,
+            onChanged: (val) {
+              setState(() {
+                _emailRegister = val;
+              });
+            },
           ),
-          validator: validateEmail,
-          controller: email,
-          onChanged: (val) {
-            setState(() {
-              _emailRegister = val;
-            });
-          },
         ),
       );
 
-  Widget passwordInput() => Padding(
-        padding: EdgeInsets.symmetric(vertical: 5, horizontal: 18),
-        child: TextFormField(
-            maxLength: 6,
-            keyboardType: TextInputType.number,
-            decoration: InputDecoration(
-              hintText: "Password",
-              prefixIcon: Icon(Icons.vpn_key),
-//            border: InputBorder.none,
-              hintStyle: TextStyle(fontSize: 16.0, color: Colors.black38),
-              filled: true,
-              fillColor: Colors.white,
-              enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.cyan[100], width: 2),
+  Widget passwordInput() => Container(
+        decoration: _boxDecorationInput,
+        child: Padding(
+          padding: EdgeInsets.symmetric(vertical: 5, horizontal: 18),
+          child: TextFormField(
+              maxLength: 6,
+              keyboardType: TextInputType.number,
+              decoration: InputDecoration(
+                counterText: "",
+                hintText: "Password",
+                prefixIcon: Icon(Icons.vpn_key),
+                border: InputBorder.none,
+                hintStyle: GoogleFonts.kanit(
+                  textStyle: TextStyle(color: Colors.black38, fontSize: 14.0),
+                ),
+                counterStyle: TextStyle(
+                  height: double.minPositive,
+                ),
               ),
-            ),
-            validator: validatePassword,
-            controller: pass,
-            onChanged: (val) {
-              setState(() {
-                _passwordRegister = val;
-              });
-            }),
+              validator: validatePassword,
+              controller: pass,
+              onChanged: (val) {
+                setState(() {
+                  _passwordRegister = val;
+                });
+              }),
+        ),
       );
 
-  Widget re_passwordInput() => Padding(
-        padding: EdgeInsets.symmetric(vertical: 5, horizontal: 18),
-        child: TextFormField(
-            maxLength: 6,
-            keyboardType: TextInputType.number,
-            decoration: InputDecoration(
-              hintText: "re-password",
-              prefixIcon: Icon(Icons.vpn_key),
-//            border: InputBorder.none,
-              hintStyle: TextStyle(fontSize: 16.0, color: Colors.black38),
-              filled: true,
-              fillColor: Colors.white,
-              enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.cyan[100], width: 2),
+  Widget re_passwordInput() => Container(
+        decoration: _boxDecorationInput,
+        child: Padding(
+          padding: EdgeInsets.symmetric(vertical: 5, horizontal: 18),
+          child: TextFormField(
+              maxLength: 6,
+              keyboardType: TextInputType.number,
+              decoration: InputDecoration(
+                counterText: "",
+                counterStyle: TextStyle(
+                  height: double.minPositive,
+                ),
+                hintText: "re-password",
+                prefixIcon: Icon(Icons.vpn_key),
+                border: InputBorder.none,
+                hintStyle: GoogleFonts.kanit(
+                  textStyle: TextStyle(color: Colors.black38, fontSize: 14.0),
+                ),
               ),
-            ),
-            validator: re_validatePassword,
-            controller: pass,
-            onChanged: (val) {
-              setState(() {
-                _passwordRegister = val;
-              });
-            }),
+              validator: re_validatePassword,
+              controller: re_pass,
+              onChanged: (val) {
+                setState(() {
+                  _repasswordRegister = val;
+                });
+              }),
+        ),
       );
 
   Widget registerBtn({String btnname}) => Padding(
@@ -217,12 +256,12 @@ class _RegisterState extends State<Register> {
           children: <Widget>[
             Expanded(
               child: Container(
-//                      width: 200.0,
-                height: 50.0,
+                width: ScreenUtil.getInstance().setWidth(180),
+                height: ScreenUtil.getInstance().setHeight(200),
 //                          Button => 'Register'
                 child: RaisedButton(
                   shape: new RoundedRectangleBorder(
-                    borderRadius: new BorderRadius.circular(10.0),
+                    borderRadius: new BorderRadius.circular(50.0),
                     side: BorderSide(color: Colors.lightBlue[300]),
                   ),
                   child: Text(
@@ -234,38 +273,25 @@ class _RegisterState extends State<Register> {
                   ),
                   color: Colors.lightBlue[300],
                   onPressed: () async {
-//                    print("stuId : $_stuIdRegister");
-//                    print("email : $_emailRegister");
-//                    print("password : $_passwordRegister");
-//                    Navigator.push(context,
-//                        MaterialPageRoute(builder: (context) => Register()));
-//                    if (formKey.currentState.validate()) {
-//                      formKey.currentState.save();
-////                      print(_id.text);
-////                      print(_pass.text);
-//                      // Call _authService function
-//                      dynamic result = await _authService.signInAnon();
-//                      if (result == null) {
-//                        print('error Signing in');
-//                      } else {
-//                        print('Signed in');
-//                        Navigator.pushNamed(context, "/emty-page");
-//                        print(result.uid);
-//                      }
-//                    }
                     if (formKeyRegister.currentState.validate()) {
                       formKeyRegister.currentState.save();
-                      dynamic result =
-                          await _authService.registerWithEmailAndPassword(
-                              _emailRegister, _passwordRegister);
-                      if (result == null) {
-                        setState(() {
-                          error = "please supply a valid email";
-                        });
-                      } else {
-                        Navigator.pushNamed(context,'/Login-page');
-                      }
+//                      dynamic result =
+//                          await _authService.registerWithEmailAndPassword(
+//                              _emailRegister, _passwordRegister);
+//                      if (result == null) {
+//                        setState(() {
+//                          error = "please supply a valid email";
+//                          isRegister = false;
+//                        });
+//                      } else {
+//                        setState(() {
+//                          isRegister = true;
+//                        });
+////
+//                      }
                     }
+//
+//                    (isRegister) ? _showDialogS() : Container();
                   },
                   elevation: 5,
                 ),
@@ -276,6 +302,36 @@ class _RegisterState extends State<Register> {
       );
 
 //  ****************************************************************************  //
+// Dialog Show Register Seuccess
+  _showDialogS() {
+    showDialog(
+        context: context,
+        builder: (_) => NetworkGiffyDialog(
+              key: keys[1],
+              image: Image.asset(
+                'img/RegisSuccess.gif',
+                fit: BoxFit.cover,
+              ),
+              entryAnimation: EntryAnimation.BOTTOM,
+              title: Text(
+                'Successfully!',
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 22.0, fontWeight: FontWeight.w600),
+              ),
+              description: Text(
+                'สมัครสมาชิกสำเร็จ กรุณาทำการเข้าสู่ระบบ',
+                textAlign: TextAlign.center,
+                style:GoogleFonts.kanit(
+                  textStyle: TextStyle(color: Colors.black38, fontSize: 14.0),
+                ),
+              ),
+              onOkButtonPressed: () {
+                Navigator.pushNamed(context, '/Login-page');
+              },
+              onlyOkButton: true,
+            ));
+  }
+
 //  ******************** Validate condition ********************
   String validateEmail(String value) {
     Pattern pattern =
@@ -309,10 +365,11 @@ class _RegisterState extends State<Register> {
 
   String re_validatePassword(String value) {
     // ignore: unrelated_type_equality_checks
-    if (value == pass) {
+    if (_repasswordRegister != _passwordRegister) {
       return "Please re-input Password";
     }
   }
+
 //  ****************************************************************************  //
 
 //  ****************************************************************************  //

@@ -37,6 +37,8 @@ dependencies:
   flutter_speed_dial: ^1.2.5
   firebase_messaging: ^6.0.9
   firebase_analytics: ^5.0.9
+  flutter_screenutil: ^0.7.0
+  giffy_dialog: ^1.6.1
 
 
 

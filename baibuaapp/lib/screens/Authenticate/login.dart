@@ -55,7 +55,6 @@ class _LoginScreenState extends State<LoginScreen> {
                       ],
                     ),
                     child: Column(
-
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         Container(
@@ -155,9 +154,14 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                 ),
-                SizedBox(height: 50,),
+                SizedBox(
+                  height: 50,
+                ),
                 FlatButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => Register()));
+                  },
                   child: Text(
                     "CREATE ACCOUNT",
                     style: GoogleFonts.roboto(
@@ -194,12 +198,13 @@ class _LoginScreenState extends State<LoginScreen> {
             keyboardType: TextInputType.emailAddress,
             decoration: InputDecoration(
               hintText: "Email",
-              prefixIcon: Icon(Icons.mail,color: Color.fromRGBO(166, 188, 208, 1),),
+              prefixIcon: Icon(
+                Icons.mail,
+                color: Color.fromRGBO(166, 188, 208, 1),
+              ),
               border: InputBorder.none,
               hintStyle: TextStyle(
-                fontSize: 16.0,
-                color: Color.fromRGBO(166, 188, 208, 1)
-              ),
+                  fontSize: 16.0, color: Color.fromRGBO(166, 188, 208, 1)),
             ),
             controller: _id,
             //** Validator ID
@@ -229,19 +234,22 @@ class _LoginScreenState extends State<LoginScreen> {
         child: Padding(
           padding: const EdgeInsets.only(left: 10, right: 10),
           child: TextFormField(
-//            maxLength: 6,
+            maxLength: 6,
             keyboardType: TextInputType.number,
             onChanged: (val) {
               setState(() => _password = val);
             },
             decoration: InputDecoration(
+              counterText: "",
+              counterStyle: TextStyle(
+                height: double.minPositive,
+              ),
               hintText: "Password",
-              prefixIcon: Icon(Icons.lock,color: Color.fromRGBO(166, 188, 208, 1)),
+              prefixIcon:
+                  Icon(Icons.lock, color: Color.fromRGBO(166, 188, 208, 1)),
               border: InputBorder.none,
               hintStyle: TextStyle(
-                fontSize: 18.0,
-                  color: Color.fromRGBO(166, 188, 208, 1)
-              ),
+                  fontSize: 18.0, color: Color.fromRGBO(166, 188, 208, 1)),
             ),
             controller: _pass,
 
@@ -279,6 +287,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 color: Color.fromRGBO(0, 147, 233, 1),
                 shape: new RoundedRectangleBorder(
                   borderRadius: new BorderRadius.circular(50.0),
+
                 ),
                 child: Text(
                   "Sign In",
@@ -298,9 +307,11 @@ class _LoginScreenState extends State<LoginScreen> {
                     print(_pass.text);
                     if (result == null) {
                       setState(() {
+
                         error = 'please supply a valid email.';
                       });
                     } else {
+
                       Navigator.pushNamed(context, '/Chatroom-page');
                     }
                     // Call _authService function
@@ -353,4 +364,6 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       );
 //**************************************************************************//
+
+
 }

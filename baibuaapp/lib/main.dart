@@ -9,6 +9,7 @@ import 'package:baibuaapp/screens/Menu/addwork.dart';
 import 'package:baibuaapp/screens/Menu/viewwork.dart';
 import 'package:baibuaapp/screens/baibuaChatroom.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_custom_error_page/flutter_custom_error_message.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 import 'screens/emty.dart';
@@ -20,6 +21,8 @@ void main() => runApp(new MyApp());
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+
+    ErrorWidget.builder = ErrorMessageBuilder.build(theme: ErrorTheme.BlueScreen);
     return StreamProvider<User>.value(
       value: AuthService().user,
       child: new MaterialApp(

@@ -21,3 +21,7 @@ baibuaapp/android/.gradle/5.4.1/javaCompile/javaCompile.lock
 baibuaapp/android/.gradle/5.4.1/javaCompile/taskHistory.bin
 
 baibuaapp/android/.gradle/buildOutputCleanup/outputFiles.bin
+
+baibuaapp/android/app/src/main/java/io/flutter/plugins/GeneratedPluginRegistrant.java
+
+baibuaapp/ios/Runner/GeneratedPluginRegistrant.m

@@ -16,7 +16,7 @@ class Wrapper extends StatelessWidget {
     if (user == null) {
       return LoginScreen();
     } else {
-      return LoginScreen();
+      return ChatroomBaibua();
     }
   }
 }

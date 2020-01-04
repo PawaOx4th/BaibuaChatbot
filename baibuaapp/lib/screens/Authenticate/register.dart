@@ -275,23 +275,21 @@ class _RegisterState extends State<Register> {
                   onPressed: () async {
                     if (formKeyRegister.currentState.validate()) {
                       formKeyRegister.currentState.save();
-//                      dynamic result =
-//                          await _authService.registerWithEmailAndPassword(
-//                              _emailRegister, _passwordRegister);
-//                      if (result == null) {
-//                        setState(() {
-//                          error = "please supply a valid email";
-//                          isRegister = false;
-//                        });
-//                      } else {
-//                        setState(() {
-//                          isRegister = true;
-//                        });
-////
-//                      }
+                      dynamic result =
+                          await _authService.registerWithEmailAndPassword(
+                              _emailRegister, _passwordRegister);
+                      if (result == null) {
+                        setState(() {
+                          error = "please supply a valid email";
+                          isRegister = false;
+                        });
+                      } else {
+                        setState(() {
+                          isRegister = true;
+                        });
+                      }
                     }
-//
-//                    (isRegister) ? _showDialogS() : Container();
+                    (isRegister) ? _showDialogS() : Container();
                   },
                   elevation: 5,
                 ),

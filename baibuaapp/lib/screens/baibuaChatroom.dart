@@ -11,10 +11,18 @@ class ChatroomBaibua extends StatefulWidget {
   _HomePageDialogflowV2 createState() => new _HomePageDialogflowV2();
 }
 
-class _HomePageDialogflowV2 extends State<ChatroomBaibua> {
+class _HomePageDialogflowV2 extends State<ChatroomBaibua>
+     {
+
+//  @override
+//  void dispose() {                                                              //********
+//    for (ChatMessage message in _messages)                                      // คืนค่า Memmory
+//      message.animationController.dispose();                                    //
+//    super.dispose();                                                            //********
+//  }
   final List<ChatMessage> _messages = <ChatMessage>[];
   final TextEditingController _textController = new TextEditingController();
-
+  bool _isComposing = false; // Check message null ?
   Widget _buildTextComposer() {
     return new IconTheme(
       data: new IconThemeData(color: Theme.of(context).accentColor),
@@ -26,6 +34,11 @@ class _HomePageDialogflowV2 extends State<ChatroomBaibua> {
               child: new TextField(
                 controller: _textController,
                 onSubmitted: _handleSubmitted,
+                onChanged: (String text) {
+                  setState(() {
+                    _isComposing = text.length > 0;
+                  });
+                },
                 decoration: new InputDecoration.collapsed(
                   hintText: "Send a message",
                 ),
@@ -34,8 +47,11 @@ class _HomePageDialogflowV2 extends State<ChatroomBaibua> {
             new Container(
               margin: new EdgeInsets.symmetric(horizontal: 4.0),
               child: new IconButton(
-                  icon: new Icon(Icons.send),
-                  onPressed: () => _handleSubmitted(_textController.text)),
+                icon: new Icon(Icons.send),
+                onPressed: _isComposing
+                    ? () => _handleSubmitted(_textController.text)
+                    : null,
+              ),
             ),
           ],
         ),
@@ -63,12 +79,16 @@ class _HomePageDialogflowV2 extends State<ChatroomBaibua> {
   }
 
   void _handleSubmitted(String text) {
-    String _textname = "User";
+    String _textname = "ME";
     _textController.clear();
+    setState(() {
+      _isComposing = false;
+    });
     ChatMessage message = new ChatMessage(
       text: text,
       name: _textname,
       type: true,
+
     );
     setState(() {
       _messages.insert(0, message);
@@ -242,7 +262,9 @@ class _HomePageDialogflowV2 extends State<ChatroomBaibua> {
 }
 
 class ChatMessage extends StatelessWidget {
-  ChatMessage({this.text, this.name, this.type});
+  ChatMessage({this.text, this.name, this.type, });
+
+//  AnimationController animationController; // Animation Control Chat UI
 
   final String text;
   final String name;
@@ -263,7 +285,6 @@ class ChatMessage extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                   color: Colors.lightBlue,
                   fontSize: 20,
-
                 )),
             new Container(
               margin: const EdgeInsets.only(top: 5.0),
@@ -310,12 +331,13 @@ class ChatMessage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return new Container(
-      margin: const EdgeInsets.symmetric(vertical: 10.0),
-      child: new Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: this.type ? myMessage(context) : otherMessage(context),
-      ),
-    );
+    return  new Container(
+        margin: const EdgeInsets.symmetric(vertical: 10.0),
+        child: new Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: this.type ? myMessage(context) : otherMessage(context),
+        ),
+      );
+
   }
 }

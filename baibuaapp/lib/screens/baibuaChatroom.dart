@@ -1,7 +1,10 @@
+import 'package:baibuaapp/screens/Menu/addwork.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dialogflow/dialogflow_v2.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
+import 'package:time_formatter/time_formatter.dart';
 
 class ChatroomBaibua extends StatefulWidget {
   ChatroomBaibua({Key key, this.title}) : super(key: key);
@@ -44,7 +47,7 @@ class _HomePageDialogflowV2 extends State<ChatroomBaibua> {
   }
 
   void _handleSubmitted(String text) {
-    String _textname = "ME";
+    String _textname = "";
     _textController.clear();
     setState(() {
       _isComposing = false;
@@ -98,7 +101,7 @@ class _HomePageDialogflowV2 extends State<ChatroomBaibua> {
                         color: Colors.white,
                       ),
                       onPressed: () {
-                        //Call Page => Menu               
+                        //Call Page => Menu
                       },
                     ),
                   ),
@@ -112,7 +115,7 @@ class _HomePageDialogflowV2 extends State<ChatroomBaibua> {
         Container(
           child: new Flexible(
             child: new ListView.builder(
-              padding: new EdgeInsets.all(8.0),
+              padding: new EdgeInsets.all(16.0),
               reverse: true,
               itemBuilder: (_, int index) => _messages[index],
               itemCount: _messages.length,
@@ -121,7 +124,9 @@ class _HomePageDialogflowV2 extends State<ChatroomBaibua> {
         ),
         new Divider(height: 1.0),
         new Container(
-          decoration: new BoxDecoration(color: Theme.of(context).cardColor),
+          padding: EdgeInsets.only(bottom: 30.0),
+          decoration:
+              BoxDecoration(border: Border.all(color: Colors.transparent)),
           child: _buildTextComposer(),
         ),
       ]),
@@ -134,7 +139,12 @@ class _HomePageDialogflowV2 extends State<ChatroomBaibua> {
     return new IconTheme(
       data: new IconThemeData(color: Theme.of(context).accentColor),
       child: new Container(
-        margin: const EdgeInsets.symmetric(horizontal: 8.0),
+        padding: EdgeInsets.symmetric(horizontal: 16.0),
+        decoration: BoxDecoration(
+          color: Color.fromRGBO(231, 234, 241, 1),
+          borderRadius: BorderRadius.circular(50.0),
+        ),
+        margin: const EdgeInsets.symmetric(horizontal: 20.0),
         child: new Row(
           children: <Widget>[
             new Flexible(
@@ -147,17 +157,32 @@ class _HomePageDialogflowV2 extends State<ChatroomBaibua> {
                   });
                 },
                 decoration: new InputDecoration.collapsed(
-                  hintText: "Send a message",
+                  hintText: "Type your message",
+                  hintStyle: GoogleFonts.roboto(
+                    fontSize: 14.0,
+//                    fontWeight: FontWeight.bold,
+                    textStyle: TextStyle(color: Colors.grey),
+                  ),
                 ),
               ),
             ),
             new Container(
-              margin: new EdgeInsets.symmetric(horizontal: 4.0),
-              child: new IconButton(
-                icon: new Icon(Icons.send),
-                onPressed: _isComposing
-                    ? () => _handleSubmitted(_textController.text)
-                    : null,
+              margin: EdgeInsets.only(left: 5),
+              width: 40,
+              decoration: BoxDecoration(
+                color: Colors.lightBlue,
+                shape: BoxShape.circle,
+              ),
+              child: Container(
+                child: new IconButton(
+                  icon: new Icon(
+                    Icons.send,
+                    color: Colors.white,
+                  ),
+                  onPressed: _isComposing
+                      ? () => _handleSubmitted(_textController.text)
+                      : null,
+                ),
               ),
             ),
           ],
@@ -175,6 +200,7 @@ class _HomePageDialogflowV2 extends State<ChatroomBaibua> {
         Icon(
           Icons.track_changes,
           color: Colors.blue,
+          size: 32,
         ),
         SizedBox(
           width: 5,
@@ -217,25 +243,58 @@ class ChatMessage extends StatelessWidget {
   final bool type;
 
   List<Widget> otherMessage(context) {
+    TimeOfDay now = TimeOfDay.now();
+    String _timeofdayBot = now.format(context).toString();
+    print(now.format(context));
+
     return <Widget>[
       new Container(
-        margin: const EdgeInsets.only(right: 16.0),
+        margin: const EdgeInsets.only(right: 5.0),
         child: new CircleAvatar(child: new Image.asset("img/logo.png")),
       ),
       new Expanded(
         child: new Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            new Text(this.name,
-                style: new TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: Colors.lightBlue,
-                  fontSize: 20,
-                )),
             new Container(
-              margin: const EdgeInsets.only(top: 5.0),
-              child: new Text(text),
+              decoration: BoxDecoration(
+                color: Color.fromRGBO(231, 234, 241, 1),
+                borderRadius: BorderRadius.only(
+                  bottomRight: const Radius.circular(30),
+                  bottomLeft: const Radius.circular(30),
+                  topRight: const Radius.circular(30),
+                ),
+              ),
+              margin: const EdgeInsets.only(top: 2.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Container(
+                    margin: const EdgeInsets.all(16.00),
+                    child: new Text(
+                      text,
+                      style: TextStyle(fontSize: 14, color: Colors.black),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 16.0, bottom: 16.0),
+                    child: Text(
+                      _timeofdayBot,
+                      style: TextStyle(color: Colors.grey[500], fontSize: 12.0),
+                    ),
+                  ),
+                ],
+              ),
             ),
+
+//            new Text(
+//              this.name,
+//              style: new TextStyle(
+//                fontWeight: FontWeight.bold,
+//                color: Colors.lightBlue,
+//                fontSize: 20,
+//              ),
+//            ),
           ],
         ),
       ),
@@ -243,35 +302,57 @@ class ChatMessage extends StatelessWidget {
   }
 
   List<Widget> myMessage(context) {
+    TimeOfDay now = TimeOfDay.now();
+    String _timeofdayUser = now.format(context).toString();
     return <Widget>[
       new Expanded(
         child: new Column(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: <Widget>[
-            new Text(
-              this.name,
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-                color: Colors.lightBlueAccent,
-              ),
-            ),
+//            new Text(
+//              this.name,
+//              style: TextStyle(
+//                fontSize: 18,
+//                fontWeight: FontWeight.bold,
+//                color: Colors.lightBlueAccent,
+//              ),
+//            ),
             new Container(
-              margin: const EdgeInsets.only(top: 5.0),
-              child: new Text(
-                text,
-                style: TextStyle(
-                  fontSize: 18,
+              decoration: BoxDecoration(
+                color: Color.fromRGBO(0, 147, 233, 1),
+                borderRadius: BorderRadius.only(
+                  bottomLeft: const Radius.circular(30),
+                  topLeft: const Radius.circular(30),
+                  topRight: const Radius.circular(30),
                 ),
+              ),
+              margin: const EdgeInsets.all(16.00),
+              child: Column(
+                children: <Widget>[
+                  Container(
+                    margin: const EdgeInsets.all(16.00),
+                    child: new Text(
+                      text,
+                      style: TextStyle(fontSize: 16, color: Colors.white),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(bottom: 16.0),
+                    child: Text(
+                      _timeofdayUser,
+                      style: TextStyle(color: Colors.white70, fontSize: 12.0),
+                    ),
+                  ),
+                ],
               ),
             ),
           ],
         ),
       ),
-      new Container(
-        margin: const EdgeInsets.only(left: 16.0),
-        child: new CircleAvatar(child: new Image.asset("img/photo.png")),
-      ),
+//      new Container(
+//        margin: const EdgeInsets.only(left: 16.0),
+////        child: new CircleAvatar(child: new Image.asset("img/photo.png")),
+//      ),
     ];
   }
 

@@ -122,7 +122,6 @@ class _HomePageDialogflowV2 extends State<ChatroomBaibua> {
             ),
           ),
         ),
-        new Divider(height: 1.0),
         new Container(
           padding: EdgeInsets.only(bottom: 30.0),
           decoration:
@@ -144,7 +143,7 @@ class _HomePageDialogflowV2 extends State<ChatroomBaibua> {
           color: Color.fromRGBO(231, 234, 241, 1),
           borderRadius: BorderRadius.circular(50.0),
         ),
-        margin: const EdgeInsets.symmetric(horizontal: 20.0),
+        margin: const EdgeInsets.symmetric(horizontal: 16.0),
         child: new Row(
           children: <Widget>[
             new Flexible(
@@ -167,7 +166,7 @@ class _HomePageDialogflowV2 extends State<ChatroomBaibua> {
               ),
             ),
             new Container(
-              margin: EdgeInsets.only(left: 5),
+              margin: EdgeInsets.only(left: 5.00),
               width: 40,
               decoration: BoxDecoration(
                 color: Colors.lightBlue,
@@ -286,15 +285,6 @@ class ChatMessage extends StatelessWidget {
                 ],
               ),
             ),
-
-//            new Text(
-//              this.name,
-//              style: new TextStyle(
-//                fontWeight: FontWeight.bold,
-//                color: Colors.lightBlue,
-//                fontSize: 20,
-//              ),
-//            ),
           ],
         ),
       ),
@@ -309,14 +299,6 @@ class ChatMessage extends StatelessWidget {
         child: new Column(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: <Widget>[
-//            new Text(
-//              this.name,
-//              style: TextStyle(
-//                fontSize: 18,
-//                fontWeight: FontWeight.bold,
-//                color: Colors.lightBlueAccent,
-//              ),
-//            ),
             new Container(
               decoration: BoxDecoration(
                 color: Color.fromRGBO(0, 147, 233, 1),
@@ -326,18 +308,19 @@ class ChatMessage extends StatelessWidget {
                   topRight: const Radius.circular(30),
                 ),
               ),
-              margin: const EdgeInsets.all(16.00),
+              margin: const EdgeInsets.only(right: 5),
               child: Column(
                 children: <Widget>[
                   Container(
-                    margin: const EdgeInsets.all(16.00),
+                    margin: const EdgeInsets.all(10.00),
                     child: new Text(
                       text,
                       style: TextStyle(fontSize: 16, color: Colors.white),
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.only(bottom: 16.0),
+                    padding:
+                        EdgeInsets.only(bottom: 16.0, left: 16.0, right: 16.0),
                     child: Text(
                       _timeofdayUser,
                       style: TextStyle(color: Colors.white70, fontSize: 12.0),

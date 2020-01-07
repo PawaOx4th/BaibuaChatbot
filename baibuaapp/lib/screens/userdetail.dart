@@ -158,6 +158,7 @@ class _UserDetailPageState extends State<UserDetailPage> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
 <<<<<<< HEAD
+<<<<<<< HEAD
                               FutureBuilder(
                                 future: UserDataService.callData(),
                                 builder: (context, snapshot) {
@@ -186,6 +187,8 @@ class _UserDetailPageState extends State<UserDetailPage> {
                                     color: Color.fromRGBO(81, 93, 111, 1),
                                     fontSize: 16.00,
 =======
+=======
+>>>>>>> parent of 1ebc652... Call REST API USER DATA
                               Text(
                                 _userName,
                                 style: GoogleFonts.kanit(
@@ -202,6 +205,9 @@ class _UserDetailPageState extends State<UserDetailPage> {
                                   textStyle: TextStyle(
                                     color: Color.fromRGBO(81, 93, 111, 1),
                                     fontSize: 18.00,
+<<<<<<< HEAD
+>>>>>>> parent of 1ebc652... Call REST API USER DATA
+=======
 >>>>>>> parent of 1ebc652... Call REST API USER DATA
                                   ),
                                 ),

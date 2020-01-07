@@ -33,7 +33,6 @@ class _SplashScreenState extends State<SplashScreen> {
               image: DecorationImage(
                 image: AssetImage('img/splashscreenbg.png'),
                 fit: BoxFit.cover,
-
               ),
             ),
           ),
@@ -46,37 +45,6 @@ class _SplashScreenState extends State<SplashScreen> {
                   color: Colors.transparent,
                 ),
               ),
-//              Expanded(
-//                flex: 5,
-//                child: Container(
-//                  child: Column(
-//                    mainAxisAlignment: MainAxisAlignment.center,
-//                    children: <Widget>[
-//                      CircleAvatar(
-//                        backgroundColor: Colors.white,
-//                        radius: 50.0,
-//                        child: Icon(
-//                          Icons.track_changes,
-//                          color: Colors.lightBlueAccent,
-//                          size: 60.0,
-//                        ),
-//                      ),
-//                      Padding(
-//                        padding: EdgeInsets.only(top: 10.0),
-//                      ),
-//                      Text(
-//                        "Baibua",
-//                        style: TextStyle(
-//                          fontSize: 32.0,
-//                          color: Colors.white,
-//                          fontWeight: FontWeight.bold,
-//                        ),
-//                      ),
-//
-//                    ],
-//                  ),
-//                ),
-//              ),
               Expanded(
                 flex: 1,
                 child: Column(

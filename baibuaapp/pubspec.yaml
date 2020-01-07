@@ -40,6 +40,8 @@ dependencies:
   flutter_screenutil: ^0.7.0
   giffy_dialog: ^1.6.1
   flutter_custom_error_page: 0.1.2
+  time_formatter: ^1.0.0+5
+
 
 
 

@@ -308,7 +308,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     if (result == null) {
                       setState(() {
 
-                        error = 'please supply a valid email.';
+                        error = 'Incorrect email.';
                       });
                     } else {
 

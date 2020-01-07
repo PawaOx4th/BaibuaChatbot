@@ -1,10 +1,7 @@
-import 'package:baibuaapp/screens/Menu/addwork.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dialogflow/dialogflow_v2.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:intl/intl.dart';
-import 'package:time_formatter/time_formatter.dart';
 
 class ChatroomBaibua extends StatefulWidget {
   ChatroomBaibua({Key key, this.title}) : super(key: key);
@@ -102,6 +99,7 @@ class _HomePageDialogflowV2 extends State<ChatroomBaibua> {
                       ),
                       onPressed: () {
                         //Call Page => Menu
+                        Navigator.pushNamed(context, '/Mainmenu-page');
                       },
                     ),
                   ),

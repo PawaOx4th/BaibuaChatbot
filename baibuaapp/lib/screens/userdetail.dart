@@ -1,5 +1,3 @@
-import 'package:baibuaapp/REST%20API/UserDataService.dart';
-import 'package:baibuaapp/REST%20API/userdata.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -13,7 +11,7 @@ class _UserDetailPageState extends State<UserDetailPage> {
   //Variable
   final bool isWork = true;
   final bool isWorkDeadline = false;
-  final bool isRole = false;
+  final bool isRole = true;
   String _countWorking = "2";
   String _countWorkDeadline = "20";
   String _userName = "นายหรินทร์ ธนะนาม";
@@ -61,13 +59,6 @@ class _UserDetailPageState extends State<UserDetailPage> {
   Color bgMenuColor = Color.fromRGBO(237, 242, 247, 1);
   Color ShadowMenuColor = Color.fromRGBO(11, 84, 194, 0.5);
   Color nameColor = Color.fromRGBO(81, 93, 111, 1);
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    UserDataService.callData();
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -166,6 +157,7 @@ class _UserDetailPageState extends State<UserDetailPage> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
+<<<<<<< HEAD
                               FutureBuilder(
                                 future: UserDataService.callData(),
                                 builder: (context, snapshot) {
@@ -193,6 +185,24 @@ class _UserDetailPageState extends State<UserDetailPage> {
                                   textStyle: TextStyle(
                                     color: Color.fromRGBO(81, 93, 111, 1),
                                     fontSize: 16.00,
+=======
+                              Text(
+                                _userName,
+                                style: GoogleFonts.kanit(
+                                  textStyle: TextStyle(
+                                    color: Color.fromRGBO(81, 93, 111, 1),
+                                    fontSize: 18.00,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                              Text(
+                                _userEmail,
+                                style: GoogleFonts.kanit(
+                                  textStyle: TextStyle(
+                                    color: Color.fromRGBO(81, 93, 111, 1),
+                                    fontSize: 18.00,
+>>>>>>> parent of 1ebc652... Call REST API USER DATA
                                   ),
                                 ),
                               ),
@@ -234,7 +244,7 @@ class _UserDetailPageState extends State<UserDetailPage> {
                   Container(
                     padding: EdgeInsets.all(18.00),
                     width: _widthScreen,
-                    height: isRole ? 250.00 : 210,
+                    height: isRole ?  250.00 : 210 ,
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(20),
@@ -309,7 +319,7 @@ class _UserDetailPageState extends State<UserDetailPage> {
                         Divider(
                           height: 10,
                         ),
-                        isRole ? role() : Container(),
+                        isRole ?  role() : Container(),
                       ],
                     ),
                   ),

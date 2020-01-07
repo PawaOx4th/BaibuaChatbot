@@ -166,25 +166,36 @@ class _UserDetailPageState extends State<UserDetailPage> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
+                              FutureBuilder(
+                                future: UserDataService.callData(),
+                                builder: (context, snapshot) {
+                                  if(snapshot.hasData){
+                                    UserData userdata = snapshot.data;
+                                    return Text(
+                                      userdata.nameEN,
+                                      style: GoogleFonts.kanit(
+                                        textStyle: TextStyle(
+                                          color: Color.fromRGBO(81, 93, 111, 1),
+                                          fontSize: 18.00,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    );
+                                  }
+                                  else {
+                                    return Container();
+                                  }
+                                },
+                              ),
                               Text(
-                                    "XXXXXX",
-                                    style: GoogleFonts.kanit(
-                                      textStyle: TextStyle(
-                                        color: Color.fromRGBO(81, 93, 111, 1),
-                                        fontSize: 18.00,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
+                                "xxxx",
+                                style: GoogleFonts.kanit(
+                                  textStyle: TextStyle(
+                                    color: Color.fromRGBO(81, 93, 111, 1),
+                                    fontSize: 16.00,
                                   ),
-                               Text(
-                                    "xxxx",
-                                    style: GoogleFonts.kanit(
-                                      textStyle: TextStyle(
-                                        color: Color.fromRGBO(81, 93, 111, 1),
-                                        fontSize: 16.00,
-                                      ),
-                                    ),
-                                  ),
+                                ),
+                              ),
                               SizedBox(
                                 height: 5.0,
                               ),
@@ -196,8 +207,7 @@ class _UserDetailPageState extends State<UserDetailPage> {
                                   borderRadius: BorderRadius.circular(50),
                                   border: Border.all(color: borderRole),
                                 ),
-                                child:
-                                isRole
+                                child: isRole
                                     ? Text(
                                         "หัวหน้าห้อง",
                                         style: GoogleFonts.kanit(

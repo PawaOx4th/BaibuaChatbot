@@ -138,7 +138,7 @@ class _MainmenuState extends State<Mainmenu> {
                       ),
                       child: InkWell(
                         onTap: () {
-//                          Navigator.pushNamed(context, '/Chatroom-page');
+                          Navigator.pushNamed(context, '/Chatroom-page');
                         },
                         child: Center(
                           child: Column(
@@ -180,7 +180,7 @@ class _MainmenuState extends State<Mainmenu> {
                       ),
                       child: InkWell(
                         onTap: () {
-                          print("Tap");
+                          Navigator.pushNamed(context, '/Userdetail-page');
                         },
                         child: Center(
                           child: Column(

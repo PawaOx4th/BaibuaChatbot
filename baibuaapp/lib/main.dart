@@ -1,5 +1,4 @@
 import 'package:baibuaapp/models/user.dart';
-import 'package:baibuaapp/debug%20push%20Notification/push_messaging.dart';
 import 'package:baibuaapp/screens/Authenticate/autu.dart';
 import 'package:baibuaapp/screens/Authenticate/login.dart';
 import 'package:baibuaapp/screens/Menu/map.dart';
@@ -8,7 +7,9 @@ import 'package:baibuaapp/screens/Menu/setting.dart';
 import 'package:baibuaapp/screens/Menu/addwork.dart';
 import 'package:baibuaapp/screens/Menu/viewwork.dart';
 import 'package:baibuaapp/screens/baibuaChatroom.dart';
+import 'package:baibuaapp/screens/mainmenu.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_custom_error_page/flutter_custom_error_message.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 import 'screens/emty.dart';
@@ -20,6 +21,8 @@ void main() => runApp(new MyApp());
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+
+    ErrorWidget.builder = ErrorMessageBuilder.build(theme: ErrorTheme.BlueScreen);
     return StreamProvider<User>.value(
       value: AuthService().user,
       child: new MaterialApp(
@@ -29,8 +32,8 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.blue,
           //******************************************************************//
           // Set font Default
-          textTheme: GoogleFonts.k2DTextTheme(Theme.of(context).textTheme),
-          primaryTextTheme: GoogleFonts.k2DTextTheme(
+          textTheme: GoogleFonts.robotoTextTheme(Theme.of(context).textTheme),
+          primaryTextTheme: GoogleFonts.robotoTextTheme(
             Theme.of(context)
                 .primaryTextTheme, // ถ้าไม่ใส่ มันจะตั้งค่า Default ทุกอย่างตาม ThemeData.light().textTheme
           ),
@@ -51,6 +54,7 @@ class MyApp extends StatelessWidget {
           '/AddWork-page': (context) => AddworkPage(), //Addwork Page
           '/ViewWork-page': (context) => ViewWork(), //Addwork Page
           '/Map-page': (context) => MyMapPageState(), //Addwork Page
+          '/Mainmenu-page': (context) => Mainmenu(), //Addwork Page
         },
         localizationsDelegates: [
           // ... app-specific localization delegate[s] here
@@ -70,13 +74,3 @@ class MyApp extends StatelessWidget {
   }
 }
 
-//class MainPage extends StatelessWidget {
-//
-//  @override
-//  Widget build(BuildContext context) => Scaffold(
-//    appBar: AppBar(
-//      title: Text("Push Message"),
-//    ),
-//    body: MessagingWidget(),
-//  );
-//}

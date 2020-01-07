@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:baibuaapp/screens/Authenticate/register.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'autu.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -26,56 +27,156 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
+    return Scaffold(
 //        resizeToAvoidBottomPadding: false,
-        backgroundColor: Colors.lightBlueAccent,
-        body: Stack(
-          fit: StackFit.expand,
-          children: <Widget>[
-            SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.only(top: 50),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    CircleAvatar(
-                      backgroundColor: Colors.white,
-                      radius: 80,
-                      child: Image.asset("img/logo.png"),
+      backgroundColor: Colors.white,
+      body: Stack(
+        fit: StackFit.expand,
+        children: <Widget>[
+          SingleChildScrollView(
+            child: Column(
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.only(top: 0.1),
+                  child: Container(
+                    alignment: Alignment.center,
+                    padding: EdgeInsets.only(top: 50.0),
+                    height: MediaQuery.of(context).size.height - 120,
+                    decoration: BoxDecoration(
+                      borderRadius:
+                          BorderRadius.vertical(bottom: Radius.circular(40)),
+                      color: Colors.white,
+                      boxShadow: [
+                        BoxShadow(
+                            color: Colors.black.withOpacity(0.3),
+                            blurRadius: 10.0,
+                            spreadRadius: 1,
+                            offset: Offset(0, 5))
+                      ],
                     ),
-                    Form(
-                      key: formKey,
-                      child: Column(
-                        children: <Widget>[
-                          Container(
-                            padding: EdgeInsets.all(30),
-                            child: Column(
-                              children: <Widget>[
-                                idInput(),
-                                SizedBox(height: 18.0),
-                                passwordInput(),
-                              ],
-                            ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Container(
+                          width: 130.0,
+                          height: 130.0,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(24),
+                            color: Colors.white,
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.blue.withOpacity(0.5),
+                                blurRadius: 10.0,
+                                spreadRadius: 0.5,
+                                offset: Offset(1.0, 1.0),
+                              ),
+                            ],
                           ),
-                        ],
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              CircleAvatar(
+                                child: Icon(
+                                  Icons.track_changes,
+                                  color: Colors.white,
+                                  size: 50,
+                                ),
+                                backgroundColor: Colors.blue,
+                                radius: 35,
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Text(
+                                "Baibua",
+                                style: GoogleFonts.roboto(
+                                  fontSize: 22.0,
+                                  fontWeight: FontWeight.bold,
+                                  textStyle: TextStyle(
+                                      color: Color.fromRGBO(0, 148, 233, 1)),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Form(
+                          key: formKey,
+                          child: Column(
+                            children: <Widget>[
+                              Container(
+                                  padding: EdgeInsets.all(30),
+                                  child: Column(
+                                    children: <Widget>[
+                                      Text(
+                                        "Sign in",
+                                        style: GoogleFonts.roboto(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 24.0,
+                                          textStyle: TextStyle(
+                                            color: Color.fromRGBO(
+                                                166, 188, 208, 1),
+                                          ),
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 25,
+                                      ),
+                                      idInput(),
+                                      SizedBox(height: 18.0),
+                                      passwordInput(),
+                                      SizedBox(height: 10.0),
+                                      InkWell(
+                                        onTap: () {
+                                          print("Click Forgot password");
+                                        },
+                                        child: Text(
+                                          "Forgot password?",
+                                          style: TextStyle(
+                                            fontSize: 14.0,
+                                            color: Color.fromRGBO(
+                                                166, 188, 208, 1),
+                                          ),
+                                        ),
+                                      ),
+                                      SizedBox(height: 70.0),
+                                      Text(
+                                        error,
+                                        style: TextStyle(
+                                            color: Colors.red, fontSize: 16),
+                                      ),
+                                      loginBtn(),
+                                    ],
+                                  )),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 50,
+                ),
+                FlatButton(
+                  onPressed: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => Register()));
+                  },
+                  child: Text(
+                    "CREATE ACCOUNT",
+                    style: GoogleFonts.roboto(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20.0,
+                      textStyle: TextStyle(
+                        color: Color.fromRGBO(166, 188, 208, 1),
                       ),
                     ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    Text(
-                      error,
-                      style: TextStyle(color: Colors.red, fontSize: 16),
-                    ),
-                    loginBtn(),
-                    buttonBottom(),
-                  ],
+                  ),
                 ),
-              ),
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -83,16 +184,10 @@ class _LoginScreenState extends State<LoginScreen> {
   //**************************************************************************//
   // Note : Widget ID  TextFormFeild
   Widget idInput() => Container(
-        padding: EdgeInsets.all(10),
+        padding: EdgeInsets.all(5),
         decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(20.0),
-          boxShadow: [
-            BoxShadow(
-              color: Color.fromRGBO(0, 0, 0, 0.1),
-              offset: Offset(0, 5),
-            ),
-          ],
+          color: Color.fromRGBO(240, 244, 248, 1),
+          borderRadius: BorderRadius.circular(50.0),
         ),
         child: Padding(
           padding: const EdgeInsets.only(left: 10, right: 10),
@@ -102,12 +197,14 @@ class _LoginScreenState extends State<LoginScreen> {
             },
             keyboardType: TextInputType.emailAddress,
             decoration: InputDecoration(
-              hintText: "E-mail",
-              prefixIcon: Icon(Icons.people),
+              hintText: "Email",
+              prefixIcon: Icon(
+                Icons.mail,
+                color: Color.fromRGBO(166, 188, 208, 1),
+              ),
               border: InputBorder.none,
               hintStyle: TextStyle(
-                fontSize: 18.0,
-              ),
+                  fontSize: 16.0, color: Color.fromRGBO(166, 188, 208, 1)),
             ),
             controller: _id,
             //** Validator ID
@@ -129,16 +226,10 @@ class _LoginScreenState extends State<LoginScreen> {
   //**************************************************************************//
   // Note : Widget Password TextFeild
   Widget passwordInput() => Container(
-        padding: EdgeInsets.all(10),
+        padding: EdgeInsets.all(5),
         decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(20.0),
-          boxShadow: [
-            BoxShadow(
-              color: Color.fromRGBO(0, 0, 0, 0.1),
-              offset: Offset(0, 5),
-            ),
-          ],
+          color: Color.fromRGBO(240, 244, 248, 1),
+          borderRadius: BorderRadius.circular(50.0),
         ),
         child: Padding(
           padding: const EdgeInsets.only(left: 10, right: 10),
@@ -149,12 +240,16 @@ class _LoginScreenState extends State<LoginScreen> {
               setState(() => _password = val);
             },
             decoration: InputDecoration(
+              counterText: "",
+              counterStyle: TextStyle(
+                height: double.minPositive,
+              ),
               hintText: "Password",
-              prefixIcon: Icon(Icons.vpn_key),
+              prefixIcon:
+                  Icon(Icons.lock, color: Color.fromRGBO(166, 188, 208, 1)),
               border: InputBorder.none,
               hintStyle: TextStyle(
-                fontSize: 18.0,
-              ),
+                  fontSize: 18.0, color: Color.fromRGBO(166, 188, 208, 1)),
             ),
             controller: _pass,
 
@@ -185,45 +280,45 @@ class _LoginScreenState extends State<LoginScreen> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Expanded(
-              child: Container(
-//                      width: 200.0,
-                height: 50.0,
-//                          Button => 'Register'
-                child: RaisedButton(
-                  shape: new RoundedRectangleBorder(
-                    borderRadius: new BorderRadius.circular(18.0),
-                    side: BorderSide(color: Colors.green),
-                  ),
-                  child: Text(
-                    "Login",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 18.0,
-                    ),
-                  ),
-                  color: Colors.green,
-                  onPressed: () async {
-                    print(_email + ":" + _password);
-                    if (formKey.currentState.validate()) {
-                      formKey.currentState.save();
-                      dynamic result = await _authService
-                          .loginWithEmailAndPassword(_email, _password);
-                      print(_id.text);
-                      print(_pass.text);
-                      if (result == null) {
-                        setState(() {
-                          error = 'please supply a valid email.';
-                        });
-                      } else {
-                        Navigator.pushNamed(context, '/Chatroom-page');
-                      }
-                      // Call _authService function
+            Container(
+              width: 250.0,
+              height: 60.0,
+              child: RaisedButton(
+                color: Color.fromRGBO(0, 147, 233, 1),
+                shape: new RoundedRectangleBorder(
+                  borderRadius: new BorderRadius.circular(50.0),
 
-                    }
-                  },
-                  elevation: 5,
                 ),
+                child: Text(
+                  "Sign In",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 18.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                onPressed: () async {
+                  print(_email + ":" + _password);
+                  if (formKey.currentState.validate()) {
+                    formKey.currentState.save();
+                    dynamic result = await _authService
+                        .loginWithEmailAndPassword(_email, _password);
+                    print(_id.text);
+                    print(_pass.text);
+                    if (result == null) {
+                      setState(() {
+
+                        error = 'Incorrect email.';
+                      });
+                    } else {
+
+                      Navigator.pushNamed(context, '/Chatroom-page');
+                    }
+                    // Call _authService function
+
+                  }
+                },
+                elevation: 5,
               ),
             ),
           ],
@@ -269,4 +364,6 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       );
 //**************************************************************************//
+
+
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dialogflow/dialogflow_v2.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class ChatroomBaibua extends StatefulWidget {
   ChatroomBaibua({Key key, this.title}) : super(key: key);
@@ -14,34 +15,14 @@ class ChatroomBaibua extends StatefulWidget {
 class _HomePageDialogflowV2 extends State<ChatroomBaibua> {
   final List<ChatMessage> _messages = <ChatMessage>[];
   final TextEditingController _textController = new TextEditingController();
+  bool _isComposing = false; // Check message null ?
 
-  Widget _buildTextComposer() {
-    return new IconTheme(
-      data: new IconThemeData(color: Theme.of(context).accentColor),
-      child: new Container(
-        margin: const EdgeInsets.symmetric(horizontal: 8.0),
-        child: new Row(
-          children: <Widget>[
-            new Flexible(
-              child: new TextField(
-                controller: _textController,
-                onSubmitted: _handleSubmitted,
-                decoration: new InputDecoration.collapsed(
-                  hintText: "Send a message",
-                ),
-              ),
-            ),
-            new Container(
-              margin: new EdgeInsets.symmetric(horizontal: 4.0),
-              child: new IconButton(
-                  icon: new Icon(Icons.send),
-                  onPressed: () => _handleSubmitted(_textController.text)),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
+  //TextStyle
+  TextStyle _googleFontRoboto = GoogleFonts.roboto(
+    fontSize: 22.0,
+    fontWeight: FontWeight.bold,
+    textStyle: TextStyle(color: Color.fromRGBO(0, 147, 233, 1)),
+  );
 
 //  Connect with Dialogflow => AuthGoogle => key.json file...
   void Response(query) async {
@@ -63,8 +44,11 @@ class _HomePageDialogflowV2 extends State<ChatroomBaibua> {
   }
 
   void _handleSubmitted(String text) {
-    String _textname = "User";
+    String _textname = "";
     _textController.clear();
+    setState(() {
+      _isComposing = false;
+    });
     ChatMessage message = new ChatMessage(
       text: text,
       name: _textname,
@@ -79,195 +63,225 @@ class _HomePageDialogflowV2 extends State<ChatroomBaibua> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-      appBar: new AppBar(
-        title: Text("Baibuachatbot"),
-        leading: Icon(Icons.chat),
-        actions: <Widget>[
-          PopupMenuButton(
-            offset: Offset(0, 100),
-            elevation: 10,
-            color: Colors.blue,
-            //** (val) => value property in PopupMenuItem **//
-            onSelected: (val) {
-              Navigator.pushNamed(context, val);
-            },
-            icon: Icon(
-              Icons.keyboard_arrow_down,
-              size: 40,
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(80),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            new AppBar(
+              centerTitle: true,
+              // Widget App Name
+              title: titleAppbar(),
+              backgroundColor: Colors.white,
+              // Widget Arrow back
+              leading: arrowBack(),
+              //Rounded Rectangle Border
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.vertical(
+                  bottom: Radius.circular(25),
+                ),
+              ),
+              actions: [
+                Padding(
+                  padding: const EdgeInsets.only(right: 16.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.blue,
+                      shape: BoxShape.circle,
+                    ),
+                    width: 40,
+                    height: 40,
+                    child: IconButton(
+                      splashColor: Colors.lightBlueAccent,
+                      icon: Icon(
+                        Icons.home,
+                        color: Colors.white,
+                      ),
+                      onPressed: () {
+                        //Call Page => Menu
+                        Navigator.pushNamed(context, '/Mainmenu-page');
+                      },
+                    ),
+                  ),
+                ),
+              ],
             ),
-            itemBuilder: (BuildContext context) {
-              return [
-                PopupMenuItem(
-                  //** value => 'routes/...' **//
-                  value: '/News-page',
-                  child: Row(
-                    children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.only(right: 10),
-                        child: Icon(
-                          Icons.fiber_new,
-                          color: Colors.white,
-                        ),
-                      ),
-                      Text(
-                        "ข่าวสาร",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                          color: Colors.white,
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-                PopupMenuItem(
-                  //** value => 'routes/...' **//
-                  value: '/Setting-page',
-                  child: Row(
-                    children: <Widget>[
-                      Hero(
-                        tag: "setting",
-                        child: Padding(
-                          padding: const EdgeInsets.only(right: 10),
-                          child: Icon(
-                            Icons.settings,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                      Text(
-                        "ตั้งค่า",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                          color: Colors.white,
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-                PopupMenuItem(
-                  //** value => 'routes/...' **//
-                  value: '/Map-page',
-                  child: Row(
-                    children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.only(right: 10),
-                        child: Icon(
-                          Icons.map,
-                          color: Colors.white,
-                        ),
-                      ),
-                      Text(
-                        "แผนที่",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                          color: Colors.white,
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-                PopupMenuItem(
-                  //** value => 'routes/...' **//
-                  value: '/AddWork-page',
-                  child: Row(
-                    children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.only(right: 10),
-                        child: Icon(
-                          Icons.add_box,
-                          color: Colors.white,
-                        ),
-                      ),
-                      Text(
-                        "เพิ่มงาน",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                          color: Colors.white,
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-                PopupMenuItem(
-                  //** value => 'routes/...' **//
-                  value: '/ViewWork-page',
-                  child: Row(
-                    children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.only(right: 10),
-                        child: Icon(
-                          Icons.work,
-                          color: Colors.white,
-                        ),
-                      ),
-                      Text(
-                        "ดูงาน",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                          color: Colors.white,
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-              ];
-            },
-          ),
-        ],
+          ],
+        ),
       ),
       body: new Column(children: <Widget>[
         Container(
           child: new Flexible(
             child: new ListView.builder(
-              padding: new EdgeInsets.all(8.0),
+              padding: new EdgeInsets.all(16.0),
               reverse: true,
               itemBuilder: (_, int index) => _messages[index],
               itemCount: _messages.length,
             ),
           ),
         ),
-        new Divider(height: 1.0),
         new Container(
-          decoration: new BoxDecoration(color: Theme.of(context).cardColor),
+          padding: EdgeInsets.only(bottom: 30.0),
+          decoration:
+              BoxDecoration(border: Border.all(color: Colors.transparent)),
           child: _buildTextComposer(),
         ),
       ]),
     );
   }
+
+//  ************************************ Widget Section ****************************** //
+//  Widget Component
+  Widget _buildTextComposer() {
+    return new IconTheme(
+      data: new IconThemeData(color: Theme.of(context).accentColor),
+      child: new Container(
+        padding: EdgeInsets.symmetric(horizontal: 16.0),
+        decoration: BoxDecoration(
+          color: Color.fromRGBO(231, 234, 241, 1),
+          borderRadius: BorderRadius.circular(50.0),
+        ),
+        margin: const EdgeInsets.symmetric(horizontal: 16.0),
+        child: new Row(
+          children: <Widget>[
+            new Flexible(
+              child: new TextField(
+                controller: _textController,
+                onSubmitted: _handleSubmitted,
+                onChanged: (String text) {
+                  setState(() {
+                    _isComposing = text.length > 0;
+                  });
+                },
+                decoration: new InputDecoration.collapsed(
+                  hintText: "Type your message",
+                  hintStyle: GoogleFonts.roboto(
+                    fontSize: 14.0,
+//                    fontWeight: FontWeight.bold,
+                    textStyle: TextStyle(color: Colors.grey),
+                  ),
+                ),
+              ),
+            ),
+            new Container(
+              margin: EdgeInsets.only(left: 5.00),
+              width: 40,
+              decoration: BoxDecoration(
+                color: Colors.lightBlue,
+                shape: BoxShape.circle,
+              ),
+              child: Container(
+                child: new IconButton(
+                  icon: new Icon(
+                    Icons.send,
+                    color: Colors.white,
+                  ),
+                  onPressed: _isComposing
+                      ? () => _handleSubmitted(_textController.text)
+                      : null,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  // Widget App Name
+  Widget titleAppbar() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisSize: MainAxisSize.min,
+      children: <Widget>[
+        Icon(
+          Icons.track_changes,
+          color: Colors.blue,
+          size: 32,
+        ),
+        SizedBox(
+          width: 5,
+        ),
+        Text(
+          "Baibua",
+          style: _googleFontRoboto,
+        ),
+      ],
+    );
+  }
+
+  // Widget Arrow back
+  Widget arrowBack() {
+    return IconButton(
+      icon: Icon(
+        Icons.arrow_back_ios,
+        color: Colors.black,
+      ),
+      onPressed: () {
+        Navigator.pop(context);
+      },
+    );
+  }
+
+//  **************************************************************************//
 }
 
 class ChatMessage extends StatelessWidget {
-  ChatMessage({this.text, this.name, this.type});
+  ChatMessage({
+    this.text,
+    this.name,
+    this.type,
+  });
+
+//  AnimationController animationController; // Animation Control Chat UI
 
   final String text;
   final String name;
   final bool type;
 
   List<Widget> otherMessage(context) {
+    TimeOfDay now = TimeOfDay.now();
+    String _timeofdayBot = now.format(context).toString();
+    print(now.format(context));
+
     return <Widget>[
       new Container(
-        margin: const EdgeInsets.only(right: 16.0),
+        margin: const EdgeInsets.only(right: 5.0),
         child: new CircleAvatar(child: new Image.asset("img/logo.png")),
       ),
       new Expanded(
         child: new Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            new Text(this.name,
-                style: new TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: Colors.lightBlue,
-                  fontSize: 20,
-
-                )),
             new Container(
-              margin: const EdgeInsets.only(top: 5.0),
-              child: new Text(text),
+              decoration: BoxDecoration(
+                color: Color.fromRGBO(231, 234, 241, 1),
+                borderRadius: BorderRadius.only(
+                  bottomRight: const Radius.circular(30),
+                  bottomLeft: const Radius.circular(30),
+                  topRight: const Radius.circular(30),
+                ),
+              ),
+              margin: const EdgeInsets.only(top: 2.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Container(
+                    margin: const EdgeInsets.all(16.00),
+                    child: new Text(
+                      text,
+                      style: TextStyle(fontSize: 14, color: Colors.black),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 16.0, bottom: 16.0),
+                    child: Text(
+                      _timeofdayBot,
+                      style: TextStyle(color: Colors.grey[500], fontSize: 12.0),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ],
         ),
@@ -276,35 +290,50 @@ class ChatMessage extends StatelessWidget {
   }
 
   List<Widget> myMessage(context) {
+    TimeOfDay now = TimeOfDay.now();
+    String _timeofdayUser = now.format(context).toString();
     return <Widget>[
       new Expanded(
         child: new Column(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: <Widget>[
-            new Text(
-              this.name,
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-                color: Colors.lightBlueAccent,
-              ),
-            ),
             new Container(
-              margin: const EdgeInsets.only(top: 5.0),
-              child: new Text(
-                text,
-                style: TextStyle(
-                  fontSize: 18,
+              decoration: BoxDecoration(
+                color: Color.fromRGBO(0, 147, 233, 1),
+                borderRadius: BorderRadius.only(
+                  bottomLeft: const Radius.circular(30),
+                  topLeft: const Radius.circular(30),
+                  topRight: const Radius.circular(30),
                 ),
+              ),
+              margin: const EdgeInsets.only(right: 5),
+              child: Column(
+                children: <Widget>[
+                  Container(
+                    margin: const EdgeInsets.all(10.00),
+                    child: new Text(
+                      text,
+                      style: TextStyle(fontSize: 16, color: Colors.white),
+                    ),
+                  ),
+                  Padding(
+                    padding:
+                        EdgeInsets.only(bottom: 16.0, left: 16.0, right: 16.0),
+                    child: Text(
+                      _timeofdayUser,
+                      style: TextStyle(color: Colors.white70, fontSize: 12.0),
+                    ),
+                  ),
+                ],
               ),
             ),
           ],
         ),
       ),
-      new Container(
-        margin: const EdgeInsets.only(left: 16.0),
-        child: new CircleAvatar(child: new Image.asset("img/photo.png")),
-      ),
+//      new Container(
+//        margin: const EdgeInsets.only(left: 16.0),
+////        child: new CircleAvatar(child: new Image.asset("img/photo.png")),
+//      ),
     ];
   }
 

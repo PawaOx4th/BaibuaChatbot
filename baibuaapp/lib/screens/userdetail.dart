@@ -188,25 +188,25 @@ class _UserDetailPageState extends State<UserDetailPage> {
                                   ),
                                 ),
                               ),
-                              Text(
-                                _userName,
-                                style: GoogleFonts.kanit(
-                                  textStyle: TextStyle(
-                                    color: Color.fromRGBO(81, 93, 111, 1),
-                                    fontSize: 18.00,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ),
-                              Text(
-                                _userEmail,
-                                style: GoogleFonts.kanit(
-                                  textStyle: TextStyle(
-                                    color: Color.fromRGBO(81, 93, 111, 1),
-                                    fontSize: 18.00,
-                                  ),
-                                ),
-                              ),
+//                              Text(
+//                                _userName,
+//                                style: GoogleFonts.kanit(
+//                                  textStyle: TextStyle(
+//                                    color: Color.fromRGBO(81, 93, 111, 1),
+//                                    fontSize: 18.00,
+//                                    fontWeight: FontWeight.bold,
+//                                  ),
+//                                ),
+//                              ),
+//                              Text(
+//                                _userEmail,
+//                                style: GoogleFonts.kanit(
+//                                  textStyle: TextStyle(
+//                                    color: Color.fromRGBO(81, 93, 111, 1),
+//                                    fontSize: 18.00,
+//                                  ),
+//                                ),
+//                              ),
                               SizedBox(
                                 height: 5.0,
                               ),

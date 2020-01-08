@@ -16,6 +16,7 @@ class _HomePageDialogflowV2 extends State<ChatroomBaibua> {
   final List<ChatMessage> _messages = <ChatMessage>[];
   final TextEditingController _textController = new TextEditingController();
   bool _isComposing = false; // Check message null ?
+  String useridChatroom = "";
 
   //TextStyle
   TextStyle _googleFontRoboto = GoogleFonts.roboto(
@@ -62,6 +63,8 @@ class _HomePageDialogflowV2 extends State<ChatroomBaibua> {
 
   @override
   Widget build(BuildContext context) {
+    String userId = ModalRoute.of(context).settings.arguments;
+
     return new Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(80),
@@ -98,8 +101,13 @@ class _HomePageDialogflowV2 extends State<ChatroomBaibua> {
                         color: Colors.white,
                       ),
                       onPressed: () {
+                        setState(() {
+                          useridChatroom = userId;
+                          Navigator.pushNamed(context, '/Mainmenu-page',
+                              arguments: useridChatroom);
+                          print(useridChatroom);
+                        });
                         //Call Page => Menu
-                        Navigator.pushNamed(context, '/Mainmenu-page');
                       },
                     ),
                   ),

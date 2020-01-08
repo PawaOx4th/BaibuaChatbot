@@ -52,6 +52,7 @@ class _MainmenuState extends State<Mainmenu> {
   @override
   Widget build(BuildContext context) {
     double _widthScreen = MediaQuery.of(context).size.width;
+    String userId = ModalRoute.of(context).settings.arguments;
 
     return Scaffold(
       appBar: PreferredSize(
@@ -180,7 +181,8 @@ class _MainmenuState extends State<Mainmenu> {
                       ),
                       child: InkWell(
                         onTap: () {
-                          Navigator.pushNamed(context, '/Userdetail-page');
+                          Navigator.pushNamed(context, '/Userdetail-page',arguments:  userId);
+                          print(  "Main Menu " + userId);
                         },
                         child: Center(
                           child: Column(

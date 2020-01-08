@@ -1,8 +1,14 @@
+import 'package:baibuaapp/REST%20API/userdata.dart';
+import 'package:baibuaapp/REST%20API/userservice.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:baibuaapp/screens/Authenticate/register.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'autu.dart';
+import 'dart:convert';
+
+import 'package:baibuaapp/REST%20API/userdata.dart';
+import 'package:http/http.dart' as Http;
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -20,6 +26,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final formKey = GlobalKey<FormState>();
 
   String _email, _password;
+  String userId;
 
   // มี new  หรือ ไม่มีก็ได้ หรือใช้ "var" แทน TextEditingController ก็ได้
   TextEditingController _id = TextEditingController();
@@ -222,8 +229,6 @@ class _LoginScreenState extends State<LoginScreen> {
       );
 
   //**************************************************************************//
-
-  //**************************************************************************//
   // Note : Widget Password TextFeild
   Widget passwordInput() => Container(
         padding: EdgeInsets.all(5),
@@ -269,8 +274,6 @@ class _LoginScreenState extends State<LoginScreen> {
       );
 
   //**************************************************************************//
-
-  //**************************************************************************//
   // Note : Widget Login Button TextFeild
   Widget loginBtn() => Padding(
         padding: const EdgeInsets.only(
@@ -287,7 +290,6 @@ class _LoginScreenState extends State<LoginScreen> {
                 color: Color.fromRGBO(0, 147, 233, 1),
                 shape: new RoundedRectangleBorder(
                   borderRadius: new BorderRadius.circular(50.0),
-
                 ),
                 child: Text(
                   "Sign In",
@@ -301,21 +303,21 @@ class _LoginScreenState extends State<LoginScreen> {
                   print(_email + ":" + _password);
                   if (formKey.currentState.validate()) {
                     formKey.currentState.save();
-                    dynamic result = await _authService
-                        .loginWithEmailAndPassword(_email, _password);
-                    print(_id.text);
-                    print(_pass.text);
+                    dynamic result = await _authService.loginWithEmailAndPassword(_email, _password);
+
+                    //**************************************************//
+                    callDataWithEmail(email: _email);
+                    print("UserID :  " + userId );
+                    //**************************************************//
+
                     if (result == null) {
                       setState(() {
-
                         error = 'Incorrect email.';
                       });
                     } else {
-
-                      Navigator.pushNamed(context, '/Chatroom-page');
+                      Navigator.pushNamed(context, '/Chatroom-page',arguments: userId);
                     }
                     // Call _authService function
-
                   }
                 },
                 elevation: 5,
@@ -326,6 +328,19 @@ class _LoginScreenState extends State<LoginScreen> {
       );
 
   //**************************************************************************//
+
+ callDataWithEmail({String email}) async {
+   print( "=> : " + email);
+    var url =
+        "https://us-central1-newagent-47c20.cloudfunctions.net/api/user/filter/$email";
+    var response = await Http.get(url);
+    Map map = jsonDecode(response.body);
+    Userdata userData = Userdata.fromJson(map);
+    print("Get data With Email: ${userData.email}");
+    setState(() {
+      userId = userData.id;
+    });
+  }
 
   //**************************************************************************//
   // Note : Widget ButtonBottom TextFeild
@@ -364,6 +379,5 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       );
 //**************************************************************************//
-
 
 }

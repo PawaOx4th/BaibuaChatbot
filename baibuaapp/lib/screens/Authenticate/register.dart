@@ -278,20 +278,32 @@ class _RegisterState extends State<Register> {
                   ),
                   color: Colors.lightBlue[300],
                   onPressed: () async {
-                    if (formKeyRegister.currentState.validate()) {
-                      formKeyRegister.currentState.save();
-                      dynamic result =
-                          await _authService.registerWithEmailAndPassword(
-                              _emailRegister, _passwordRegister);
-                      if (result == null) {
-                        setState(() {
-                          error = "please supply a valid email";
-                          isRegister = false;
-                        });
-                      } else {
-                        _registerUser();
-                      }
-                    }
+                    //Call Http Post Method
+                    var register = Registeruser();
+                    register.email = _emailRegister;
+                    register.password = _passwordRegister;
+                    register.id = _stuIdRegister;
+                    print(register.email);
+                    print(register.password);
+                    print(register.id);
+                    String jsonRegister = registeruserToJson(register);
+                    print(jsonRegister);
+
+                    String _postUrl =
+                        'https://us-central1-newagent-47c20.cloudfunctions.net/api/user/';
+                    var response = await Http.post(
+                      _postUrl,
+                      headers: {
+                        HttpHeaders.contentTypeHeader: 'application/json'
+                      },
+                      body: jsonRegister,
+                    );
+                    print("Status: " +
+                        response.statusCode.toString() +
+                        response.body);
+
+                    _registerUser(response);
+
                     (isRegister) ? _showDialogS() : Container();
                   },
                   elevation: 5,
@@ -303,7 +315,7 @@ class _RegisterState extends State<Register> {
       );
 
 //  ****************************************************************************  //
-// Dialog Show Register Seuccess
+// Dialog Show Register Successfully
   _showDialogS() {
     showDialog(
         context: context,
@@ -333,43 +345,29 @@ class _RegisterState extends State<Register> {
             ));
   }
 
-//  Call Post User Register
-  _registerUser() async {
-    //Call Http Post Method
-    var register = Registeruser();
-    register.email = _emailRegister;
-    register.password = _passwordRegister;
-    register.id = _stuIdRegister;
-    print(register.email);
-    print(register.password);
-    print(register.id);
-    String jsonRegister = registeruserToJson(register);
-    print(jsonRegister);
-
-    String _postUrl =
-        'https://us-central1-newagent-47c20.cloudfunctions.net/api/user/';
-    var response = await Http.post(
-      _postUrl,
-      headers: {HttpHeaders.contentTypeHeader: 'application/json'},
-      body: jsonRegister,
-    );
-    print("Status: " + response.statusCode.toString() + response.body);
-
-    //Check Status Code
-    if(response.statusCode == 201){
-      setState(() {
-        isRegister = true;
-      });
-    }
-    else{
+  _registerUser(response) async {
+    if (response.statusCode == 201) {
+      if (formKeyRegister.currentState.validate()) {
+        formKeyRegister.currentState.save();
+        dynamic result = await _authService.registerWithEmailAndPassword(
+            _emailRegister, _passwordRegister);
+        if (result == null) {
+          setState(() {
+            error = "please supply a valid email";
+            isRegister = false;
+          });
+        } else {
+          setState(() {
+            isRegister = true;
+          });
+        }
+      }
+    } else {
       setState(() {
         isRegister = false;
         print(response.statusCode.toString());
       });
-
     }
-
-
   }
 
 //  ******************** Validate condition ********************

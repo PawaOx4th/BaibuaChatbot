@@ -65,6 +65,7 @@ class _UserDetailPageState extends State<UserDetailPage> {
   @override
   Widget build(BuildContext context) {
     double _widthScreen = MediaQuery.of(context).size.width;
+    String userID = ModalRoute.of(context).settings.arguments ;
     return Scaffold(
       backgroundColor: bgMenuColor,
       appBar: PreferredSize(
@@ -160,12 +161,12 @@ class _UserDetailPageState extends State<UserDetailPage> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               FutureBuilder(
-                                future: UserDataService.callData(),
+                                future: UserDataService.callData(userID: userID),
                                 builder: (context, snapshot) {
                                   if (snapshot.hasData) {
-                                    UserData userdata = snapshot.data;
+                                    Userdata userdata = snapshot.data;
                                     return Text(
-                                      userdata.nameEN,
+                                      userdata.nameEn,
                                       style: GoogleFonts.kanit(
                                         textStyle: TextStyle(
                                           color: Color.fromRGBO(81, 93, 111, 1),

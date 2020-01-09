@@ -48,10 +48,13 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: Container(
                     alignment: Alignment.center,
                     padding: EdgeInsets.only(top: 50.0),
-                    height: MediaQuery.of(context).size.height - 120,
+                    height: MediaQuery
+                        .of(context)
+                        .size
+                        .height - 120,
                     decoration: BoxDecoration(
                       borderRadius:
-                          BorderRadius.vertical(bottom: Radius.circular(40)),
+                      BorderRadius.vertical(bottom: Radius.circular(40)),
                       color: Colors.white,
                       boxShadow: [
                         BoxShadow(
@@ -190,7 +193,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
   //**************************************************************************//
   // Note : Widget ID  TextFormFeild
-  Widget idInput() => Container(
+  Widget idInput() =>
+      Container(
         padding: EdgeInsets.all(5),
         decoration: BoxDecoration(
           color: Color.fromRGBO(240, 244, 248, 1),
@@ -230,7 +234,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
   //**************************************************************************//
   // Note : Widget Password TextFeild
-  Widget passwordInput() => Container(
+  Widget passwordInput() =>
+      Container(
         padding: EdgeInsets.all(5),
         decoration: BoxDecoration(
           color: Color.fromRGBO(240, 244, 248, 1),
@@ -251,7 +256,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               hintText: "Password",
               prefixIcon:
-                  Icon(Icons.lock, color: Color.fromRGBO(166, 188, 208, 1)),
+              Icon(Icons.lock, color: Color.fromRGBO(166, 188, 208, 1)),
               border: InputBorder.none,
               hintStyle: TextStyle(
                   fontSize: 18.0, color: Color.fromRGBO(166, 188, 208, 1)),
@@ -275,7 +280,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
   //**************************************************************************//
   // Note : Widget Login Button TextFeild
-  Widget loginBtn() => Padding(
+  Widget loginBtn() =>
+      Padding(
         padding: const EdgeInsets.only(
           left: 30.0,
           right: 30.0,
@@ -300,24 +306,37 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
                 onPressed: () async {
-                  print(_email + ":" + _password);
+                  var url =
+                      "https://us-central1-newagent-47c20.cloudfunctions.net/api/user/filter/${_email}";
+                  var response = await Http.get(url);
+                  Map map = jsonDecode(response.body);
+                  Userdata userData = Userdata.fromJson(map);
+
                   if (formKey.currentState.validate()) {
-                    formKey.currentState.save();
-                    dynamic result = await _authService.loginWithEmailAndPassword(_email, _password);
+                    if (response.statusCode == 200) {
+                      formKey.currentState.save();
+                      dynamic result = await _authService
+                          .loginWithEmailAndPassword(_email, _password);
+                      if (result == null) {
+                        print("Result Null");
+                        setState(() {
+                          error = 'please supply a valid email.';
+                        });
+                      } else {
+                        setState(() {
+                          userId = userData.id;
+                        });
 
-                    //**************************************************//
-                    callDataWithEmail(email: _email);
-                    print("UserID :  " + userId );
-                    //**************************************************//
-
-                    if (result == null) {
-                      setState(() {
-                        error = 'Incorrect email.';
-                      });
+                        Navigator.pushNamed(
+                            context, '/Chatroom-page', arguments:userId);
+                        print("Get data With Email: ${userData.email}");
+                        print("Result NotNull: ${userData.id}");
+                      }
                     } else {
-                      Navigator.pushNamed(context, '/Chatroom-page',arguments: userId);
+                      print(response.statusCode.toString());
                     }
-                    // Call _authService function
+                  } else {
+                    print("Validation fail");
                   }
                 },
                 elevation: 5,
@@ -329,8 +348,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
   //**************************************************************************//
 
- callDataWithEmail({String email}) async {
-   print( "=> : " + email);
+  callDataWithEmail({String email}) async {
+    print("=> : " + email);
     var url =
         "https://us-central1-newagent-47c20.cloudfunctions.net/api/user/filter/$email";
     var response = await Http.get(url);
@@ -344,7 +363,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
   //**************************************************************************//
   // Note : Widget ButtonBottom TextFeild
-  Widget buttonBottom() => Container(
+  Widget buttonBottom() =>
+      Container(
         child: Padding(
           padding: const EdgeInsets.only(left: 20, right: 20),
           child: Row(

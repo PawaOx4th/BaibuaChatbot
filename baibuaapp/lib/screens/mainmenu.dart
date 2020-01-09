@@ -1,3 +1,4 @@
+import 'package:baibuaapp/screens/Authenticate/autu.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -49,6 +50,8 @@ class _MainmenuState extends State<Mainmenu> {
     super.initState();
   }
 
+  final AuthService _authService = AuthService();
+
   @override
   Widget build(BuildContext context) {
     double _widthScreen = MediaQuery.of(context).size.width;
@@ -81,7 +84,9 @@ class _MainmenuState extends State<Mainmenu> {
                               color: Color.fromRGBO(166, 188, 208, 1),
                               size: 28,
                             ),
-                            onPressed: () {},
+                            onPressed: () {
+                              print("Click");
+                            },
                           ),
                           isWork ? working() : Container(),
                         ],
@@ -97,7 +102,11 @@ class _MainmenuState extends State<Mainmenu> {
                               color: Color.fromRGBO(166, 188, 208, 1),
                               size: 28,
                             ),
-                            onPressed: () {},
+                            onPressed: () async {
+                              await _authService.signOut();
+                              print(_authService.toString());
+                              Navigator.pushNamed(context, '/Login-page');
+                            },
                           ),
                           isWorkDeadline ? workDeadline() : Container(),
                         ],
@@ -181,8 +190,9 @@ class _MainmenuState extends State<Mainmenu> {
                       ),
                       child: InkWell(
                         onTap: () {
-                          Navigator.pushNamed(context, '/Userdetail-page',arguments:  userId);
-                          print(  "Main Menu " + userId);
+                          Navigator.pushNamed(context, '/Userdetail-page',
+                              arguments: userId);
+                          print("Main Menu " + userId);
                         },
                         child: Center(
                           child: Column(

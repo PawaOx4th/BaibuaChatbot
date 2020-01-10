@@ -1,6 +1,4 @@
 import 'package:baibuaapp/REST%20API/userdata.dart';
-import 'package:baibuaapp/REST%20API/userservice.dart';
-import 'package:baibuaapp/screens/baibuaChatroom.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -8,8 +6,6 @@ import 'package:baibuaapp/screens/Authenticate/register.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'autu.dart';
 import 'dart:convert';
-
-import 'package:baibuaapp/REST%20API/userdata.dart';
 import 'package:http/http.dart' as Http;
 
 class LoginScreen extends StatefulWidget {
@@ -43,12 +39,13 @@ class _LoginScreenState extends State<LoginScreen> {
           SingleChildScrollView(
             child: Column(
               children: <Widget>[
+
                 Padding(
                   padding: const EdgeInsets.only(top: 0.1),
                   child: Container(
                     alignment: Alignment.center,
-                    padding: EdgeInsets.only(top: 50.0),
-                    height: MediaQuery.of(context).size.height - 120,
+                    padding: EdgeInsets.only(top: 10.0),
+                    height: MediaQuery.of(context).size.height - 80,
                     decoration: BoxDecoration(
                       borderRadius:
                           BorderRadius.vertical(bottom: Radius.circular(40)),
@@ -64,6 +61,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
+                        SizedBox(height: 40,),
                         Container(
                           width: 130.0,
                           height: 130.0,
@@ -162,7 +160,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
                 SizedBox(
-                  height: 50,
+                  height: 20,
                 ),
                 FlatButton(
                   onPressed: () {

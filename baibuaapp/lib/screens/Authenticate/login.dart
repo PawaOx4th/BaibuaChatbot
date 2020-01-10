@@ -1,5 +1,7 @@
 import 'package:baibuaapp/REST%20API/userdata.dart';
 import 'package:baibuaapp/REST%20API/userservice.dart';
+import 'package:baibuaapp/screens/baibuaChatroom.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:baibuaapp/screens/Authenticate/register.dart';
@@ -22,9 +24,7 @@ class _LoginScreenState extends State<LoginScreen> {
   String error = '';
 
   //  ****************************************************** //
-
   final formKey = GlobalKey<FormState>();
-
   String _email, _password;
   String userId;
 
@@ -48,13 +48,10 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: Container(
                     alignment: Alignment.center,
                     padding: EdgeInsets.only(top: 50.0),
-                    height: MediaQuery
-                        .of(context)
-                        .size
-                        .height - 120,
+                    height: MediaQuery.of(context).size.height - 120,
                     decoration: BoxDecoration(
                       borderRadius:
-                      BorderRadius.vertical(bottom: Radius.circular(40)),
+                          BorderRadius.vertical(bottom: Radius.circular(40)),
                       color: Colors.white,
                       boxShadow: [
                         BoxShadow(
@@ -193,8 +190,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   //**************************************************************************//
   // Note : Widget ID  TextFormFeild
-  Widget idInput() =>
-      Container(
+  Widget idInput() => Container(
         padding: EdgeInsets.all(5),
         decoration: BoxDecoration(
           color: Color.fromRGBO(240, 244, 248, 1),
@@ -234,8 +230,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   //**************************************************************************//
   // Note : Widget Password TextFeild
-  Widget passwordInput() =>
-      Container(
+  Widget passwordInput() => Container(
         padding: EdgeInsets.all(5),
         decoration: BoxDecoration(
           color: Color.fromRGBO(240, 244, 248, 1),
@@ -256,7 +251,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               hintText: "Password",
               prefixIcon:
-              Icon(Icons.lock, color: Color.fromRGBO(166, 188, 208, 1)),
+                  Icon(Icons.lock, color: Color.fromRGBO(166, 188, 208, 1)),
               border: InputBorder.none,
               hintStyle: TextStyle(
                   fontSize: 18.0, color: Color.fromRGBO(166, 188, 208, 1)),
@@ -280,8 +275,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   //**************************************************************************//
   // Note : Widget Login Button TextFeild
-  Widget loginBtn() =>
-      Padding(
+  Widget loginBtn() => Padding(
         padding: const EdgeInsets.only(
           left: 30.0,
           right: 30.0,
@@ -317,6 +311,11 @@ class _LoginScreenState extends State<LoginScreen> {
                       formKey.currentState.save();
                       dynamic result = await _authService
                           .loginWithEmailAndPassword(_email, _password);
+
+                      final FirebaseUser user =
+                          await FirebaseAuth.instance.currentUser();
+                      final String uid = user.uid.toString();
+
                       if (result == null) {
                         print("Result Null");
                         setState(() {
@@ -327,10 +326,17 @@ class _LoginScreenState extends State<LoginScreen> {
                           userId = userData.id;
                         });
 
+                        setUpDisplayName(userID: userId);
+//                        MaterialPageRoute materialPageRoute = MaterialPageRoute(
+//                            builder: (BuildContext) => ChatroomBaibua());
+//                        Navigator.of(context).pushAndRemoveUntil(
+//                            materialPageRoute, (Route<dynamic> route) => false);
+
                         Navigator.pushNamed(
-                            context, '/Chatroom-page', arguments:userId);
+                            context, '/Chatroom-page');
                         print("Get data With Email: ${userData.email}");
-                        print("Result NotNull: ${userData.id}");
+                        print("Result NotNull: ${uid}");
+
                       }
                     } else {
                       print(response.statusCode.toString());
@@ -361,10 +367,20 @@ class _LoginScreenState extends State<LoginScreen> {
     });
   }
 
+  //Setup Display Name with USER ID
+  Future<void> setUpDisplayName({String userID}) async {
+    FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+    await firebaseAuth.currentUser().then((response) {
+      UserUpdateInfo userUpdateInfo = UserUpdateInfo();
+      userUpdateInfo.displayName = userID ;
+      response.updateProfile(userUpdateInfo);
+      print("UserUpdateInfo: ${userUpdateInfo.displayName}");
+    });
+  }
+
   //**************************************************************************//
   // Note : Widget ButtonBottom TextFeild
-  Widget buttonBottom() =>
-      Container(
+  Widget buttonBottom() => Container(
         child: Padding(
           padding: const EdgeInsets.only(left: 20, right: 20),
           child: Row(

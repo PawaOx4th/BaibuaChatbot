@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:baibuaapp/REST%20API/register.dart';
 import 'package:baibuaapp/screens/Authenticate/autu.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -289,20 +290,45 @@ class _RegisterState extends State<Register> {
                     String jsonRegister = registeruserToJson(register);
                     print(jsonRegister);
 
-                    String _postUrl =
-                        'https://us-central1-newagent-47c20.cloudfunctions.net/api/user/';
-                    var response = await Http.post(
-                      _postUrl,
+                    String _postUrl ='https://us-central1-newagent-47c20.cloudfunctions.net/api/user/';
+                    var response = await Http.post(_postUrl,
                       headers: {
                         HttpHeaders.contentTypeHeader: 'application/json'
                       },
                       body: jsonRegister,
                     );
-                    print("Status: " +
-                        response.statusCode.toString() +
-                        response.body);
+                    print("Status: " + response.statusCode.toString() +  response.body);
+                    if (response.statusCode == 201)   {
+                        if (formKeyRegister.currentState.validate()) {
+                          formKeyRegister.currentState.save();
+                          dynamic result = await _authService.registerWithEmailAndPassword(
+                              _emailRegister, _passwordRegister);
+                          if (result == null) {
+                            setState(
+                                  () {
+                                error = "please supply a valid email";
+                                isRegister = false;
+                              },
+                            );
+                          } else {
+                            print('else result not Null');
+                            setState(
+                                  () {
+                                isRegister = true;
+                              },
+                            );
+                          }
+                        }
+                      } else {
+                        print('else');
+                        setState(
+                              () {
+                            isRegister = false;
+                            print(response.statusCode.toString());
+                          },
+                        );
+                      }
 
-                    _registerUser(response);
 
                     (isRegister) ? _showDialogS() : Container();
                   },
@@ -345,30 +371,7 @@ class _RegisterState extends State<Register> {
             ));
   }
 
-  _registerUser(response) async {
-    if (response.statusCode == 201) {
-      if (formKeyRegister.currentState.validate()) {
-        formKeyRegister.currentState.save();
-        dynamic result = await _authService.registerWithEmailAndPassword(
-            _emailRegister, _passwordRegister);
-        if (result == null) {
-          setState(() {
-            error = "please supply a valid email";
-            isRegister = false;
-          });
-        } else {
-          setState(() {
-            isRegister = true;
-          });
-        }
-      }
-    } else {
-      setState(() {
-        isRegister = false;
-        print(response.statusCode.toString());
-      });
-    }
-  }
+
 
 //  ******************** Validate condition ********************
   String validateEmail(String value) {
@@ -408,8 +411,6 @@ class _RegisterState extends State<Register> {
     }
   }
 
-//  ****************************************************************************  //
-
-//  ****************************************************************************  //
+//  *********************************************************************** //
 
 }

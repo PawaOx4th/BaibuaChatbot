@@ -1,5 +1,6 @@
 import 'package:baibuaapp/REST%20API/userdata.dart';
 import 'package:baibuaapp/REST%20API/userservice.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -18,7 +19,7 @@ class _UserDetailPageState extends State<UserDetailPage> {
   String _countWorkDeadline = "20";
   String _userName = "นายหรินทร์ ธนะนาม";
   String _userEmail = "test@gmail.com";
-  String _userid = "115910400343-2";
+  String _userid = "";
 
   //TextStyle
   TextStyle _googleFontRoboto = GoogleFonts.roboto(
@@ -61,6 +62,24 @@ class _UserDetailPageState extends State<UserDetailPage> {
   Color bgMenuColor = Color.fromRGBO(237, 242, 247, 1);
   Color ShadowMenuColor = Color.fromRGBO(11, 84, 194, 0.5);
   Color nameColor = Color.fromRGBO(81, 93, 111, 1);
+
+
+  Future<void> findDisplay() async {
+    FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+    FirebaseUser firebaseUser = await firebaseAuth.currentUser();
+    String name = firebaseUser.displayName;
+    setState(() {
+      _userid = name ;
+    });
+    print("Displayname In Main Menu Page => " + name);
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    findDisplay();
+  }
 
   @override
   Widget build(BuildContext context) {

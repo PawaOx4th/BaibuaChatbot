@@ -14,12 +14,9 @@ class _UserDetailPageState extends State<UserDetailPage> {
   //Variable
   final bool isWork = true;
   final bool isWorkDeadline = false;
-  final bool isRole = true;
+
   String _countWorking = "2";
   String _countWorkDeadline = "20";
-  String _userName = "นายหรินทร์ ธนะนาม";
-  String _userEmail = "test@gmail.com";
-  String _userid = "";
 
   //TextStyle
   TextStyle _googleFontRoboto = GoogleFonts.roboto(
@@ -63,14 +60,11 @@ class _UserDetailPageState extends State<UserDetailPage> {
   Color ShadowMenuColor = Color.fromRGBO(11, 84, 194, 0.5);
   Color nameColor = Color.fromRGBO(81, 93, 111, 1);
 
-
   Future<void> findDisplay() async {
     FirebaseAuth firebaseAuth = FirebaseAuth.instance;
     FirebaseUser firebaseUser = await firebaseAuth.currentUser();
     String name = firebaseUser.displayName;
-    setState(() {
-      _userid = name ;
-    });
+
     print("Displayname In Main Menu Page => " + name);
   }
 
@@ -79,12 +73,14 @@ class _UserDetailPageState extends State<UserDetailPage> {
     // TODO: implement initState
     super.initState();
     findDisplay();
+//    isRole = false ;
   }
 
   @override
   Widget build(BuildContext context) {
     double _widthScreen = MediaQuery.of(context).size.width;
-    String userID = ModalRoute.of(context).settings.arguments ;
+    String userID = ModalRoute.of(context).settings.arguments;
+
     return Scaffold(
       backgroundColor: bgMenuColor,
       appBar: PreferredSize(
@@ -111,6 +107,7 @@ class _UserDetailPageState extends State<UserDetailPage> {
                       Stack(
                         children: <Widget>[
                           IconButton(
+                            
                             icon: Icon(
                               Icons.book,
                               color: Color.fromRGBO(166, 188, 208, 1),
@@ -127,6 +124,7 @@ class _UserDetailPageState extends State<UserDetailPage> {
                       Stack(
                         children: <Widget>[
                           IconButton(
+                            tooltip: "",
                             icon: Icon(
                               Icons.notification_important,
                               color: Color.fromRGBO(166, 188, 208, 1),
@@ -151,206 +149,224 @@ class _UserDetailPageState extends State<UserDetailPage> {
           SingleChildScrollView(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 18.0),
-              child: Column(
-                children: <Widget>[
-                  //************************ Title ***************************//
-                  Container(
-                    width: _widthScreen,
-                    height: 130,
-                    decoration: BoxDecoration(
-//                    color: Colors.black,
-                        ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.max,
+              child: FutureBuilder(
+                future: UserDataService.callData(userID: userID),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    Userdata userdata = snapshot.data;
+                    bool isRole;
+                    if (userdata.level == 1) {
+                      isRole = true;
+                    } else {
+                      isRole = false;
+                    }
+
+                    return Column(
                       children: <Widget>[
-                        Expanded(
-                          flex: 1,
-                          child: CircleAvatar(
-                            radius: 50.00,
-                            backgroundColor: Colors.black,
+                        //************************ Title ***************************//
+                        Container(
+                          width: _widthScreen,
+                          height: 130,
+                          decoration: BoxDecoration(
+//                    color: Colors.black,
+                              ),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            children: <Widget>[
+                              Expanded(
+                                flex: 1,
+                                child: CircleAvatar(
+                                  radius: 50.00,
+                                  backgroundColor: Colors.black,
+                                ),
+                              ),
+                              SizedBox(
+                                width: 16.0,
+                              ),
+                              Expanded(
+                                flex: 2,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    FutureBuilder(
+                                      future: UserDataService.callData(
+                                          userID: userID),
+                                      builder: (context, snapshot) {
+                                        if (snapshot.hasData) {
+                                          Userdata userdata = snapshot.data;
+                                          return Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: <Widget>[
+                                              Text(
+                                                userdata.nameEn,
+                                                style: GoogleFonts.kanit(
+                                                  textStyle: TextStyle(
+                                                    color: Color.fromRGBO(
+                                                        81, 93, 111, 1),
+                                                    fontSize: 18.00,
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                                ),
+                                              ),
+                                              Text(
+                                                userdata.id,
+                                                style: GoogleFonts.kanit(
+                                                  textStyle: TextStyle(
+                                                    color: Color.fromRGBO(
+                                                        81, 93, 111, 1),
+                                                    fontSize: 16.00,
+                                                  ),
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                height: 5.0,
+                                              ),
+                                              Container(
+                                                width: 86,
+                                                height: 30,
+                                                alignment: Alignment.center,
+                                                decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(50),
+                                                  border: Border.all(
+                                                      color: borderRole),
+                                                ),
+                                                child: isRole
+                                                    ? Text(
+                                                        "หัวหน้าห้อง",
+                                                        style:
+                                                            GoogleFonts.kanit(
+                                                          textStyle: TextStyle(
+                                                            color:
+                                                                Color.fromRGBO(
+                                                                    0,
+                                                                    147,
+                                                                    233,
+                                                                    1),
+                                                            fontSize: 12.00,
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                          ),
+                                                        ),
+                                                      )
+                                                    : Container(),
+                                              ),
+                                            ],
+                                          );
+                                        } else {
+                                          return Container();
+                                        }
+                                      },
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                         SizedBox(
-                          width: 16.0,
+                          height: 16.00,
                         ),
-                        Expanded(
-                          flex: 2,
+                        //************************ Detile *************************//
+                        Container(
+                          padding: EdgeInsets.all(18.00),
+                          width: _widthScreen,
+                          height: isRole ? 250.00 : 210,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(20),
+                          ),
                           child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
-                              FutureBuilder(
-                                future: UserDataService.callData(userID: userID),
-                                builder: (context, snapshot) {
-                                  if (snapshot.hasData) {
-                                    Userdata userdata = snapshot.data;
-                                    return Text(
-                                      userdata.nameEn,
-                                      style: GoogleFonts.kanit(
-                                        textStyle: TextStyle(
-                                          color: Color.fromRGBO(81, 93, 111, 1),
-                                          fontSize: 18.00,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                    );
-                                  } else {
-                                    return Container();
-                                  }
-                                },
-                              ),
-                              Text(
-                                "xxxx",
-                                style: GoogleFonts.kanit(
-                                  textStyle: TextStyle(
-                                    color: Color.fromRGBO(81, 93, 111, 1),
-                                    fontSize: 16.00,
-                                  ),
+                              Container(
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 5.0, horizontal: 5.0),
+                                child: Row(
+                                  children: <Widget>[
+                                    Icon(
+                                      Icons.contacts,
+                                      size: 28.00,
+                                      color: borderRole,
+                                    ),
+                                    SizedBox(width: 16.00),
+                                    Text(userdata.nameEn,
+                                        style: _detailFontKanit),
+                                  ],
                                 ),
                               ),
-//                              Text(
-//                                _userName,
-//                                style: GoogleFonts.kanit(
-//                                  textStyle: TextStyle(
-//                                    color: Color.fromRGBO(81, 93, 111, 1),
-//                                    fontSize: 18.00,
-//                                    fontWeight: FontWeight.bold,
-//                                  ),
-//                                ),
-//                              ),
-//                              Text(
-//                                _userEmail,
-//                                style: GoogleFonts.kanit(
-//                                  textStyle: TextStyle(
-//                                    color: Color.fromRGBO(81, 93, 111, 1),
-//                                    fontSize: 18.00,
-//                                  ),
-//                                ),
-//                              ),
                               SizedBox(
-                                height: 5.0,
+                                height: 8.00,
+                              ),
+                              Divider(
+                                height: 10,
                               ),
                               Container(
-                                width: 86,
-                                height: 30,
-                                alignment: Alignment.center,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(50),
-                                  border: Border.all(color: borderRole),
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 5.0, horizontal: 5.0),
+                                child: Row(
+                                  children: <Widget>[
+                                    Icon(
+                                      Icons.payment,
+                                      size: 28.00,
+                                      color: borderRole,
+                                    ),
+                                    SizedBox(width: 16.00),
+                                    Text(userdata.id, style: _detailFontKanit),
+                                  ],
                                 ),
-                                child: isRole
-                                    ? Text(
-                                        "หัวหน้าห้อง",
-                                        style: GoogleFonts.kanit(
-                                          textStyle: TextStyle(
-                                            color:
-                                                Color.fromRGBO(0, 147, 233, 1),
-                                            fontSize: 12.00,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                      )
-                                    : Container(),
                               ),
+                              SizedBox(
+                                height: 8.00,
+                              ),
+                              Divider(
+                                height: 10,
+                              ),
+                              Container(
+                                padding: EdgeInsets.symmetric(
+                                  vertical: 5.0,
+                                  horizontal: 5.0,
+                                ),
+                                child: Row(
+                                  children: <Widget>[
+                                    Icon(
+                                      Icons.mail_outline,
+                                      size: 28.00,
+                                      color: borderRole,
+                                    ),
+                                    SizedBox(width: 16.00),
+                                    Text(
+                                      userdata.email,
+                                      style: _detailFontKanit,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(
+                                height: 8.00,
+                              ),
+                              Divider(
+                                height: 10,
+                              ),
+                              isRole ? role() : Container(),
                             ],
                           ),
                         ),
+                        SizedBox(
+                          height: 16.00,
+                        ),
+                        Placeholder(),
+                        Placeholder(),
+                        Placeholder(),
                       ],
-                    ),
-                  ),
-                  SizedBox(
-                    height: 16.00,
-                  ),
-                  //************************ Detile *************************//
-                  Container(
-                    padding: EdgeInsets.all(18.00),
-                    width: _widthScreen,
-                    height: isRole ? 250.00 : 210,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: Column(
-                      children: <Widget>[
-                        Container(
-                          padding: EdgeInsets.symmetric(
-                              vertical: 5.0, horizontal: 5.0),
-                          child: Row(
-                            children: <Widget>[
-                              Icon(
-                                Icons.contacts,
-                                size: 28.00,
-                                color: borderRole,
-                              ),
-                              SizedBox(width: 16.00),
-                              Text(_userName, style: _detailFontKanit),
-                            ],
-                          ),
-                        ),
-                        SizedBox(
-                          height: 8.00,
-                        ),
-                        Divider(
-                          height: 10,
-                        ),
-                        Container(
-                          padding: EdgeInsets.symmetric(
-                              vertical: 5.0, horizontal: 5.0),
-                          child: Row(
-                            children: <Widget>[
-                              Icon(
-                                Icons.payment,
-                                size: 28.00,
-                                color: borderRole,
-                              ),
-                              SizedBox(width: 16.00),
-                              Text(_userid, style: _detailFontKanit),
-                            ],
-                          ),
-                        ),
-                        SizedBox(
-                          height: 8.00,
-                        ),
-                        Divider(
-                          height: 10,
-                        ),
-                        Container(
-                          padding: EdgeInsets.symmetric(
-                            vertical: 5.0,
-                            horizontal: 5.0,
-                          ),
-                          child: Row(
-                            children: <Widget>[
-                              Icon(
-                                Icons.mail_outline,
-                                size: 28.00,
-                                color: borderRole,
-                              ),
-                              SizedBox(width: 16.00),
-                              Text(
-                                _userEmail,
-                                style: _detailFontKanit,
-                              ),
-                            ],
-                          ),
-                        ),
-                        SizedBox(
-                          height: 8.00,
-                        ),
-                        Divider(
-                          height: 10,
-                        ),
-                        isRole ? role() : Container(),
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    height: 16.00,
-                  ),
-                  Placeholder(),
-                  Placeholder(),
-                  Placeholder(),
-                ],
+                    );
+                  } else {
+                    return Container();
+                  }
+                },
               ),
             ),
           ),

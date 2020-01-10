@@ -1,5 +1,7 @@
 import 'package:baibuaapp/REST%20API/userdata.dart';
 import 'package:baibuaapp/REST%20API/userservice.dart';
+import 'package:baibuaapp/screens/Authenticate/autu.dart';
+import 'package:baibuaapp/screens/Authenticate/login.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -36,17 +38,8 @@ class _UserDetailPageState extends State<UserDetailPage> {
     textStyle: TextStyle(color: Color.fromRGBO(81, 92, 111, 1)),
   );
 
-  TextStyle _nameKanit = GoogleFonts.kanit(
-    fontSize: 18.0,
-    fontWeight: FontWeight.w500,
-    textStyle: TextStyle(
-      color: Color.fromRGBO(81, 92, 11, 1),
-    ),
-  );
-
-  TextStyle _textMenuTH = GoogleFonts.kanit(
-    fontSize: 18.0,
-    fontWeight: FontWeight.bold,
+  TextStyle _btnFontKanit = GoogleFonts.kanit(
+    fontSize: 16.0,
     textStyle: TextStyle(color: Colors.white),
   );
 
@@ -59,6 +52,10 @@ class _UserDetailPageState extends State<UserDetailPage> {
   Color bgMenuColor = Color.fromRGBO(237, 242, 247, 1);
   Color ShadowMenuColor = Color.fromRGBO(11, 84, 194, 0.5);
   Color nameColor = Color.fromRGBO(81, 93, 111, 1);
+  Color btnSendAdminColor = Color.fromRGBO(166, 188, 208, 1);
+  Color btnLogOutColor = Color.fromRGBO(255, 105, 105, 1);
+
+  final AuthService _authService = AuthService();
 
   Future<void> findDisplay() async {
     FirebaseAuth firebaseAuth = FirebaseAuth.instance;
@@ -107,7 +104,6 @@ class _UserDetailPageState extends State<UserDetailPage> {
                       Stack(
                         children: <Widget>[
                           IconButton(
-                            
                             icon: Icon(
                               Icons.book,
                               color: Color.fromRGBO(166, 188, 208, 1),
@@ -225,18 +221,20 @@ class _UserDetailPageState extends State<UserDetailPage> {
                                               SizedBox(
                                                 height: 5.0,
                                               ),
-                                              Container(
-                                                width: 86,
-                                                height: 30,
-                                                alignment: Alignment.center,
-                                                decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(50),
-                                                  border: Border.all(
-                                                      color: borderRole),
-                                                ),
-                                                child: isRole
-                                                    ? Text(
+                                              (isRole)
+                                                  ? Container(
+                                                      width: 86,
+                                                      height: 30,
+                                                      alignment:
+                                                          Alignment.center,
+                                                      decoration: BoxDecoration(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(50),
+                                                        border: Border.all(
+                                                            color: borderRole),
+                                                      ),
+                                                      child: Text(
                                                         "หัวหน้าห้อง",
                                                         style:
                                                             GoogleFonts.kanit(
@@ -252,9 +250,8 @@ class _UserDetailPageState extends State<UserDetailPage> {
                                                                 FontWeight.bold,
                                                           ),
                                                         ),
-                                                      )
-                                                    : Container(),
-                                              ),
+                                                      ))
+                                                  : Container(),
                                             ],
                                           );
                                         } else {
@@ -275,7 +272,7 @@ class _UserDetailPageState extends State<UserDetailPage> {
                         Container(
                           padding: EdgeInsets.all(18.00),
                           width: _widthScreen,
-                          height: isRole ? 250.00 : 210,
+                          height: isRole ? 250.00 : 195,
                           decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(20),
@@ -348,19 +345,176 @@ class _UserDetailPageState extends State<UserDetailPage> {
                               SizedBox(
                                 height: 8.00,
                               ),
-                              Divider(
-                                height: 10,
-                              ),
                               isRole ? role() : Container(),
                             ],
                           ),
                         ),
                         SizedBox(
+                          height: 25.00,
+                        ),
+                        //************************ Sub Detail **********************//
+                        Container(
+                          padding: EdgeInsets.all(18.00),
+                          width: _widthScreen,
+                          height: 250.00,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          child: Column(
+                            children: <Widget>[
+                              Container(
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 5.0, horizontal: 5.0),
+                                child: Row(
+                                  children: <Widget>[
+                                    Icon(
+                                      Icons.school,
+                                      size: 28.00,
+                                      color: borderRole,
+                                    ),
+                                    SizedBox(width: 16.00),
+                                    Text(userdata.major,
+                                        style: _detailFontKanit),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(
+                                height: 8.00,
+                              ),
+                              Divider(
+                                height: 10,
+                              ),
+                              Container(
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 5.0, horizontal: 5.0),
+                                child: Row(
+                                  children: <Widget>[
+                                    Icon(
+                                      Icons.class_,
+                                      size: 28.00,
+                                      color: borderRole,
+                                    ),
+                                    SizedBox(width: 16.00),
+                                    Text(userdata.faculty,
+                                        style: _detailFontKanit),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(
+                                height: 8.00,
+                              ),
+                              Divider(
+                                height: 10,
+                              ),
+                              Container(
+                                padding: EdgeInsets.symmetric(
+                                  vertical: 5.0,
+                                  horizontal: 5.0,
+                                ),
+                                child: Row(
+                                  children: <Widget>[
+                                    Icon(
+                                      Icons.create,
+                                      size: 28.00,
+                                      color: borderRole,
+                                    ),
+                                    SizedBox(width: 16.00),
+                                    Text(
+                                      userdata.status,
+                                      style: _detailFontKanit,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(
+                                height: 8.00,
+                              ),
+                              Divider(
+                                height: 10,
+                              ),
+                              Container(
+                                padding: EdgeInsets.symmetric(
+                                  vertical: 5.0,
+                                  horizontal: 5.0,
+                                ),
+                                child: Row(
+                                  children: <Widget>[
+                                    Icon(
+                                      Icons.turned_in_not,
+                                      size: 28.00,
+                                      color: borderRole,
+                                    ),
+                                    SizedBox(width: 16.00),
+                                    Text(
+                                      userdata.degree,
+                                      style: _detailFontKanit,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          height: 25.00,
+                        ),
+                        //************************  Send Admin Button **********************//
+                        RaisedButton(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Container(
+                            height: 60,
+//                            width: _widthScreen,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: Center(
+                                child: Text(
+                              "ติดต่อผู้แดแลระบบเพื่อแก้ไขข้อมูล",
+                              style: _btnFontKanit,
+                            )),
+                          ),
+                          onPressed: () {},
+                          elevation: 0.00,
+                          color: btnSendAdminColor,
+                        ),
+                        SizedBox(
                           height: 16.00,
                         ),
-                        Placeholder(),
-                        Placeholder(),
-                        Placeholder(),
+                        //************************  LogOut Button **********************//
+                        RaisedButton(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Container(
+                            height: 60,
+//                            width: _widthScreen,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: Center(
+                                child: Text(
+                              "ออกจากระบบ",
+                              style: _btnFontKanit,
+                            )),
+                          ),
+                          elevation: 0.00,
+                          color: btnLogOutColor,
+                          onPressed: () async {
+                            await _authService.signOut();
+                            print(_authService.toString());
+//                            Navigator.pushNamed(context, '/Login-page');
+                            MaterialPageRoute materialPageRoute = MaterialPageRoute(
+                                builder: (BuildContext) => LoginScreen());
+                            Navigator.of(context).pushAndRemoveUntil(
+                                materialPageRoute, (Route<dynamic> route) => false);
+                          },
+                        ),
+                        SizedBox(
+                          height: 36.00,
+                        ),
                       ],
                     );
                   } else {

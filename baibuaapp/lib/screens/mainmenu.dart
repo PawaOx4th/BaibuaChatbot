@@ -114,11 +114,7 @@ class _MainmenuState extends State<Mainmenu> {
                               color: Color.fromRGBO(166, 188, 208, 1),
                               size: 28,
                             ),
-                            onPressed: () async {
-                              await _authService.signOut();
-                              print(_authService.toString());
-                              Navigator.pushNamed(context, '/Login-page');
-                            },
+                            onPressed: () {} ,
                           ),
                           isWorkDeadline ? workDeadline() : Container(),
                         ],

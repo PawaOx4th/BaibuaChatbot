@@ -1,4 +1,5 @@
 import 'package:baibuaapp/REST%20API/userdata.dart';
+import 'package:baibuaapp/screens/baibuaChatroom.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -237,6 +238,7 @@ class _LoginScreenState extends State<LoginScreen> {
         child: Padding(
           padding: const EdgeInsets.only(left: 10, right: 10),
           child: TextFormField(
+            obscureText: true,
             maxLength: 6,
             keyboardType: TextInputType.number,
             onChanged: (val) {
@@ -325,13 +327,13 @@ class _LoginScreenState extends State<LoginScreen> {
                         });
 
                         setUpDisplayName(userID: userId);
-//                        MaterialPageRoute materialPageRoute = MaterialPageRoute(
-//                            builder: (BuildContext) => ChatroomBaibua());
-//                        Navigator.of(context).pushAndRemoveUntil(
-//                            materialPageRoute, (Route<dynamic> route) => false);
+                        MaterialPageRoute materialPageRoute = MaterialPageRoute(
+                            builder: (BuildContext) => ChatroomBaibua());
+                        Navigator.of(context).pushAndRemoveUntil(
+                            materialPageRoute, (Route<dynamic> route) => false);
 
-                        Navigator.pushNamed(
-                            context, '/Chatroom-page');
+//                        Navigator.pushNamed(
+//                            context, '/Chatroom-page');
                         print("Get data With Email: ${userData.email}");
                         print("Result NotNull: ${uid}");
 

@@ -1,3 +1,5 @@
+import 'package:baibuaapp/screens/Authenticate/autu.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -13,6 +15,7 @@ class _MainmenuState extends State<Mainmenu> {
   final bool isWorkDeadline = false;
   String _countWorking = "2";
   String _countWorkDeadline = "20";
+  String _userID = '';
 
   //TextStyle
   TextStyle _googleFontRoboto = GoogleFonts.roboto(
@@ -41,17 +44,30 @@ class _MainmenuState extends State<Mainmenu> {
   Color bgMenuColor = Color.fromRGBO(0, 147, 233, 1);
   Color ShadowMenuColor = Color.fromRGBO(11, 84, 194, 0.5);
 
+  Future<void> findDisplay() async {
+    FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+    FirebaseUser firebaseUser = await firebaseAuth.currentUser();
+    String name = firebaseUser.displayName;
+    setState(() {
+      _userID = name ;
+    });
+    print("Displayname In Main Menu Page => " + name);
+  }
+
   //Init State
   @override
   void initState() {
     // TODO: implement initState
-
     super.initState();
+    findDisplay();
   }
+
+  final AuthService _authService = AuthService();
 
   @override
   Widget build(BuildContext context) {
     double _widthScreen = MediaQuery.of(context).size.width;
+    String userId = ModalRoute.of(context).settings.arguments;
 
     return Scaffold(
       appBar: PreferredSize(
@@ -80,7 +96,9 @@ class _MainmenuState extends State<Mainmenu> {
                               color: Color.fromRGBO(166, 188, 208, 1),
                               size: 28,
                             ),
-                            onPressed: () {},
+                            onPressed: () {
+                              print("Click");
+                            },
                           ),
                           isWork ? working() : Container(),
                         ],
@@ -96,7 +114,7 @@ class _MainmenuState extends State<Mainmenu> {
                               color: Color.fromRGBO(166, 188, 208, 1),
                               size: 28,
                             ),
-                            onPressed: () {},
+                            onPressed: () {} ,
                           ),
                           isWorkDeadline ? workDeadline() : Container(),
                         ],
@@ -138,7 +156,7 @@ class _MainmenuState extends State<Mainmenu> {
                       ),
                       child: InkWell(
                         onTap: () {
-//                          Navigator.pushNamed(context, '/Chatroom-page');
+                          Navigator.pushNamed(context, '/Chatroom-page');
                         },
                         child: Center(
                           child: Column(
@@ -180,7 +198,10 @@ class _MainmenuState extends State<Mainmenu> {
                       ),
                       child: InkWell(
                         onTap: () {
-                          print("Tap");
+                          Navigator.pushNamed(
+                            context,
+                            '/Userdetail-page',arguments: _userID
+                          );
                         },
                         child: Center(
                           child: Column(

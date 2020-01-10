@@ -1,9 +1,14 @@
+import 'dart:io';
+
+import 'package:baibuaapp/REST%20API/register.dart';
 import 'package:baibuaapp/screens/Authenticate/autu.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:giffy_dialog/giffy_dialog.dart';
+import 'package:http/http.dart' as Http;
 
 class Register extends StatefulWidget {
   @override
@@ -16,7 +21,8 @@ class _RegisterState extends State<Register> {
   final AuthService _authService = AuthService();
 
 //  Variable  form  Email Input, Student-id Input and Password Input
-  String _stuIdRegister, _emailRegister, _passwordRegister,_repasswordRegister ;
+  String _stuIdRegister, _emailRegister, _passwordRegister, _repasswordRegister;
+
   bool isRegister = false;
 
   static const List<Key> keys = [
@@ -273,22 +279,61 @@ class _RegisterState extends State<Register> {
                   ),
                   color: Colors.lightBlue[300],
                   onPressed: () async {
-                    if (formKeyRegister.currentState.validate()) {
-                      formKeyRegister.currentState.save();
-                      dynamic result =
-                          await _authService.registerWithEmailAndPassword(
-                              _emailRegister, _passwordRegister);
-                      if (result == null) {
-                        setState(() {
-                          error = "please supply a valid email";
-                          isRegister = false;
-                        });
-                      } else {
-                        setState(() {
-                          isRegister = true;
-                        });
+                    //Call Http Post Method
+                    var register = Registeruser();
+                    register.email = _emailRegister;
+                    register.password = _passwordRegister;
+                    register.id = _stuIdRegister;
+                    print(register.email);
+                    print(register.password);
+                    print(register.id);
+                    String jsonRegister = registeruserToJson(register);
+                    print(jsonRegister);
+
+                    String _postUrl =
+                        'https://us-central1-newagent-47c20.cloudfunctions.net/api/user/';
+                    var response = await Http.post(
+                      _postUrl,
+                      headers: {
+                        HttpHeaders.contentTypeHeader: 'application/json'
+                      },
+                      body: jsonRegister,
+                    );
+                    print("Status: " +
+                        response.statusCode.toString() +
+                        response.body);
+                    if (response.statusCode == 201) {
+                      if (formKeyRegister.currentState.validate()) {
+                        formKeyRegister.currentState.save();
+                        dynamic result =
+                            await _authService.registerWithEmailAndPassword(
+                                _emailRegister, _passwordRegister);
+                        if (result == null) {
+                          setState(
+                            () {
+                              error = "please supply a valid email";
+                              isRegister = false;
+                            },
+                          );
+                        } else {
+                          print('else result not Null');
+                          setState(
+                            () {
+                              isRegister = true;
+                            },
+                          );
+                        }
                       }
+                    } else {
+                      print('else');
+                      setState(
+                        () {
+                          isRegister = false;
+                          print(response.statusCode.toString());
+                        },
+                      );
                     }
+
                     (isRegister) ? _showDialogS() : Container();
                   },
                   elevation: 5,
@@ -300,7 +345,7 @@ class _RegisterState extends State<Register> {
       );
 
 //  ****************************************************************************  //
-// Dialog Show Register Seuccess
+// Dialog Show Register Successfully
   _showDialogS() {
     showDialog(
         context: context,
@@ -319,7 +364,7 @@ class _RegisterState extends State<Register> {
               description: Text(
                 'สมัครสมาชิกสำเร็จ กรุณาทำการเข้าสู่ระบบ',
                 textAlign: TextAlign.center,
-                style:GoogleFonts.kanit(
+                style: GoogleFonts.kanit(
                   textStyle: TextStyle(color: Colors.black38, fontSize: 14.0),
                 ),
               ),
@@ -368,8 +413,6 @@ class _RegisterState extends State<Register> {
     }
   }
 
-//  ****************************************************************************  //
-
-//  ****************************************************************************  //
+//  *********************************************************************** //
 
 }

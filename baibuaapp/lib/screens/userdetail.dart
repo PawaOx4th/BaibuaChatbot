@@ -16,6 +16,7 @@ class _UserDetailPageState extends State<UserDetailPage> {
   //Variable
   final bool isWork = true;
   final bool isWorkDeadline = false;
+  String iD = '';
 
   String _countWorking = "2";
   String _countWorkDeadline = "20";
@@ -60,9 +61,11 @@ class _UserDetailPageState extends State<UserDetailPage> {
   Future<void> findDisplay() async {
     FirebaseAuth firebaseAuth = FirebaseAuth.instance;
     FirebaseUser firebaseUser = await firebaseAuth.currentUser();
-    String name = firebaseUser.displayName;
-
-    print("Displayname In Main Menu Page => " + name);
+    String userId = firebaseUser.displayName;
+    setState(() {
+      iD = userId;
+    });
+    print("Displayname In Main Menu Page => " + userId);
   }
 
   @override
@@ -70,13 +73,13 @@ class _UserDetailPageState extends State<UserDetailPage> {
     // TODO: implement initState
     super.initState();
     findDisplay();
-//    isRole = false ;
+
+
   }
 
   @override
   Widget build(BuildContext context) {
     double _widthScreen = MediaQuery.of(context).size.width;
-    String userID = ModalRoute.of(context).settings.arguments;
 
     return Scaffold(
       backgroundColor: bgMenuColor,
@@ -146,7 +149,7 @@ class _UserDetailPageState extends State<UserDetailPage> {
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 18.0),
               child: FutureBuilder(
-                future: UserDataService.callData(userID: userID),
+                future: UserDataService.callData(userID: iD),
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
                     Userdata userdata = snapshot.data;
@@ -186,8 +189,8 @@ class _UserDetailPageState extends State<UserDetailPage> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: <Widget>[
                                     FutureBuilder(
-                                      future: UserDataService.callData(
-                                          userID: userID),
+                                      future:
+                                          UserDataService.callData(userID: iD),
                                       builder: (context, snapshot) {
                                         if (snapshot.hasData) {
                                           Userdata userdata = snapshot.data;
@@ -506,14 +509,16 @@ class _UserDetailPageState extends State<UserDetailPage> {
                             await _authService.signOut();
                             print(_authService.toString());
 //                            Navigator.pushNamed(context, '/Login-page');
-                            MaterialPageRoute materialPageRoute = MaterialPageRoute(
-                                builder: (BuildContext) => LoginScreen());
+                            MaterialPageRoute materialPageRoute =
+                                MaterialPageRoute(
+                                    builder: (BuildContext) => LoginScreen());
                             Navigator.of(context).pushAndRemoveUntil(
-                                materialPageRoute, (Route<dynamic> route) => false);
+                                materialPageRoute,
+                                (Route<dynamic> route) => false);
                           },
                         ),
                         SizedBox(
-                          height: 36.00,
+                          height: 100.00,
                         ),
                       ],
                     );

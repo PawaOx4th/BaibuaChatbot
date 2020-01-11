@@ -15,7 +15,6 @@ class _MainmenuState extends State<Mainmenu> {
   final bool isWorkDeadline = false;
   String _countWorking = "2";
   String _countWorkDeadline = "20";
-  String _userID = '';
 
   //TextStyle
   TextStyle _googleFontRoboto = GoogleFonts.roboto(
@@ -48,9 +47,7 @@ class _MainmenuState extends State<Mainmenu> {
     FirebaseAuth firebaseAuth = FirebaseAuth.instance;
     FirebaseUser firebaseUser = await firebaseAuth.currentUser();
     String name = firebaseUser.displayName;
-    setState(() {
-      _userID = name ;
-    });
+
     print("Displayname In Main Menu Page => " + name);
   }
 
@@ -198,9 +195,13 @@ class _MainmenuState extends State<Mainmenu> {
                       ),
                       child: InkWell(
                         onTap: () {
+//                          Navigator.pushNamed(
+//                            context,
+//                            '/Userdetail-page',arguments: _userID
+//                          );
                           Navigator.pushNamed(
                             context,
-                            '/Userdetail-page',arguments: _userID
+                              '/Bottomnavigation-page'
                           );
                         },
                         child: Center(

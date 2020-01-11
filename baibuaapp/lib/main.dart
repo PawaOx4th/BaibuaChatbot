@@ -1,6 +1,7 @@
 import 'package:baibuaapp/models/user.dart';
 import 'package:baibuaapp/screens/Authenticate/autu.dart';
 import 'package:baibuaapp/screens/Authenticate/login.dart';
+import 'package:baibuaapp/screens/Bottomnavigation.dart';
 
 import 'package:baibuaapp/screens/baibuaChatroom.dart';
 import 'package:baibuaapp/screens/mainmenu.dart';
@@ -48,6 +49,7 @@ class MyApp extends StatelessWidget {
           '/Chatroom-page': (context) => ChatroomBaibua(), // ChatRooms
           '/Mainmenu-page': (context) => Mainmenu(),
           '/Userdetail-page': (context) => UserDetailPage(),
+          '/Bottomnavigation-page': (context) => BottomNavigation(),
         },
         localizationsDelegates: [
           // ... app-specific localization delegate[s] here

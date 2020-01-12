@@ -3,6 +3,8 @@ import 'package:baibuaapp/screens/userdetail.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import 'mainmenu.dart';
+
 class BottomNavigation extends StatefulWidget {
   BottomNavigation({
     Key key,
@@ -20,19 +22,11 @@ class _BottomNavigationState extends State<BottomNavigation> {
 
   final _pageOptions = [
     UserDetailPage(),
-    // ignore: top_level_instance_method
-    _gotoChatroom(),
-    UserDetailPage(),
-//    Text('iTem1'),
-//    Text('iTem2'),
-//    Text('iTem3'),
-//    Text('iTem4'),
-//    Text('iTem5'),
+    ChatroomBaibua(),
+    Mainmenu() ,
   ];
 
-  _gotoChatroom() {
-    Navigator.of(context).pushNamed('/Chatroom-page');
-  }
+
   @override
   Widget build(BuildContext context) {
 //    String userID = ModalRoute.of(context).settings.arguments;
@@ -57,7 +51,6 @@ class _BottomNavigationState extends State<BottomNavigation> {
         topRight: Radius.circular(20),
         topLeft: Radius.circular(20),
       ),
-
       child: BottomNavigationBar(
         backgroundColor: Colors.white,
         currentIndex: _selectedPage,
@@ -84,4 +77,3 @@ class _BottomNavigationState extends State<BottomNavigation> {
     );
   }
 }
-

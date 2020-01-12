@@ -1,3 +1,6 @@
+import 'package:baibuaapp/REST%20API/Newservice.dart';
+import 'package:baibuaapp/models/Newmodel.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -7,8 +10,6 @@ class NewEvent extends StatefulWidget {
 }
 
 class _NewEventState extends State<NewEvent> {
-
-
   //Variable
   final bool isWork = true;
   final bool isWorkDeadline = false;
@@ -41,7 +42,7 @@ class _NewEventState extends State<NewEvent> {
   );
 
   TextStyle _countwork =
-  TextStyle(color: Colors.white70, fontWeight: FontWeight.bold);
+      TextStyle(color: Colors.white70, fontWeight: FontWeight.bold);
 
   //Color All
   Color iconColor = Color.fromRGBO(173, 197, 219, 1);
@@ -52,8 +53,13 @@ class _NewEventState extends State<NewEvent> {
   Color btnSendAdminColor = Color.fromRGBO(166, 188, 208, 1);
   Color btnLogOutColor = Color.fromRGBO(255, 105, 105, 1);
 
+  NewsService newsService = NewsService();
+
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
+
     return SafeArea(
       child: Scaffold(
         appBar: PreferredSize(
@@ -118,7 +124,42 @@ class _NewEventState extends State<NewEvent> {
             ],
           ),
         ),
-        body: Container(),
+        body: SingleChildScrollView(
+          scrollDirection: Axis.vertical,
+          child: Container(
+            child: Column(
+              children: <Widget>[
+                Container(
+                  child: Container(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.00),
+                    height: height ,
+                    child: ListView.builder(
+                      itemCount: 10,
+                      itemBuilder: (context, index) {
+                        return Container(
+                          height: width * 0.5,
+                          child: Card(
+                            color: Colors.red,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12.00),
+                            ),
+                            elevation: 1,
+                            child: Container(
+                              child: Center(
+                                child: Text(index.toString()),
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }

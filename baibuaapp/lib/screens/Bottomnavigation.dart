@@ -1,9 +1,9 @@
-import 'package:baibuaapp/screens/baibuaChatroom.dart';
-import 'package:baibuaapp/screens/userdetail.dart';
+import 'package:baibuaapp/screens/menu/baibuaChatroom.dart';
+import 'package:baibuaapp/screens/menu/userdetail.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'mainmenu.dart';
+import 'menu/mainmenu.dart';
 
 class BottomNavigation extends StatefulWidget {
   BottomNavigation({

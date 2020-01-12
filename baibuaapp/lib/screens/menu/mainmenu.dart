@@ -257,7 +257,7 @@ class _MainmenuState extends State<Mainmenu> {
                       ),
                       child: InkWell(
                         onTap: () {
-//                          Navigator.pushNamed(context, '/Chatroom-page');
+                          Navigator.pushNamed(context, '/Newevent-page');
                         },
                         child: Center(
                           child: Column(

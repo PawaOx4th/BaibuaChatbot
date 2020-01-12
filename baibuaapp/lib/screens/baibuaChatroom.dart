@@ -107,7 +107,7 @@ class _HomePageDialogflowV2 extends State<ChatroomBaibua> {
                       ),
                       onPressed: () {
                         setState(() {
-                          Navigator.pushNamed(context, '/Mainmenu-page');
+                          Navigator.pushNamed(context, '/Bottomnavigation-page');
                           findDisplay();
                         });
                       },

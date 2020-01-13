@@ -291,7 +291,7 @@ class _RegisterState extends State<Register> {
                     print(jsonRegister);
 
                     String _postUrl =
-                        'https://us-central1-newagent-47c20.cloudfunctions.net/api/user/';
+                        'https://us-central1-newagent-47c20.cloudfunctions.net/api/user';
                     var response = await Http.post(
                       _postUrl,
                       headers: {

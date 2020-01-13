@@ -301,7 +301,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 onPressed: () async {
                   var url =
-                      "https://us-central1-newagent-47c20.cloudfunctions.net/api/user/filter/${_email}";
+                      "https://us-central1-newagent-47c20.cloudfunctions.net/api/user/filterEm/${_email}";
                   var response = await Http.get(url);
                   Map map = jsonDecode(response.body);
                   Userdata userData = Userdata.fromJson(map);
@@ -357,7 +357,7 @@ class _LoginScreenState extends State<LoginScreen> {
   callDataWithEmail({String email}) async {
     print("=> : " + email);
     var url =
-        "https://us-central1-newagent-47c20.cloudfunctions.net/api/user/filter/$email";
+        "https://us-central1-newagent-47c20.cloudfunctions.net/api/user/filterEm/$email";
     var response = await Http.get(url);
     Map map = jsonDecode(response.body);
     Userdata userData = Userdata.fromJson(map);

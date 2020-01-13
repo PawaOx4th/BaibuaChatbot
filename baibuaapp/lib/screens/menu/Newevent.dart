@@ -1,8 +1,11 @@
+import 'dart:convert';
+
 import 'package:baibuaapp/REST%20API/Newservice.dart';
 import 'package:baibuaapp/models/Newmodel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:http/http.dart' as Http;
 
 class NewEvent extends StatefulWidget {
   @override
@@ -55,12 +58,39 @@ class _NewEventState extends State<NewEvent> {
 
   NewsService newsService = NewsService();
 
+
+  List data;
+  Future<String> getData() async {
+    String _urlAllNews =
+        "https://us-central1-newagent-47c20.cloudfunctions.net/api/news";
+    var response = await Http.get(_urlAllNews);
+//    Http.Response response = await Http.get(Uri.encodeFull(_urlAllNews),
+//        headers: {"Accept": "Application/json"});
+
+//    print(response.body.toString());
+    setState(() {
+      data = json.decode(response.body);
+    });
+    return "success";
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+//    super.initState();
+    this.getData();
+  }
+
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
 
+    print(data[0]["Description"]);
+    print(data.length);
+
     return SafeArea(
+
       child: Scaffold(
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(80),
@@ -124,42 +154,64 @@ class _NewEventState extends State<NewEvent> {
             ],
           ),
         ),
-        body: SingleChildScrollView(
-          scrollDirection: Axis.vertical,
-          child: Container(
-            child: Column(
+        body: ListView.builder(
+          itemCount: data.length,
+          itemBuilder: (BuildContext context, int index) {
+            return Column(
               children: <Widget>[
-                Container(
-                  child: Container(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.00),
-                    height: height ,
-                    child: ListView.builder(
-                      itemCount: 10,
-                      itemBuilder: (context, index) {
-                        return Container(
-                          height: width * 0.5,
-                          child: Card(
-                            color: Colors.red,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12.00),
-                            ),
-                            elevation: 1,
-                            child: Container(
-                              child: Center(
-                                child: Text(index.toString()),
-                              ),
-                            ),
-                          ),
-                        );
-                      },
-                    ),
-                  ),
+                Card(
+                  child: Text(data[index]["Description"]),
                 ),
               ],
-            ),
-          ),
+            );
+          },
         ),
+//        body: SingleChildScrollView(
+//          scrollDirection: Axis.vertical,
+//          child: Container(
+//            child: ,
+////            child: Column(
+////              children: <Widget>[
+////                Container(
+////                  child: Container(
+////                    padding:
+////                        EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.00),
+////                    height: height,
+////                    child: ListView.builder(
+////                      itemCount: data == null ? 0 : data.length,
+////                      itemBuilder: (BuildContext context, int index){
+////                        return Card(
+////                          child: Text(data[index]["description"]),
+////                        );
+////                      },
+////                    ),
+////
+//////                    child: ListView.builder(
+//////                      itemCount: 10,
+//////                      itemBuilder: (context, index) {
+//////                        return Container(
+//////                          height: width * 0.5,
+//////                          child: Card(
+//////                            color: Colors.red,
+//////                            shape: RoundedRectangleBorder(
+//////                              borderRadius: BorderRadius.circular(12.00),
+//////                            ),
+//////                            elevation: 1,
+//////                            child: Container(
+//////                              child: Center(
+//////                                child: Text(index.toString()),
+//////                              ),
+//////                            ),
+//////                          ),
+//////                        );
+//////                      },
+//////                    ),
+////                  ),
+////                ),
+////              ],
+////            ),
+//          ),
+//        ),
       ),
     );
   }

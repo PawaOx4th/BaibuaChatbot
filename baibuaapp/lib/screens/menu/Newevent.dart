@@ -1,8 +1,11 @@
+import 'dart:convert';
+
 import 'package:baibuaapp/REST%20API/Newservice.dart';
 import 'package:baibuaapp/models/Newmodel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:http/http.dart' as Http;
 
 class NewEvent extends StatefulWidget {
   @override
@@ -14,9 +17,9 @@ class _NewEventState extends State<NewEvent> {
   final bool isWork = true;
   final bool isWorkDeadline = false;
   String iD = '';
-
   String _countWorking = "2";
   String _countWorkDeadline = "20";
+  List newsData;
 
   //TextStyle
   TextStyle _googleFontRoboto = GoogleFonts.roboto(
@@ -54,6 +57,25 @@ class _NewEventState extends State<NewEvent> {
   Color btnLogOutColor = Color.fromRGBO(255, 105, 105, 1);
 
   NewsService newsService = NewsService();
+
+//  Method
+  Future<String> getNews() async {
+    String _urlNews =
+        "https://us-central1-newagent-47c20.cloudfunctions.net/api/news";
+    var response = await Http.get(_urlNews);
+    setState(() {
+      newsData = jsonDecode(response.body);
+    });
+
+    return "Success ";
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getNews();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -125,29 +147,29 @@ class _NewEventState extends State<NewEvent> {
           ),
         ),
         body: SingleChildScrollView(
-          scrollDirection: Axis.vertical,
+//          scrollDirection: Axis.vertical,
           child: Container(
             child: Column(
+              mainAxisSize: MainAxisSize.max,
               children: <Widget>[
                 Container(
                   child: Container(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.00),
-                    height: height ,
+                    padding: EdgeInsets.symmetric(horizontal: 16.0),
+                    height: MediaQuery.of(context).size.height * 0.8 ,
                     child: ListView.builder(
-                      itemCount: 10,
+                      itemCount: newsData == null ? 0 : newsData.length,
                       itemBuilder: (context, index) {
                         return Container(
-                          height: width * 0.5,
+                          height: MediaQuery.of(context).size.width * 0.5,
                           child: Card(
-                            color: Colors.red,
+                            color: Colors.deepPurpleAccent,
                             shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12.00),
+                              borderRadius: BorderRadius.circular(12.0),
                             ),
                             elevation: 1,
                             child: Container(
                               child: Center(
-                                child: Text(index.toString()),
+                                child: Text(newsData[index]['Topic']),
                               ),
                             ),
                           ),

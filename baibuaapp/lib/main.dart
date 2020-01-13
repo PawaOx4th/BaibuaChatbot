@@ -2,10 +2,11 @@ import 'package:baibuaapp/models/user.dart';
 import 'package:baibuaapp/screens/Authenticate/autu.dart';
 import 'package:baibuaapp/screens/Authenticate/login.dart';
 import 'package:baibuaapp/screens/Bottomnavigation.dart';
+import 'package:baibuaapp/screens/menu/Newevent.dart';
 
-import 'package:baibuaapp/screens/baibuaChatroom.dart';
-import 'package:baibuaapp/screens/mainmenu.dart';
-import 'package:baibuaapp/screens/userdetail.dart';
+import 'package:baibuaapp/screens/menu/baibuaChatroom.dart';
+import 'package:baibuaapp/screens/menu/mainmenu.dart';
+import 'package:baibuaapp/screens/menu/userdetail.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_error_page/flutter_custom_error_message.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -49,6 +50,7 @@ class MyApp extends StatelessWidget {
           '/Chatroom-page': (context) => ChatroomBaibua(), // ChatRooms
           '/Mainmenu-page': (context) => Mainmenu(),
           '/Userdetail-page': (context) => UserDetailPage(),
+          '/Newevent-page': (context) => NewEvent(),
           '/Bottomnavigation-page': (context) => BottomNavigation(),
         },
         localizationsDelegates: [

@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:baibuaapp/REST%20API/Newservice.dart';
-import 'package:baibuaapp/models/Newmodel.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -16,33 +16,39 @@ class _NewEventState extends State<NewEvent>
     with SingleTickerProviderStateMixin {
   //Variable
   final bool isWork = true;
-  final bool isWorkDeadline = false;
+  final bool isWorkDeadline = true;
   String iD = '';
   String _countWorking = "2";
   String _countWorkDeadline = "20";
   List newsData;
+  var pictureDemo =
+      "https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80";
 
   //TextStyle
-  TextStyle _googleFontRoboto = GoogleFonts.roboto(
+  TextStyle _googleFontKaniTitle = GoogleFonts.kanit(
     fontSize: 22.0,
-    fontWeight: FontWeight.bold,
-    textStyle: TextStyle(color: Color.fromRGBO(0, 147, 233, 1)),
+    fontWeight: FontWeight.w500,
+    textStyle: TextStyle(
+      color: Color.fromRGBO(0, 147, 233, 1),
+    ),
   );
 
   TextStyle _googleFontKanit = GoogleFonts.kanit(
     fontSize: 16.0,
     fontWeight: FontWeight.w500,
+    textStyle: TextStyle(color: Colors.white, height: 1.2),
+  );
+
+  TextStyle _dateFontKanit = GoogleFonts.kanit(
+    fontSize: 12.0,
+    fontWeight: FontWeight.w400,
     textStyle: TextStyle(color: Colors.white),
   );
 
-  TextStyle _detailFontKanit = GoogleFonts.kanit(
-    fontSize: 16.0,
-    textStyle: TextStyle(color: Color.fromRGBO(81, 92, 111, 1)),
-  );
-
-  TextStyle _btnFontKanit = GoogleFonts.kanit(
-    fontSize: 16.0,
-    textStyle: TextStyle(color: Colors.white),
+  TextStyle _typeFontKanit = GoogleFonts.kanit(
+    fontSize: 12.0,
+    fontWeight: FontWeight.w400,
+    textStyle: TextStyle(color: Colors.grey[300]),
   );
 
   TextStyle _countwork =
@@ -57,14 +63,10 @@ class _NewEventState extends State<NewEvent>
   Color btnSendAdminColor = Color.fromRGBO(166, 188, 208, 1);
   Color btnLogOutColor = Color.fromRGBO(255, 105, 105, 1);
 
-//  Color cardBackgroudBack = Color.fromRGBO(60, 73, 92, 1);
-//  Color cardBackgroudBlue = Color.fromRGBO(0, 147, 233, 1);
-//  Color cardBackgroudGray = Color.fromRGBO(116, 138, 157, 1);
-
   List cardColor = [
-    Color.fromRGBO(60, 73, 92, 1),
-    Color.fromRGBO(0, 147, 233, 1),
-    Color.fromRGBO(116, 138, 157, 1),
+    Color.fromRGBO(60, 73, 92, 1).withOpacity(0.6), //Background Black
+    Color.fromRGBO(0, 147, 233, 1).withOpacity(0.6), // Background Blue
+    Color.fromRGBO(116, 138, 157, 1).withOpacity(0.6), // Background Gray
   ];
 
   NewsService newsService = NewsService();
@@ -91,7 +93,7 @@ class _NewEventState extends State<NewEvent>
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
-    double width = MediaQuery.of(context).size.width;
+//    double width = MediaQuery.of(context).size.width;
 
     return SafeArea(
       child: Scaffold(
@@ -177,6 +179,7 @@ class _NewEventState extends State<NewEvent>
 
                         //Show News  =>  newsData[index]['Topic'],
                         return Container(
+                          margin: EdgeInsets.symmetric(vertical: 8.00),
                           height: height * 0.28,
                           child: InkWell(
                             onTap: () => print(index + 1),
@@ -187,20 +190,65 @@ class _NewEventState extends State<NewEvent>
                               ),
                               elevation: 1,
                               child: Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(12.0),
+                                  image: DecorationImage(
+                                    image: NetworkImage(pictureDemo),
+                                    fit: BoxFit.cover,
+                                    colorFilter: ColorFilter.mode(
+                                       cardColor[countColor],BlendMode.modulate),
+                                  ),
+                                ),
                                 child: Stack(
                                   children: <Widget>[
+                                    //Topic
                                     Positioned(
-                                      top: 50,
-                                      left: 0,
+                                      top: 40,
+                                      left: 16,
+                                      child: Container(
+                                          alignment: Alignment.bottomLeft,
+                                          width: 300,
+                                          height: 80,
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.end,
+                                            children: <Widget>[
+                                              Text(
+                                                newsData[index]['Topic'],
+                                                style: _googleFontKanit,
+                                                maxLines: 3,
+                                                textAlign: TextAlign.left,
+                                                overflow: TextOverflow.ellipsis,
+                                              ),
+                                            ],
+                                          )),
+                                    ),
+
+                                    //Date
+                                    Positioned(
+                                      bottom: 20,
+                                      left: 16,
                                       child: Container(
                                         width: 300,
-                                        height: 100,
+                                        height: 50,
                                         child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
                                           children: <Widget>[
-                                            Text( newsData[index]['Topic'],style: _googleFontKanit,overflow: ,),
+                                            Text(
+                                              "โพสต์เมื่อวันที่  ${newsData[index]['Month']} " +
+                                                  " ${newsData[index]['Day']}," +
+                                                  " ${newsData[index]['Year']}",
+                                              style: _dateFontKanit,
+                                            ),
+                                            Text(
+                                              "ข่าวประชาสัมพันธ์  ${newsData[index]['Type']} ",
+                                              style: _typeFontKanit,
+                                            ),
                                           ],
-                                        )
+                                        ),
                                       ),
                                     ),
                                   ],
@@ -231,8 +279,8 @@ class _NewEventState extends State<NewEvent>
           width: 5,
         ),
         Text(
-          "ข้อมูลส่วนตัว",
-          style: _googleFontKanit,
+          "ข่าวสาร",
+          style: _googleFontKaniTitle,
         ),
       ],
     );

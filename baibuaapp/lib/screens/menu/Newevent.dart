@@ -12,7 +12,8 @@ class NewEvent extends StatefulWidget {
   _NewEventState createState() => _NewEventState();
 }
 
-class _NewEventState extends State<NewEvent> {
+class _NewEventState extends State<NewEvent>
+    with SingleTickerProviderStateMixin {
   //Variable
   final bool isWork = true;
   final bool isWorkDeadline = false;
@@ -29,9 +30,9 @@ class _NewEventState extends State<NewEvent> {
   );
 
   TextStyle _googleFontKanit = GoogleFonts.kanit(
-    fontSize: 22.0,
+    fontSize: 16.0,
     fontWeight: FontWeight.w500,
-    textStyle: TextStyle(color: Color.fromRGBO(0, 147, 233, 1)),
+    textStyle: TextStyle(color: Colors.white),
   );
 
   TextStyle _detailFontKanit = GoogleFonts.kanit(
@@ -55,6 +56,16 @@ class _NewEventState extends State<NewEvent> {
   Color nameColor = Color.fromRGBO(81, 93, 111, 1);
   Color btnSendAdminColor = Color.fromRGBO(166, 188, 208, 1);
   Color btnLogOutColor = Color.fromRGBO(255, 105, 105, 1);
+
+//  Color cardBackgroudBack = Color.fromRGBO(60, 73, 92, 1);
+//  Color cardBackgroudBlue = Color.fromRGBO(0, 147, 233, 1);
+//  Color cardBackgroudGray = Color.fromRGBO(116, 138, 157, 1);
+
+  List cardColor = [
+    Color.fromRGBO(60, 73, 92, 1),
+    Color.fromRGBO(0, 147, 233, 1),
+    Color.fromRGBO(116, 138, 157, 1),
+  ];
 
   NewsService newsService = NewsService();
 
@@ -133,7 +144,9 @@ class _NewEventState extends State<NewEvent> {
                                 color: Color.fromRGBO(166, 188, 208, 1),
                                 size: 28,
                               ),
-                              onPressed: () {},
+                              onPressed: () {
+                                print(height.toString());
+                              },
                             ),
                             isWorkDeadline ? workDeadline() : Container(),
                           ],
@@ -155,21 +168,43 @@ class _NewEventState extends State<NewEvent> {
                 Container(
                   child: Container(
                     padding: EdgeInsets.symmetric(horizontal: 16.0),
-                    height: MediaQuery.of(context).size.height * 0.8 ,
+                    height: MediaQuery.of(context).size.height * 0.83,
                     child: ListView.builder(
                       itemCount: newsData == null ? 0 : newsData.length,
                       itemBuilder: (context, index) {
+                        // Set Card Color
+                        int countColor = index % 3;
+
+                        //Show News  =>  newsData[index]['Topic'],
                         return Container(
-                          height: MediaQuery.of(context).size.width * 0.5,
-                          child: Card(
-                            color: Colors.deepPurpleAccent,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12.0),
-                            ),
-                            elevation: 1,
-                            child: Container(
-                              child: Center(
-                                child: Text(newsData[index]['Topic']),
+                          height: height * 0.28,
+                          child: InkWell(
+                            onTap: () => print(index + 1),
+                            child: Card(
+                              color: cardColor[countColor],
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12.0),
+                              ),
+                              elevation: 1,
+                              child: Container(
+                                child: Stack(
+                                  children: <Widget>[
+                                    Positioned(
+                                      top: 50,
+                                      left: 0,
+                                      child: Container(
+                                        width: 300,
+                                        height: 100,
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: <Widget>[
+                                            Text( newsData[index]['Topic'],style: _googleFontKanit,overflow: ,),
+                                          ],
+                                        )
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                           ),

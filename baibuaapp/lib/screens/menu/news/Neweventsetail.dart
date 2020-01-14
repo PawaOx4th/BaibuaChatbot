@@ -41,22 +41,22 @@ class _NewEventDetailState extends State<NewEventDetail> {
       "https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80";
 
   //TextStyle
-  TextStyle _googleFontKaniTitle = GoogleFonts.kanit(
-    fontSize: 22.0,
-    fontWeight: FontWeight.w500,
+  TextStyle _descriptionFontKaniTitle = GoogleFonts.kanit(
+    fontSize: 18.0,
+    fontWeight: FontWeight.w400,
     textStyle: TextStyle(
-      color: Color.fromRGBO(0, 147, 233, 1),
+      color: Colors.white,
     ),
   );
 
   TextStyle _googleFontKanit = GoogleFonts.kanit(
-    fontSize: 16.0,
-    fontWeight: FontWeight.w500,
-    textStyle: TextStyle(color: Colors.white, height: 1.2),
+    fontSize: 22.0,
+    fontWeight: FontWeight.w900,
+    textStyle: TextStyle(color: Colors.white),
   );
 
   TextStyle _dateFontKanit = GoogleFonts.kanit(
-    fontSize: 12.0,
+    fontSize: 16.0,
     fontWeight: FontWeight.w400,
     textStyle: TextStyle(color: Colors.white),
   );
@@ -70,10 +70,15 @@ class _NewEventDetailState extends State<NewEventDetail> {
   TextStyle _countwork =
       TextStyle(color: Colors.white70, fontWeight: FontWeight.bold);
 
+  Color descriptionColor = Color.fromRGBO(60, 73, 92, 1);
+
   List cardColor = [
-    Color.fromRGBO(60, 73, 92, 1), // Background Dark
-    Color.fromRGBO(0, 147, 233, 1), // Background  Blue
-    Color.fromRGBO(116, 138, 157, 1), // Background Gray
+    Color.fromRGBO(60, 73, 92, 1).withOpacity(0.6),
+    //Background Black
+    Color.fromRGBO(0, 147, 233, 1).withOpacity(0.6),
+    // Background Blue
+    Color.fromRGBO(116, 138, 157, 1).withOpacity(0.6),
+    // Background Gray // Background Gray
   ];
 
   @override
@@ -87,13 +92,17 @@ class _NewEventDetailState extends State<NewEventDetail> {
   Widget build(BuildContext context) {
     double hightScreen = MediaQuery.of(context).size.height;
     double widthScreen = MediaQuery.of(context).size.width;
+    print(widget.month);
+
     return SafeArea(
       child: Scaffold(
         body: SingleChildScrollView(
           child: Container(
             height: hightScreen,
             width: widthScreen,
-            decoration: BoxDecoration(color: Colors.grey[400]),
+            decoration: BoxDecoration(
+              color: descriptionColor,
+            ),
             child: Stack(
               children: <Widget>[
                 SingleChildScrollView(
@@ -108,7 +117,13 @@ class _NewEventDetailState extends State<NewEventDetail> {
                             bottomLeft: Radius.circular(30.00),
                             bottomRight: Radius.circular(30.00),
                           ),
-                          color: cardColor[widget.Colororder],
+                          image: DecorationImage(
+                            image: NetworkImage(pictureDemo),
+                            fit: BoxFit.cover,
+                            colorFilter: ColorFilter.mode(
+                                cardColor[widget.Colororder],
+                                BlendMode.modulate),
+                          ),
                         ),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.end,
@@ -138,7 +153,6 @@ class _NewEventDetailState extends State<NewEventDetail> {
                                       Navigator.of(context).pop();
                                     },
                                   ),
-
                                   SizedBox(
                                     width: 16.00,
                                   ),
@@ -151,14 +165,31 @@ class _NewEventDetailState extends State<NewEventDetail> {
                             Expanded(
                               flex: 4,
                               child: Container(
-                                width: MediaQuery.of(context).size.width,
+                                width: MediaQuery.of(context).size.width * 0.9,
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.end,
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: <Widget>[
-                                    Text(widget.topic),
+                                    Text(
+                                      widget.topic,
+                                      style: _googleFontKanit,
+                                      maxLines: 3,
+                                      textAlign: TextAlign.left,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
                                     SizedBox(
                                       height: 8.00,
+                                    ),
+                                    Text(
+                                      "โพสต์เมื่อวันที่  ${widget.month} ${widget.day}, ${widget.year}",
+                                      style: _dateFontKanit,
+                                    ),
+                                    Text(
+                                      "ข่าวประชาสัมพันธ์ / ${widget.type}",
+                                      style: _typeFontKanit,
+                                    ),
+                                    SizedBox(
+                                      height: 30.00,
                                     ),
 //                                    Text(widget.description),
                                   ],
@@ -168,13 +199,19 @@ class _NewEventDetailState extends State<NewEventDetail> {
                           ],
                         ),
                       ),
-
+                      SizedBox(
+                        height: 20.00,
+                      ),
                       //*********************************** Description Section *************************//
                       SingleChildScrollView(
                         child: Padding(
-                          padding: const EdgeInsets.all(8.0),
+                          padding:
+                              const EdgeInsets.symmetric(horizontal: 26.00),
                           child: Container(
-                            child: Placeholder(),
+//                            height: hightScreen * 0.5,
+                            child:
+//                            Placeholder()
+                            Text(widget.description,style: _descriptionFontKaniTitle,),
                           ),
                         ),
                       ),

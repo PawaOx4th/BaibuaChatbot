@@ -33,6 +33,11 @@ class RouteGenerator {
             builder: (_) => NewEventDetail(
                   topic: args,
                   description: args,
+                  month: args,
+                  id: args,
+                  type: args,
+                  day: args,
+                  year: args,
                 ));
       case '/Bottomnavigation-page':
         return MaterialPageRoute(builder: (_) => BottomNavigation());

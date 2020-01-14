@@ -90,7 +90,7 @@ class _NewEventState extends State<NewEvent>
           day: newsData[indexS]['Day'],
           type: newsData[indexS]['Type'],
           id: newsData[indexS]['Id'],
-          month: newsData[indexS]['Mouth'],
+          month: newsData[indexS]['Month'],
           year: newsData[indexS]['Year'],
           Colororder: countColor,
         ),
@@ -108,6 +108,8 @@ class _NewEventState extends State<NewEvent>
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
+
+
 //    double width = MediaQuery.of(context).size.width;
 
     return SafeArea(

@@ -81,7 +81,7 @@ class _NewEventState extends State<NewEvent>
   }
 
   //Navigator push to Page
-  _passarguments(newData,indexS){
+  _passarguments(newData,indexS,countColor){
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => NewEventDetail(
@@ -92,6 +92,7 @@ class _NewEventState extends State<NewEvent>
           id: newsData[indexS]['Id'],
           month: newsData[indexS]['Mouth'],
           year: newsData[indexS]['Year'],
+          Colororder: countColor,
         ),
       ),
     );
@@ -199,7 +200,7 @@ class _NewEventState extends State<NewEvent>
                             onTap: () => {
 //                              print(index + 1),
 //                              print(newsData[index]["Description"]),
-                              _passarguments(newsData,index),
+                              _passarguments(newsData,index,countColor),
                             },
                             child: Card(
                               color: cardColor[countColor],

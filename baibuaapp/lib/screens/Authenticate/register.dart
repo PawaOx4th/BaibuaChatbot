@@ -199,6 +199,7 @@ class _RegisterState extends State<Register> {
         child: Padding(
           padding: EdgeInsets.symmetric(vertical: 5, horizontal: 18),
           child: TextFormField(
+              obscureText: true,
               maxLength: 6,
               keyboardType: TextInputType.number,
               decoration: InputDecoration(
@@ -228,6 +229,7 @@ class _RegisterState extends State<Register> {
         child: Padding(
           padding: EdgeInsets.symmetric(vertical: 5, horizontal: 18),
           child: TextFormField(
+              obscureText: true,
               maxLength: 6,
               keyboardType: TextInputType.number,
               decoration: InputDecoration(

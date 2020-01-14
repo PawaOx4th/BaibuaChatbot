@@ -1,3 +1,4 @@
+import 'package:baibuaapp/google_assistant.dart';
 import 'package:baibuaapp/screens/Authenticate/login.dart';
 import 'package:baibuaapp/screens/Bottomnavigation.dart';
 import 'package:baibuaapp/screens/emty.dart';
@@ -35,6 +36,8 @@ class RouteGenerator {
                 ));
       case '/Bottomnavigation-page':
         return MaterialPageRoute(builder: (_) => BottomNavigation());
+      case '/Googleasistant-page':
+        return MaterialPageRoute(builder: (_) => GoogleAssistant());
 //      case '/onepage':
 //      // Validation of correct data type
 //        if (args is String) {

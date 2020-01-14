@@ -1,5 +1,4 @@
 
-import 'package:baibuaapp/TestAllFunction.dart';
 import 'package:baibuaapp/models/user.dart' show User;
 import 'package:baibuaapp/screens/Authenticate/login.dart' show LoginScreen;
 import 'package:baibuaapp/screens/menu/baibuaChatroom.dart';

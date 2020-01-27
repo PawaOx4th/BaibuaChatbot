@@ -2,6 +2,7 @@ import 'package:baibuaapp/google_assistant.dart';
 import 'package:baibuaapp/screens/Authenticate/login.dart';
 import 'package:baibuaapp/screens/Bottomnavigation.dart';
 import 'package:baibuaapp/screens/emty.dart';
+import 'package:baibuaapp/screens/menu/Group.dart';
 import 'package:baibuaapp/screens/menu/baibuaChatroom.dart';
 import 'package:baibuaapp/screens/menu/mainmenu.dart';
 import 'package:baibuaapp/screens/menu/news/Newevent.dart';
@@ -39,8 +40,13 @@ class RouteGenerator {
                   day: args,
                   year: args,
                 ));
+      case '/Group-page':
+        return MaterialPageRoute(builder: (_) => Group());
       case '/Bottomnavigation-page':
-        return MaterialPageRoute(builder: (_) => BottomNavigation());
+        return MaterialPageRoute(
+            builder: (_) => BottomNavigation(
+                  page: args,
+                ));
       case '/Googleasistant-page':
         return MaterialPageRoute(builder: (_) => GoogleAssistant());
 //      case '/onepage':

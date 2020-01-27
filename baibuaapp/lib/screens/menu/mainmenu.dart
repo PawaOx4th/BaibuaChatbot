@@ -1,4 +1,5 @@
 import 'package:baibuaapp/screens/Authenticate/autu.dart';
+import 'package:baibuaapp/screens/Bottomnavigation.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -111,7 +112,7 @@ class _MainmenuState extends State<Mainmenu> {
                               color: Color.fromRGBO(166, 188, 208, 1),
                               size: 28,
                             ),
-                            onPressed: () {} ,
+                            onPressed: () {},
                           ),
                           isWorkDeadline ? workDeadline() : Container(),
                         ],
@@ -199,10 +200,11 @@ class _MainmenuState extends State<Mainmenu> {
 //                            context,
 //                            '/Userdetail-page',arguments: _userID
 //                          );
-                          Navigator.pushNamed(
-                            context,
-                              '/Bottomnavigation-page'
-                          );
+                          Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => BottomNavigation(
+                              page: 2,
+                            ),
+                          ));
                         },
                         child: Center(
                           child: Column(
@@ -298,7 +300,7 @@ class _MainmenuState extends State<Mainmenu> {
                       ),
                       child: InkWell(
                         onTap: () {
-//                          Navigator.pushNamed(context, '/Chatroom-page');
+                          Navigator.pushNamed(context, '/Group-page');
                         },
                         child: Center(
                           child: Column(

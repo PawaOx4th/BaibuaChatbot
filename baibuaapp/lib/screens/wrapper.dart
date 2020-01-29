@@ -1,8 +1,7 @@
-import 'package:baibuaapp/screens/baibuaChatroom.dart';
-import 'package:baibuaapp/screens/emty.dart' show Emty_PageNavigation;
-import 'package:baibuaapp/screens/splashscreen.dart';
+
 import 'package:baibuaapp/models/user.dart' show User;
 import 'package:baibuaapp/screens/Authenticate/login.dart' show LoginScreen;
+import 'package:baibuaapp/screens/menu/baibuaChatroom.dart';
 import 'package:flutter/material.dart' show BuildContext, StatelessWidget, Widget;
 import 'package:provider/provider.dart' show Provider;
 
@@ -17,6 +16,7 @@ class Wrapper extends StatelessWidget {
       return LoginScreen();
     } else {
       return ChatroomBaibua();
+//      return TestAllFunction();
     }
   }
 }

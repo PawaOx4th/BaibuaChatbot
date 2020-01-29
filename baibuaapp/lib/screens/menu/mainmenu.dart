@@ -1,3 +1,6 @@
+import 'package:baibuaapp/screens/Authenticate/autu.dart';
+import 'package:baibuaapp/screens/Bottomnavigation.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -41,17 +44,28 @@ class _MainmenuState extends State<Mainmenu> {
   Color bgMenuColor = Color.fromRGBO(0, 147, 233, 1);
   Color ShadowMenuColor = Color.fromRGBO(11, 84, 194, 0.5);
 
+  Future<void> findDisplay() async {
+    FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+    FirebaseUser firebaseUser = await firebaseAuth.currentUser();
+    String name = firebaseUser.displayName;
+
+    print("Displayname In Main Menu Page => " + name);
+  }
+
   //Init State
   @override
   void initState() {
     // TODO: implement initState
-
     super.initState();
+    findDisplay();
   }
+
+  final AuthService _authService = AuthService();
 
   @override
   Widget build(BuildContext context) {
     double _widthScreen = MediaQuery.of(context).size.width;
+    String userId = ModalRoute.of(context).settings.arguments;
 
     return Scaffold(
       appBar: PreferredSize(
@@ -75,11 +89,14 @@ class _MainmenuState extends State<Mainmenu> {
                         children: <Widget>[
                           IconButton(
                             icon: Icon(
-                              Icons.assignment_late,
+//                              Icons.assignment_late,
+                              Icons.book,
                               color: Color.fromRGBO(166, 188, 208, 1),
                               size: 28,
                             ),
-                            onPressed: () {},
+                            onPressed: () {
+                              print("Click");
+                            },
                           ),
                           isWork ? working() : Container(),
                         ],
@@ -109,17 +126,18 @@ class _MainmenuState extends State<Mainmenu> {
         ),
       ),
       body: Stack(
-//        fit: StackFit.expand,
         children: <Widget>[
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
+              //************************Line1 ********************************//
               Container(
                 width: _widthScreen,
                 height: 150,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
+                    //******************** Baibua Chatroom ********************//
                     Container(
                       width: 147,
                       height: 145,
@@ -160,6 +178,8 @@ class _MainmenuState extends State<Mainmenu> {
                         ),
                       ),
                     ),
+
+                    //*********************** Detail **************************//
                     Container(
                       width: 147,
                       height: 145,
@@ -176,7 +196,15 @@ class _MainmenuState extends State<Mainmenu> {
                       ),
                       child: InkWell(
                         onTap: () {
-                          print("Tap");
+//                          Navigator.pushNamed(
+//                            context,
+//                            '/Userdetail-page',arguments: _userID
+//                          );
+                          Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => BottomNavigation(
+                              page: 2,
+                            ),
+                          ));
                         },
                         child: Center(
                           child: Column(
@@ -203,47 +231,199 @@ class _MainmenuState extends State<Mainmenu> {
                   ],
                 ),
               ),
+
               SizedBox(
                 height: 20.0,
               ),
+              //************************ Line2 ********************************//
               Container(
                 width: _widthScreen,
                 height: 150,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
+                    //************************ News **************************//
                     Container(
                       width: 147,
                       height: 145,
-                      child: Placeholder(),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: bgMenuColor,
+                        boxShadow: [
+                          BoxShadow(
+                              color: ShadowMenuColor,
+                              offset: Offset(0, 5),
+//                            spreadRadius: 5,
+                              blurRadius: 5)
+                        ],
+                      ),
+                      child: InkWell(
+                        onTap: () {
+                          // Navigator.pushNamed(context, '/Newevent-page');
+                          Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => BottomNavigation(
+                              page: 0,
+                            ),
+                          ));
+                        },
+                        child: Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Container(
+                                width: 60,
+                                height: 60,
+                                child: Icon(
+                                  Icons.library_books,
+                                  size: 50,
+                                  color: Colors.white,
+                                ),
+                              ),
+                              Text(
+                                "ข่าวสาร",
+                                style: _textMenuTH,
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
                     ),
+                    //************************ Group **************************//
                     Container(
                       width: 147,
                       height: 145,
-                      child: Placeholder(),
-                    )
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: bgMenuColor,
+                        boxShadow: [
+                          BoxShadow(
+                              color: ShadowMenuColor,
+                              offset: Offset(0, 5),
+//                            spreadRadius: 5,
+                              blurRadius: 5)
+                        ],
+                      ),
+                      child: InkWell(
+                        onTap: () {
+                          Navigator.pushNamed(context, '/Group-page');
+                        },
+                        child: Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Container(
+                                width: 60,
+                                height: 60,
+                                child: Icon(
+                                  Icons.people,
+                                  size: 50,
+                                  color: Colors.white,
+                                ),
+                              ),
+                              Text(
+                                "กลุ่ม",
+                                style: _textMenuTH,
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ),
               SizedBox(
                 height: 20.0,
               ),
+              //************************ Line3 ********************************//
               Container(
                 width: _widthScreen,
                 height: 150,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
+                    //************************ Map **************************//
                     Container(
                       width: 147,
                       height: 145,
-                      child: Placeholder(),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: bgMenuColor,
+                        boxShadow: [
+                          BoxShadow(
+                              color: ShadowMenuColor,
+                              offset: Offset(0, 5),
+//                            spreadRadius: 5,
+                              blurRadius: 5)
+                        ],
+                      ),
+                      child: InkWell(
+                        onTap: () {
+//                          Navigator.pushNamed(context, '/Chatroom-page');
+                        },
+                        child: Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Container(
+                                width: 60,
+                                height: 60,
+                                child: Icon(
+                                  Icons.map,
+                                  size: 50,
+                                  color: Colors.white,
+                                ),
+                              ),
+                              Text(
+                                "แผนที่",
+                                style: _textMenuTH,
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
                     ),
+                    //************************ Setting ************************//
                     Container(
                       width: 147,
                       height: 145,
-                      child: Placeholder(),
-                    )
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: bgMenuColor,
+                        boxShadow: [
+                          BoxShadow(
+                              color: ShadowMenuColor,
+                              offset: Offset(0, 5),
+//                            spreadRadius: 5,
+                              blurRadius: 5)
+                        ],
+                      ),
+                      child: InkWell(
+                        onTap: () {
+//                          Navigator.pushNamed(context, '/Chatroom-page');
+                        },
+                        child: Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Container(
+                                width: 60,
+                                height: 60,
+                                child: Icon(
+                                  Icons.settings_applications,
+                                  size: 50,
+                                  color: Colors.white,
+                                ),
+                              ),
+                              Text(
+                                "ตั้งค่า",
+                                style: _textMenuTH,
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ),

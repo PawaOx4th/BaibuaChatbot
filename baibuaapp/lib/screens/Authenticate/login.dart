@@ -1,8 +1,13 @@
+import 'package:baibuaapp/REST%20API/userdata.dart';
+import 'package:baibuaapp/screens/menu/baibuaChatroom.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:baibuaapp/screens/Authenticate/register.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'autu.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as Http;
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -16,10 +21,9 @@ class _LoginScreenState extends State<LoginScreen> {
   String error = '';
 
   //  ****************************************************** //
-
   final formKey = GlobalKey<FormState>();
-
   String _email, _password;
+  String userId;
 
   // มี new  หรือ ไม่มีก็ได้ หรือใช้ "var" แทน TextEditingController ก็ได้
   TextEditingController _id = TextEditingController();
@@ -36,12 +40,13 @@ class _LoginScreenState extends State<LoginScreen> {
           SingleChildScrollView(
             child: Column(
               children: <Widget>[
+
                 Padding(
                   padding: const EdgeInsets.only(top: 0.1),
                   child: Container(
                     alignment: Alignment.center,
-                    padding: EdgeInsets.only(top: 50.0),
-                    height: MediaQuery.of(context).size.height - 120,
+                    padding: EdgeInsets.only(top: 10.0),
+                    height: MediaQuery.of(context).size.height - 80,
                     decoration: BoxDecoration(
                       borderRadius:
                           BorderRadius.vertical(bottom: Radius.circular(40)),
@@ -57,6 +62,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
+                        SizedBox(height: 40,),
                         Container(
                           width: 130.0,
                           height: 130.0,
@@ -155,7 +161,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
                 SizedBox(
-                  height: 50,
+                  height: 20,
                 ),
                 FlatButton(
                   onPressed: () {
@@ -222,8 +228,6 @@ class _LoginScreenState extends State<LoginScreen> {
       );
 
   //**************************************************************************//
-
-  //**************************************************************************//
   // Note : Widget Password TextFeild
   Widget passwordInput() => Container(
         padding: EdgeInsets.all(5),
@@ -234,6 +238,7 @@ class _LoginScreenState extends State<LoginScreen> {
         child: Padding(
           padding: const EdgeInsets.only(left: 10, right: 10),
           child: TextFormField(
+            obscureText: true,
             maxLength: 6,
             keyboardType: TextInputType.number,
             onChanged: (val) {
@@ -269,8 +274,6 @@ class _LoginScreenState extends State<LoginScreen> {
       );
 
   //**************************************************************************//
-
-  //**************************************************************************//
   // Note : Widget Login Button TextFeild
   Widget loginBtn() => Padding(
         padding: const EdgeInsets.only(
@@ -287,7 +290,6 @@ class _LoginScreenState extends State<LoginScreen> {
                 color: Color.fromRGBO(0, 147, 233, 1),
                 shape: new RoundedRectangleBorder(
                   borderRadius: new BorderRadius.circular(50.0),
-
                 ),
                 child: Text(
                   "Sign In",
@@ -298,24 +300,49 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
                 onPressed: () async {
-                  print(_email + ":" + _password);
+                  var url =
+                      "https://us-central1-newagent-47c20.cloudfunctions.net/api/user/filterEm/${_email}";
+                  var response = await Http.get(url);
+                  Map map = jsonDecode(response.body);
+                  Userdata userData = Userdata.fromJson(map);
+
                   if (formKey.currentState.validate()) {
-                    formKey.currentState.save();
-                    dynamic result = await _authService
-                        .loginWithEmailAndPassword(_email, _password);
-                    print(_id.text);
-                    print(_pass.text);
-                    if (result == null) {
-                      setState(() {
+                    if (response.statusCode == 200) {
+                      formKey.currentState.save();
+                      dynamic result = await _authService
+                          .loginWithEmailAndPassword(_email, _password);
 
-                        error = 'Incorrect email.';
-                      });
+                      final FirebaseUser user =
+                          await FirebaseAuth.instance.currentUser();
+                      final String uid = user.uid.toString();
+
+                      if (result == null) {
+                        print("Result Null");
+                        setState(() {
+                          error = 'please supply a valid email.';
+                        });
+                      } else {
+                        setState(() {
+                          userId = userData.id;
+                        });
+
+                        setUpDisplayName(userID: userId);
+                        MaterialPageRoute materialPageRoute = MaterialPageRoute(
+                            builder: (BuildContext) => ChatroomBaibua());
+                        Navigator.of(context).pushAndRemoveUntil(
+                            materialPageRoute, (Route<dynamic> route) => false);
+
+//                        Navigator.pushNamed(
+//                            context, '/Chatroom-page');
+                        print("Get data With Email: ${userData.email}");
+                        print("Result NotNull: ${uid}");
+
+                      }
                     } else {
-
-                      Navigator.pushNamed(context, '/Chatroom-page');
+                      print(response.statusCode.toString());
                     }
-                    // Call _authService function
-
+                  } else {
+                    print("Validation fail");
                   }
                 },
                 elevation: 5,
@@ -326,6 +353,30 @@ class _LoginScreenState extends State<LoginScreen> {
       );
 
   //**************************************************************************//
+
+  callDataWithEmail({String email}) async {
+    print("=> : " + email);
+    var url =
+        "https://us-central1-newagent-47c20.cloudfunctions.net/api/user/filterEm/$email";
+    var response = await Http.get(url);
+    Map map = jsonDecode(response.body);
+    Userdata userData = Userdata.fromJson(map);
+    print("Get data With Email: ${userData.email}");
+    setState(() {
+      userId = userData.id;
+    });
+  }
+
+  //Setup Display Name with USER ID
+  Future<void> setUpDisplayName({String userID}) async {
+    FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+    await firebaseAuth.currentUser().then((response) {
+      UserUpdateInfo userUpdateInfo = UserUpdateInfo();
+      userUpdateInfo.displayName = userID ;
+      response.updateProfile(userUpdateInfo);
+      print("UserUpdateInfo: ${userUpdateInfo.displayName}");
+    });
+  }
 
   //**************************************************************************//
   // Note : Widget ButtonBottom TextFeild
@@ -364,6 +415,5 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       );
 //**************************************************************************//
-
 
 }

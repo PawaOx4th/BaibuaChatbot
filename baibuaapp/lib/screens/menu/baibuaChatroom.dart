@@ -252,7 +252,6 @@ class ChatMessage extends StatelessWidget {
   });
 
 //  AnimationController animationController; // Animation Control Chat UI
-
   final String text;
   final String name;
   final bool type;

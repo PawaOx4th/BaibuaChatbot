@@ -1,7 +1,5 @@
 import 'dart:convert';
-
-import 'package:baibuaapp/REST%20API/Newservice.dart';
-
+import 'package:baibuaapp/screens/menu/news/Neweventsetail.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -21,6 +19,7 @@ class _NewEventState extends State<NewEvent>
   String _countWorking = "2";
   String _countWorkDeadline = "20";
   List newsData;
+  int indexS;
   var pictureDemo =
       "https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80";
 
@@ -69,8 +68,6 @@ class _NewEventState extends State<NewEvent>
     Color.fromRGBO(116, 138, 157, 1).withOpacity(0.6), // Background Gray
   ];
 
-  NewsService newsService = NewsService();
-
 //  Method
   Future<String> getNews() async {
     String _urlNews =
@@ -83,6 +80,24 @@ class _NewEventState extends State<NewEvent>
     return "Success ";
   }
 
+  //Navigator push to Page
+  _passarguments(newData, indexS, countColor) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => NewEventDetail(
+          topic: newsData[indexS]['Topic'],
+          description: newsData[indexS]['Description'],
+          day: newsData[indexS]['Day'],
+          type: newsData[indexS]['Type'],
+          id: newsData[indexS]['Id'],
+          month: newsData[indexS]['Month'],
+          year: newsData[indexS]['Year'],
+          Colororder: countColor,
+        ),
+      ),
+    );
+  }
+
   @override
   void initState() {
     // TODO: implement initState
@@ -93,6 +108,7 @@ class _NewEventState extends State<NewEvent>
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
+
 //    double width = MediaQuery.of(context).size.width;
 
     return SafeArea(
@@ -181,8 +197,12 @@ class _NewEventState extends State<NewEvent>
                         return Container(
                           margin: EdgeInsets.symmetric(vertical: 8.00),
                           height: height * 0.28,
-                          child: InkWell(
-                            onTap: () => print(index + 1),
+                          child: GestureDetector(
+                            onTap: () => {
+//                              print(index + 1),
+//                              print(newsData[index]["Description"]),
+                              _passarguments(newsData, index, countColor),
+                            },
                             child: Card(
                               color: cardColor[countColor],
                               shape: RoundedRectangleBorder(
@@ -196,7 +216,8 @@ class _NewEventState extends State<NewEvent>
                                     image: NetworkImage(pictureDemo),
                                     fit: BoxFit.cover,
                                     colorFilter: ColorFilter.mode(
-                                       cardColor[countColor],BlendMode.modulate),
+                                        cardColor[countColor],
+                                        BlendMode.modulate),
                                   ),
                                 ),
                                 child: Stack(
@@ -213,12 +234,16 @@ class _NewEventState extends State<NewEvent>
                                             mainAxisAlignment:
                                                 MainAxisAlignment.end,
                                             children: <Widget>[
-                                              Text(
-                                                newsData[index]['Topic'],
-                                                style: _googleFontKanit,
-                                                maxLines: 3,
-                                                textAlign: TextAlign.left,
-                                                overflow: TextOverflow.ellipsis,
+                                              Hero(
+                                                tag: newsData[index]['Topic'],
+                                                child: Text(
+                                                  newsData[index]['Topic'],
+                                                  style: _googleFontKanit,
+                                                  maxLines: 3,
+                                                  textAlign: TextAlign.left,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                ),
                                               ),
                                             ],
                                           )),

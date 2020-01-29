@@ -170,12 +170,15 @@ class _NewEventDetailState extends State<NewEventDetail> {
                                   mainAxisAlignment: MainAxisAlignment.end,
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: <Widget>[
-                                    Text(
-                                      widget.topic,
-                                      style: _googleFontKanit,
-                                      maxLines: 3,
-                                      textAlign: TextAlign.left,
-                                      overflow: TextOverflow.ellipsis,
+                                    Hero(
+                                      tag: widget.topic,
+                                      child: Text(
+                                        widget.topic,
+                                        style: _googleFontKanit,
+                                        maxLines: 3,
+                                        textAlign: TextAlign.left,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
                                     ),
                                     SizedBox(
                                       height: 8.00,
@@ -211,7 +214,10 @@ class _NewEventDetailState extends State<NewEventDetail> {
 //                            height: hightScreen * 0.5,
                             child:
 //                            Placeholder()
-                            Text(widget.description,style: _descriptionFontKaniTitle,),
+                                Text(
+                              widget.description,
+                              style: _descriptionFontKaniTitle,
+                            ),
                           ),
                         ),
                       ),

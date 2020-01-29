@@ -81,7 +81,7 @@ class _NewEventState extends State<NewEvent>
   }
 
   //Navigator push to Page
-  _passarguments(newData,indexS,countColor){
+  _passarguments(newData, indexS, countColor) {
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => NewEventDetail(
@@ -108,7 +108,6 @@ class _NewEventState extends State<NewEvent>
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
-
 
 //    double width = MediaQuery.of(context).size.width;
 
@@ -198,11 +197,11 @@ class _NewEventState extends State<NewEvent>
                         return Container(
                           margin: EdgeInsets.symmetric(vertical: 8.00),
                           height: height * 0.28,
-                          child: InkWell(
+                          child: GestureDetector(
                             onTap: () => {
 //                              print(index + 1),
 //                              print(newsData[index]["Description"]),
-                              _passarguments(newsData,index,countColor),
+                              _passarguments(newsData, index, countColor),
                             },
                             child: Card(
                               color: cardColor[countColor],
@@ -235,12 +234,16 @@ class _NewEventState extends State<NewEvent>
                                             mainAxisAlignment:
                                                 MainAxisAlignment.end,
                                             children: <Widget>[
-                                              Text(
-                                                newsData[index]['Topic'],
-                                                style: _googleFontKanit,
-                                                maxLines: 3,
-                                                textAlign: TextAlign.left,
-                                                overflow: TextOverflow.ellipsis,
+                                              Hero(
+                                                tag: newsData[index]['Topic'],
+                                                child: Text(
+                                                  newsData[index]['Topic'],
+                                                  style: _googleFontKanit,
+                                                  maxLines: 3,
+                                                  textAlign: TextAlign.left,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                ),
                                               ),
                                             ],
                                           )),

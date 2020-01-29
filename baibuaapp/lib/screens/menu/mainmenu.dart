@@ -259,7 +259,12 @@ class _MainmenuState extends State<Mainmenu> {
                       ),
                       child: InkWell(
                         onTap: () {
-                          Navigator.pushNamed(context, '/Newevent-page');
+                          // Navigator.pushNamed(context, '/Newevent-page');
+                          Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => BottomNavigation(
+                              page: 0,
+                            ),
+                          ));
                         },
                         child: Center(
                           child: Column(
@@ -370,7 +375,7 @@ class _MainmenuState extends State<Mainmenu> {
                                 ),
                               ),
                               Text(
-                                "ข่าวสาร",
+                                "แผนที่",
                                 style: _textMenuTH,
                               )
                             ],
@@ -411,7 +416,7 @@ class _MainmenuState extends State<Mainmenu> {
                                 ),
                               ),
                               Text(
-                                "กลุ่ม",
+                                "ตั้งค่า",
                                 style: _textMenuTH,
                               )
                             ],

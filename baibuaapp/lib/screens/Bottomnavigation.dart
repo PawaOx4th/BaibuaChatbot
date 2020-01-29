@@ -25,7 +25,8 @@ class BottomNavigation extends StatefulWidget {
 class _BottomNavigationState extends State<BottomNavigation> {
   int selectpage;
 
-  Color iconColor = Color.fromRGBO(166, 188, 208, 1);
+  // Color iconColor = Color.fromRGBO(166, 188, 208, 1);
+  Color iconColor = Colors.white;
 
   @override
   void initState() {
@@ -73,27 +74,49 @@ class _BottomNavigationState extends State<BottomNavigation> {
         ],
       ),
       bottomNavigationBar: CurvedNavigationBar(
+        animationDuration: Duration(milliseconds: 300),
         index: selectpage,
         key: _bottomNavigationKey,
         backgroundColor: Colors.transparent,
         buttonBackgroundColor: Colors.blue,
-        color: Colors.white,
+        color: Colors.blue,
         items: <Widget>[
           Icon(
             Icons.library_books,
             size: 30,
             color: iconColor,
           ),
-          Icon(Icons.group, size: 30),
+          Icon(
+            Icons.group,
+            size: 30,
+            color: iconColor,
+          ),
           IconButton(
             onPressed: () {
               Navigator.pushNamed(context, '/Chatroom-page');
               print("Go to Chatroom");
             },
-            icon: Icon(Icons.message),
+            icon: Icon(
+              Icons.message,
+              color: iconColor,
+            ),
           ),
-          Icon(Icons.map, size: 30),
-          Icon(Icons.home, size: 30),
+          Icon(
+            Icons.map,
+            size: 30,
+            color: iconColor,
+          ),
+          IconButton(
+            onPressed: () {
+              Navigator.pushNamed(context, '/Mainmenu-page');
+              print("Go to Chatroom");
+            },
+            icon: Icon(
+              Icons.home,
+              size: 30,
+              color: iconColor,
+            ),
+          ),
         ],
         onTap: (index) {
           //Handle button tap

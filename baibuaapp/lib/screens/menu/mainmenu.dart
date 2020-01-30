@@ -305,7 +305,11 @@ class _MainmenuState extends State<Mainmenu> {
                       ),
                       child: InkWell(
                         onTap: () {
-                          Navigator.pushNamed(context, '/Group-page');
+                          Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => BottomNavigation(
+                              page: 1,
+                            ),
+                          ));
                         },
                         child: Center(
                           child: Column(

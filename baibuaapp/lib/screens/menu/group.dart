@@ -1,17 +1,249 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
-class Group extends StatelessWidget {
+class Group extends StatefulWidget {
   const Group({Key key}) : super(key: key);
 
   @override
+  _GroupState createState() => _GroupState();
+}
+
+class _GroupState extends State<Group> {
+  final bool isWork = true;
+
+  final bool isWorkDeadline = true;
+
+  String iD = '';
+
+  String _countWorking = "2";
+
+  String _countWorkDeadline = "20";
+
+  //TextStyle
+  TextStyle _googleFontKaniTitle = GoogleFonts.kanit(
+    fontSize: 22.0,
+    fontWeight: FontWeight.w500,
+    textStyle: TextStyle(
+      color: Color.fromRGBO(0, 147, 233, 1),
+    ),
+  );
+
+  TextStyle _googleFontKanit = GoogleFonts.kanit(
+    fontSize: 16.0,
+    fontWeight: FontWeight.w500,
+    textStyle: TextStyle(color: Colors.white, height: 1.2),
+  );
+
+  TextStyle _dateFontKanit = GoogleFonts.kanit(
+    fontSize: 12.0,
+    fontWeight: FontWeight.w400,
+    textStyle: TextStyle(color: Colors.white),
+  );
+
+  TextStyle _typeFontKanit = GoogleFonts.kanit(
+    fontSize: 12.0,
+    fontWeight: FontWeight.w400,
+    textStyle: TextStyle(color: Colors.grey[300]),
+  );
+
+  TextStyle _countwork =
+      TextStyle(color: Colors.white70, fontWeight: FontWeight.bold);
+
+  @override
   Widget build(BuildContext context) {
-    return Container(
-      child: SafeArea(
-        child: Scaffold(
-          body: Stack(),
+    double height = MediaQuery.of(context).size.height;
+    return SafeArea(
+      child: Scaffold(
+        appBar: appBar(context, height),
+        body: SingleChildScrollView(
+          child: Container(
+            // color: Colors.redAccent,
+            // height: height,
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              children: <Widget>[
+                Container(
+                  child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: 16.0),
+                    height: height * 0.80,
+                    // color: Colors.grey,
+                    child: ListView.builder(
+                      itemCount: 5,
+                      itemBuilder: (context, index) {
+                        return Container(
+                          margin: EdgeInsets.symmetric(vertical: 8.00),
+                          height: height * 0.28,
+                          child: Card(
+                            color: Colors.indigo,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12.0),
+                            ),
+                            elevation: 1,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(12.0)),
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
         ),
       ),
     );
   }
+
+  //*******************************************************************************************//
+  //~ Widget Secction
+  Widget appBar(context, height) {
+    return PreferredSize(
+      preferredSize: Size.fromHeight(80),
+      child: Column(
+        children: <Widget>[
+          AppBar(
+            // title: titleAppbar(),
+            leading: IconButton(
+              icon: Icon(
+                Icons.arrow_back_ios,
+                color: Colors.black,
+              ),
+              onPressed: () => Navigator.pop(context),
+            ),
+            backgroundColor: Colors.white,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.vertical(
+                bottom: Radius.circular(25),
+              ),
+            ),
+            actions: [
+              Padding(
+                padding: EdgeInsets.only(right: 16.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisSize: MainAxisSize.max,
+                  children: <Widget>[
+                    Stack(
+                      children: <Widget>[
+                        IconButton(
+                          icon: Icon(
+                            Icons.book,
+                            color: Color.fromRGBO(166, 188, 208, 1),
+                            size: 28,
+                          ),
+                          onPressed: () {},
+                        ),
+                        isWork ? working() : Container(),
+                      ],
+                    ),
+                    SizedBox(
+                      width: 80,
+                    ),
+                    titleAppbar(),
+                    SizedBox(
+                      width: 70,
+                    ),
+                    Stack(
+                      children: <Widget>[
+                        IconButton(
+                          tooltip: "",
+                          icon: Icon(
+                            Icons.notification_important,
+                            color: Color.fromRGBO(166, 188, 208, 1),
+                            size: 28,
+                          ),
+                          onPressed: () {
+                            print(height.toString());
+                          },
+                        ),
+                        isWorkDeadline ? workDeadline() : Container(),
+                      ],
+                    ),
+                    SizedBox(
+                      width: 2.00,
+                    ),
+                    Stack(
+                      children: <Widget>[
+                        IconButton(
+                          icon: Icon(
+                            Icons.create_new_folder,
+                            color: Color.fromRGBO(166, 188, 208, 1),
+                            size: 28,
+                          ),
+                          onPressed: () {},
+                        ),
+                        isWork ? working() : Container(),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget titleAppbar() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisSize: MainAxisSize.max,
+      children: <Widget>[
+        SizedBox(
+          width: 5,
+        ),
+        Text(
+          "กลุ่ม",
+          style: _googleFontKaniTitle,
+        ),
+      ],
+    );
+  }
+
+  Widget working() {
+    return Positioned(
+      bottom: 5,
+      left: 3,
+      child: Container(
+        alignment: Alignment.center,
+        width: 22,
+        height: 20,
+        decoration: BoxDecoration(
+          color: Colors.red,
+          borderRadius: BorderRadius.circular(40),
+        ),
+        child: Text(
+          _countWorking,
+          style: _countwork,
+        ),
+      ),
+    );
+  }
+
+  Widget workDeadline() {
+    return Positioned(
+      bottom: 5,
+      left: 3,
+      child: Container(
+        alignment: Alignment.center,
+        width: 22,
+        height: 20,
+        decoration: BoxDecoration(
+          color: Colors.red,
+          borderRadius: BorderRadius.circular(40),
+        ),
+        child: Text(
+          _countWorkDeadline,
+          style: _countwork,
+        ),
+      ),
+    );
+  }
+  //*******************************************************************************************//
+
 }

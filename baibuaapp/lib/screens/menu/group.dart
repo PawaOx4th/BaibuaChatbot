@@ -50,6 +50,12 @@ class _GroupState extends State<Group> {
   TextStyle _countwork =
       TextStyle(color: Colors.white70, fontWeight: FontWeight.bold);
 
+  List cardColor = [
+    Color.fromRGBO(0, 147, 233, 1).withOpacity(0.6), // Background Blue
+    Color.fromRGBO(60, 73, 92, 1).withOpacity(0.6), //Background Black
+    Color.fromRGBO(116, 138, 157, 1).withOpacity(0.6), // Background Gray
+  ];
+
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
@@ -71,18 +77,82 @@ class _GroupState extends State<Group> {
                     child: ListView.builder(
                       itemCount: 5,
                       itemBuilder: (context, index) {
+                        int countColor = index % 3;
                         return Container(
                           margin: EdgeInsets.symmetric(vertical: 8.00),
-                          height: height * 0.28,
+                          height: height * 0.22,
                           child: Card(
-                            color: Colors.indigo,
+                            color: cardColor[countColor],
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(12.0),
                             ),
                             elevation: 1,
                             child: Container(
                               decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(12.0)),
+                                borderRadius: BorderRadius.circular(12.0),
+                              ),
+                              child: Stack(
+                                children: <Widget>[
+                                  //Name Subject
+                                  Positioned(
+                                    top: 26,
+                                    left: 16,
+                                    child: Text(
+                                      "วิชา" + "กฎหมาย ม.44",
+                                    ),
+                                  ),
+                                  Positioned(
+                                    top: 60,
+                                    left: 16,
+                                    child: Container(
+                                      color: Colors.greenAccent,
+                                      width: 200,
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        mainAxisSize: MainAxisSize.max,
+                                        children: <Widget>[
+                                          Text("รหัสวิชา : " + "1010800"),
+                                          Text("Sec : " + "1010")
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                  Positioned(
+                                    top: 90,
+                                    left: 16,
+                                    child: Container(
+                                      color: Colors.greenAccent,
+                                      width: 200,
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        mainAxisSize: MainAxisSize.max,
+                                        children: <Widget>[
+                                          Text("เวลา  " + "9.00 - 11.00 น."),
+                                          Text("วันจันทร์")
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                  Positioned(
+                                    top: 116,
+                                    left: 16,
+                                    child: Container(
+                                      color: Colors.greenAccent,
+                                      width: 200,
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        mainAxisSize: MainAxisSize.max,
+                                        children: <Widget>[
+                                          Text("อ. ประยุทธ หน้าหี"),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         );
@@ -244,6 +314,7 @@ class _GroupState extends State<Group> {
       ),
     );
   }
+
   //*******************************************************************************************//
 
 }

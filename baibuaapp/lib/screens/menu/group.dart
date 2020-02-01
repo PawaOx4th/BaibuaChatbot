@@ -1,24 +1,22 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class Group extends StatefulWidget {
-  const Group({Key key}) : super(key: key);
-
   @override
   _GroupState createState() => _GroupState();
 }
 
 class _GroupState extends State<Group> {
+  //Variable
   final bool isWork = true;
-
   final bool isWorkDeadline = true;
-
   String iD = '';
-
   String _countWorking = "2";
-
   String _countWorkDeadline = "20";
+  List newsData;
+  int indexS;
+  var pictureDemo =
+      "https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80";
 
   //TextStyle
   TextStyle _googleFontKaniTitle = GoogleFonts.kanit(
@@ -50,127 +48,15 @@ class _GroupState extends State<Group> {
   TextStyle _countwork =
       TextStyle(color: Colors.white70, fontWeight: FontWeight.bold);
 
-  List cardColor = [
-    Color.fromRGBO(0, 147, 233, 1).withOpacity(0.6), // Background Blue
-    Color.fromRGBO(60, 73, 92, 1).withOpacity(0.6), //Background Black
-    Color.fromRGBO(116, 138, 157, 1).withOpacity(0.6), // Background Gray
-  ];
-
   @override
   Widget build(BuildContext context) {
-    double height = MediaQuery.of(context).size.height;
     return SafeArea(
-      child: Scaffold(
-        appBar: appBar(context, height),
-        body: SingleChildScrollView(
-          child: Container(
-            // color: Colors.redAccent,
-            // height: height,
-            child: Column(
-              mainAxisSize: MainAxisSize.max,
-              children: <Widget>[
-                Container(
-                  child: Container(
-                    padding: EdgeInsets.symmetric(horizontal: 16.0),
-                    height: height * 0.80,
-                    // color: Colors.grey,
-                    child: ListView.builder(
-                      itemCount: 5,
-                      itemBuilder: (context, index) {
-                        int countColor = index % 3;
-                        return Container(
-                          margin: EdgeInsets.symmetric(vertical: 8.00),
-                          height: height * 0.22,
-                          child: Card(
-                            color: cardColor[countColor],
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12.0),
-                            ),
-                            elevation: 1,
-                            child: Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(12.0),
-                              ),
-                              child: Stack(
-                                children: <Widget>[
-                                  //Name Subject
-                                  Positioned(
-                                    top: 26,
-                                    left: 16,
-                                    child: Text(
-                                      "วิชา" + "กฎหมาย ม.44",
-                                    ),
-                                  ),
-                                  Positioned(
-                                    top: 60,
-                                    left: 16,
-                                    child: Container(
-                                      color: Colors.greenAccent,
-                                      width: 200,
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        mainAxisSize: MainAxisSize.max,
-                                        children: <Widget>[
-                                          Text("รหัสวิชา : " + "1010800"),
-                                          Text("Sec : " + "1010")
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                  Positioned(
-                                    top: 90,
-                                    left: 16,
-                                    child: Container(
-                                      color: Colors.greenAccent,
-                                      width: 200,
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        mainAxisSize: MainAxisSize.max,
-                                        children: <Widget>[
-                                          Text("เวลา  " + "9.00 - 11.00 น."),
-                                          Text("วันจันทร์")
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                  Positioned(
-                                    top: 116,
-                                    left: 16,
-                                    child: Container(
-                                      color: Colors.greenAccent,
-                                      width: 200,
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        mainAxisSize: MainAxisSize.max,
-                                        children: <Widget>[
-                                          Text("อ. ประยุทธ หน้าหี"),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
+        child: Scaffold(appBar: customsAppBar(), body: GroupSubject()));
   }
 
-  //*******************************************************************************************//
-  //~ Widget Secction
-  Widget appBar(context, height) {
+  //***********************************************************************//
+  //~ Widget
+  Widget customsAppBar() {
     return PreferredSize(
       preferredSize: Size.fromHeight(80),
       child: Column(
@@ -193,63 +79,70 @@ class _GroupState extends State<Group> {
             actions: [
               Padding(
                 padding: EdgeInsets.only(right: 16.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  mainAxisSize: MainAxisSize.max,
-                  children: <Widget>[
-                    Stack(
-                      children: <Widget>[
-                        IconButton(
-                          icon: Icon(
-                            Icons.book,
-                            color: Color.fromRGBO(166, 188, 208, 1),
-                            size: 28,
-                          ),
-                          onPressed: () {},
+                child: Container(
+                  color: Colors.transparent,
+                  width: MediaQuery.of(context).size.width * 0.9,
+                  child: Row(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      //Working
+                      Padding(
+                        padding: EdgeInsets.only(left: 25.0),
+                        child: Stack(
+                          children: <Widget>[
+                            IconButton(
+                              icon: Icon(
+                                Icons.book,
+                                color: Color.fromRGBO(166, 188, 208, 1),
+                                size: 28,
+                              ),
+                              onPressed: () {},
+                            ),
+                            isWork ? working() : Container(),
+                          ],
                         ),
-                        isWork ? working() : Container(),
-                      ],
-                    ),
-                    SizedBox(
-                      width: 80,
-                    ),
-                    titleAppbar(),
-                    SizedBox(
-                      width: 70,
-                    ),
-                    Stack(
-                      children: <Widget>[
-                        IconButton(
-                          tooltip: "",
-                          icon: Icon(
-                            Icons.notification_important,
-                            color: Color.fromRGBO(166, 188, 208, 1),
-                            size: 28,
-                          ),
-                          onPressed: () {
-                            print(height.toString());
-                          },
+                      ),
+
+                      //Name App BAr
+                      titleAppbar(),
+
+                      //Notification
+                      Container(
+                        child: Wrap(
+                          children: <Widget>[
+                            Stack(
+                              children: <Widget>[
+                                IconButton(
+                                  tooltip: "",
+                                  icon: Icon(
+                                    Icons.notification_important,
+                                    color: Color.fromRGBO(166, 188, 208, 1),
+                                    size: 28,
+                                  ),
+                                  onPressed: () {},
+                                ),
+                                isWorkDeadline ? workDeadline() : Container(),
+                              ],
+                            ),
+                            Stack(
+                              children: <Widget>[
+                                IconButton(
+                                  tooltip: "เพิ่มกลุ่ม",
+                                  icon: Icon(
+                                    Icons.queue,
+                                    color: Color.fromRGBO(166, 188, 208, 1),
+                                    size: 28,
+                                  ),
+                                  onPressed: () {},
+                                ),
+                              ],
+                            ),
+                          ],
                         ),
-                        isWorkDeadline ? workDeadline() : Container(),
-                      ],
-                    ),
-                    SizedBox(
-                      width: 2.00,
-                    ),
-                    Stack(
-                      children: <Widget>[
-                        IconButton(
-                          icon: Icon(
-                            Icons.create_new_folder,
-                            color: Color.fromRGBO(166, 188, 208, 1),
-                            size: 28,
-                          ),
-                          onPressed: () {},
-                        ),
-                        isWork ? working() : Container(),
-                      ],
-                    ),
-                  ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ],
@@ -259,6 +152,7 @@ class _GroupState extends State<Group> {
     );
   }
 
+  // Widget App Name
   Widget titleAppbar() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -275,6 +169,7 @@ class _GroupState extends State<Group> {
     );
   }
 
+  //Widget Count Working
   Widget working() {
     return Positioned(
       bottom: 5,
@@ -295,6 +190,7 @@ class _GroupState extends State<Group> {
     );
   }
 
+  //Widget  work Deadline
   Widget workDeadline() {
     return Positioned(
       bottom: 5,
@@ -314,7 +210,60 @@ class _GroupState extends State<Group> {
       ),
     );
   }
+}
 
-  //*******************************************************************************************//
+//todo Class Group Subject  Return Subjects..
+class GroupSubject extends StatefulWidget {
+  @override
+  _GroupSubjectState createState() => _GroupSubjectState();
+}
 
+class _GroupSubjectState extends State<GroupSubject> {
+  //? Key
+  Key _singleChildScroll, _mainColumn;
+
+  //? Variable
+  ////Colors
+  List cardColor = [
+    Color.fromRGBO(60, 73, 92, 1).withOpacity(0.6), //Background Black
+    Color.fromRGBO(0, 147, 233, 1).withOpacity(0.6), // Background Blue
+    Color.fromRGBO(116, 138, 157, 1).withOpacity(0.6), // Background Gray
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      key: _singleChildScroll,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 22.0),
+        child: Column(
+          key: _mainColumn,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            Container(
+              height: MediaQuery.of(context).size.height,
+
+              //! Build Call Data With REST API..
+              child: ListView.builder(
+                  itemCount: 10,
+                  itemBuilder: (context, index) {
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8.0),
+                      child: Card(
+                        color: Colors.black26,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Container(
+                          height: 160,
+                        ),
+                      ),
+                    );
+                  }),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 }

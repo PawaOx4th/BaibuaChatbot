@@ -196,10 +196,7 @@ class _MainmenuState extends State<Mainmenu> {
                       ),
                       child: InkWell(
                         onTap: () {
-//                          Navigator.pushNamed(
-//                            context,
-//                            '/Userdetail-page',arguments: _userID
-//                          );
+                          // Navigator.pushNamed(context, '/Userdetail-page');
                           Navigator.of(context).push(MaterialPageRoute(
                             builder: (context) => BottomNavigation(
                               page: 2,

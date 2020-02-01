@@ -1,11 +1,13 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+
 import 'package:baibuaapp/screens/menu/baibuaChatroom.dart';
 import 'package:baibuaapp/screens/menu/group.dart';
 import 'package:baibuaapp/screens/menu/map.dart';
 import 'package:baibuaapp/screens/menu/news/Newevent.dart';
 import 'package:baibuaapp/screens/menu/userdetail.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
+
 import 'menu/mainmenu.dart';
 
 class BottomNavigation extends StatefulWidget {
@@ -50,9 +52,9 @@ class _BottomNavigationState extends State<BottomNavigation> {
       case 0:
         return newEvent;
       case 1:
-        return group;
+        return Group();
       case 2:
-        return userDetailPage;
+        return UserDetailPage();
       case 3:
         return map;
       case 4:

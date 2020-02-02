@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class Group extends StatefulWidget {
+class AddGroup extends StatefulWidget {
   @override
-  _GroupState createState() => _GroupState();
+  _AddGroupState createState() => _AddGroupState();
 }
 
-class _GroupState extends State<Group> {
-  //Variable
+class _AddGroupState extends State<AddGroup> {
+  //************************************************ Global Variable 👑 *******************************************//
+//Variable
   final bool isWork = true;
   final bool isWorkDeadline = true;
   String iD = '';
@@ -18,7 +19,7 @@ class _GroupState extends State<Group> {
   var pictureDemo =
       "https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80";
 
-  //TextStyle
+//TextStyle
   TextStyle _googleFontKaniTitle = GoogleFonts.kanit(
     fontSize: 22.0,
     fontWeight: FontWeight.w500,
@@ -48,13 +49,17 @@ class _GroupState extends State<Group> {
   TextStyle _countwork =
       TextStyle(color: Colors.white70, fontWeight: FontWeight.bold);
 
+//**********************************************************************************************/ /
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-        child: Scaffold(appBar: customsAppBar(), body: GroupSubject()));
+        child: Scaffold(
+      appBar: customsAppBar(),
+      body: Container(),
+    ));
   }
 
-  //***********************************************************************//
   //~ Widget
   Widget customsAppBar() {
     return PreferredSize(
@@ -206,62 +211,6 @@ class _GroupState extends State<Group> {
         child: Text(
           _countWorkDeadline,
           style: _countwork,
-        ),
-      ),
-    );
-  }
-}
-
-//todo Class Group Subject  Return Subjects..
-class GroupSubject extends StatefulWidget {
-  @override
-  _GroupSubjectState createState() => _GroupSubjectState();
-}
-
-class _GroupSubjectState extends State<GroupSubject> {
-  //? Key
-  Key _singleChildScroll, _mainColumn;
-
-  //? Variable
-  ////Colors
-  List cardColor = [
-    Color.fromRGBO(60, 73, 92, 1).withOpacity(0.6), //Background Black
-    Color.fromRGBO(0, 147, 233, 1).withOpacity(0.6), // Background Blue
-    Color.fromRGBO(116, 138, 157, 1).withOpacity(0.6), // Background Gray
-  ];
-
-  @override
-  Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      key: _singleChildScroll,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 22.0),
-        child: Column(
-          key: _mainColumn,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            Container(
-              height: MediaQuery.of(context).size.height,
-
-              //! Build Call Data With REST API..
-              child: ListView.builder(
-                  itemCount: 10,
-                  itemBuilder: (context, index) {
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 8.0),
-                      child: Card(
-                        color: Colors.black26,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        child: Container(
-                          height: 160,
-                        ),
-                      ),
-                    );
-                  }),
-            ),
-          ],
         ),
       ),
     );

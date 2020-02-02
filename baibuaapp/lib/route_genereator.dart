@@ -1,8 +1,9 @@
+import 'package:baibuaapp/Screens/menu/group/addGroup.dart';
+import 'package:baibuaapp/Screens/menu/group/group.dart';
 import 'package:baibuaapp/google_assistant.dart';
 import 'package:baibuaapp/screens/Authenticate/login.dart';
 import 'package:baibuaapp/screens/Bottomnavigation.dart';
 import 'package:baibuaapp/screens/emty.dart';
-import 'package:baibuaapp/screens/menu/Group.dart';
 import 'package:baibuaapp/screens/menu/baibuaChatroom.dart';
 import 'package:baibuaapp/screens/menu/mainmenu.dart';
 import 'package:baibuaapp/screens/menu/news/Newevent.dart';
@@ -42,13 +43,15 @@ class RouteGenerator {
                 ));
       case '/Group-page':
         return MaterialPageRoute(builder: (_) => Group());
+      case '/AddGroup-page':
+        return MaterialPageRoute(builder: (_) => AddGroup());
       case '/Bottomnavigation-page':
         return MaterialPageRoute(
             builder: (_) => BottomNavigation(
                   page: args,
                 ));
-      case '/Googleasistant-page':
-        return MaterialPageRoute(builder: (_) => GoogleAssistant());
+      // case '/Googleasistant-page':
+      //   return MaterialPageRoute(builder: (_) => GoogleAssistant());
 //      case '/onepage':
 //      // Validation of correct data type
 //        if (args is String) {

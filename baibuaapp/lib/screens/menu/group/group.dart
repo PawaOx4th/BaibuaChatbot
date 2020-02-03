@@ -1,4 +1,7 @@
-import 'package:baibuaapp/Screens/menu/group/addGroup.dart';
+import 'package:baibuaapp/REST%20API/getAllSubject.dart';
+// import 'package:baibuaapp/Screens/menu/group/addGroup.dart';
+import 'package:baibuaapp/models/groupMpdel.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -52,12 +55,12 @@ class _GroupState extends State<Group> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-        child: Scaffold(appBar: customsAppBar(), body: GroupSubject()));
+        child: Scaffold(appBar: customsAppBar(context), body: GroupSubject()));
   }
 
   //***********************************************************************//
   //~ Widget
-  Widget customsAppBar() {
+  Widget customsAppBar(context) {
     return PreferredSize(
       preferredSize: Size.fromHeight(80),
       child: Column(
@@ -136,10 +139,12 @@ class _GroupState extends State<Group> {
                                     size: 28,
                                   ),
                                   onPressed: () {
-                                    Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                            builder: (context) => AddGroup()));
-                                    print("เพิ่มกลุ่ม");
+                                    // AllSubject allSubject = AllSubject();
+                                    AllSubject.getAllGroup();
+                                    // Navigator.of(context).push(
+                                    //     MaterialPageRoute(
+                                    //         builder: (context) => AddGroup()));
+                                    // print("เพิ่มกลุ่ม");
                                   },
                                 ),
                               ],
@@ -229,6 +234,7 @@ class _GroupSubjectState extends State<GroupSubject> {
   Key _singleChildScroll, _mainColumn;
 
   //? Variable 🎒
+  String iD = '';
   ////Colors
   List cardColor = [
     Color.fromRGBO(60, 73, 92, 1).withOpacity(1), //Background Black
@@ -252,6 +258,22 @@ class _GroupSubjectState extends State<GroupSubject> {
     ),
   );
 
+  Future<void> findDisplay() async {
+    FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+    FirebaseUser firebaseUser = await firebaseAuth.currentUser();
+    String userId = firebaseUser.displayName;
+    setState(() {
+      iD = userId;
+    });
+    print("Displayname In Main Menu Page => " + userId);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    findDisplay();
+  }
+
   //? Build List Subjects...
   @override
   Widget build(BuildContext context) {
@@ -270,100 +292,126 @@ class _GroupSubjectState extends State<GroupSubject> {
               height: MediaQuery.of(context).size.height,
 
               //! Build Call Data With REST API..
-              child: ListView.builder(
-                  itemCount: 10,
-                  itemBuilder: (context, index) {
-                    int bgColor = index % 3;
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 8.0),
-                      child: Card(
-                        color: cardColor[bgColor],
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        child: Container(
-                          height: 160,
-                          child: Stack(
-                            children: <Widget>[
-                              //?Name Subject
-                              Positioned(
-                                top: 20.0,
-                                left: 16.0,
-                                height: height / 15,
-                                width: width / 1.5,
-                                child: Text(
-                                  "วิชา กฎหมาย ม.44",
-                                  style: _subjectName,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                              ),
+              child: FutureBuilder(
+                //**  Call Function..
+                future: AllSubject.getAllGroup(userId: iD),
+                builder: (BuildContext context, AsyncSnapshot snapshot) {
+                  //** Check Data not Null..
+                  if (snapshot.hasData) {
+                    List<GroupModel> groupModel = snapshot.data;
+                    int bgColor = groupModel.length % 3;
 
-                              Positioned(
-                                top: 46,
-                                left: 16.0,
-                                height: height / 15,
-                                width: width,
-                                child: Row(
-                                  children: <Widget>[
-                                    //?Subject Code
-                                    Text(
-                                      "รหัสวิชา: 10101800",
+                    //**  Set Build Data Show !!
+                    return ListView.builder(
+                      itemCount: groupModel.length,
+                      itemBuilder: (BuildContext context, index) {
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 8.0),
+                          child: Card(
+                            color: cardColor[bgColor],
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            child: Container(
+                              height: 160,
+                              child: Stack(
+                                children: <Widget>[
+                                  //?Name Subject
+                                  Positioned(
+                                    top: 20.0,
+                                    left: 16.0,
+                                    height: height / 15,
+                                    width: width / 1.5,
+                                    child: Text(
+                                      groupModel[index]
+                                          .sec
+                                          .subject, //** => Show Name Subject */
+                                      style: _subjectName,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ),
+
+                                  Positioned(
+                                    top: 46,
+                                    left: 16.0,
+                                    height: height / 15,
+                                    width: width,
+                                    child: Row(
+                                      children: <Widget>[
+                                        //?Subject Code
+                                        Text(
+                                          "รหัสวิชา: 10101800",
+                                          style: _subjectDetail,
+                                        ),
+                                        SizedBox(
+                                          width: 10.0,
+                                        ),
+
+                                        //?Subject Group
+                                        Text(
+                                          "Sec: ${groupModel[index].sec.sec}",
+                                          style: _subjectDetail,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+
+                                  Positioned(
+                                    top: 79,
+                                    left: 16.0,
+                                    height: height / 15,
+                                    width: width,
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: <Widget>[
+                                        //?Subject Time
+                                        Text(
+                                          "สร้างวันที่ : ${groupModel[index].sec.createDate[0]} ${groupModel[index].sec.createDate[1]} ${groupModel[index].sec.createDate[2]}",
+                                          style: _subjectDetail,
+                                        ),
+                                        SizedBox(
+                                          width: 10.0,
+                                        ),
+
+                                        //?Subject Date
+                                        Text(
+                                          "อัปเดตล่าสุด : ${groupModel[index].sec.updateDate[0]} ${groupModel[index].sec.updateDate[1]} ${groupModel[index].sec.updateDate[2]}",
+                                          style: _subjectDetail,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+
+                                  Positioned(
+                                    top: 120,
+                                    left: 16.0,
+                                    height: height / 15,
+                                    width: width,
+                                    child: Text(
+                                      "ดร.ประหยัด จันทร์โอชา",
                                       style: _subjectDetail,
                                     ),
-                                    SizedBox(
-                                      width: 10.0,
-                                    ),
-
-                                    //?Subject Group
-                                    Text(
-                                      "Sec: 100",
-                                      style: _subjectDetail,
-                                    ),
-                                  ],
-                                ),
+                                  ),
+                                ],
                               ),
-
-                              Positioned(
-                                top: 65,
-                                left: 16.0,
-                                height: height / 15,
-                                width: width,
-                                child: Row(
-                                  children: <Widget>[
-                                    //?Subject Time
-                                    Text(
-                                      "เวลา: 09.00 - 12.00",
-                                      style: _subjectDetail,
-                                    ),
-                                    SizedBox(
-                                      width: 10.0,
-                                    ),
-
-                                    //?Subject Date
-                                    Text(
-                                      "วันจันทร์",
-                                      style: _subjectDetail,
-                                    ),
-                                  ],
-                                ),
-                              ),
-
-                              Positioned(
-                                top: 95,
-                                left: 16.0,
-                                height: height / 15,
-                                width: width,
-                                child: Text(
-                                  "ดร.ประหยัด จันทร์โอชา",
-                                  style: _subjectDetail,
-                                ),
-                              ),
-                            ],
+                            ),
                           ),
-                        ),
-                      ),
+                        );
+                      },
                     );
-                  }),
+                  }
+
+                  //* Data has Null
+                  else {
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+                },
+              ),
             ),
           ],
         ),

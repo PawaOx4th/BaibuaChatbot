@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:dropdown_formfield/dropdown_formfield.dart';
 
 class AddGroup extends StatefulWidget {
   @override
@@ -235,6 +236,9 @@ class _SubjectDetailState extends State<SubjectDetail> {
       subJectDate,
       subJectTeacher;
 
+  String _myActivity;
+  String dropdownValue = 'จันทร์';
+
   //! ***** TesxtStyle Section***** //
   //TextStyle
   TextStyle hitsTitle = GoogleFonts.kanit(
@@ -286,7 +290,11 @@ class _SubjectDetailState extends State<SubjectDetail> {
                 SizedBox(
                   height: 16.0,
                 ),
-                teacherSubject()
+                teacherSubject(),
+                SizedBox(
+                  height: 16.0,
+                ),
+                // dropDownDate()
               ],
             ),
           ),
@@ -366,19 +374,102 @@ class _SubjectDetailState extends State<SubjectDetail> {
       );
 
   Widget dateSubject() => Container(
+        width: MediaQuery.of(context).size.width,
         padding: EdgeInsets.all(14.0),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15.0),
           color: Colors.white,
         ),
-        child: TextFormField(
-          decoration: InputDecoration(
-            hintText: "วันเรียน",
-            hintStyle: hitsTitle,
-            border: InputBorder.none,
-          ),
-          style: textDetail,
-          controller: subJectDate, //** => ID Subject controller */
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Text(
+              "วันเรียน",
+              style: hitsTitle,
+            ),
+            DropdownButton<String>(
+              value: dropdownValue,
+              icon: Icon(Icons.arrow_downward),
+              iconSize: 24,
+              elevation: 16,
+              style: textDetail,
+              underline: Container(
+                height: 2,
+                color: Colors.blue,
+              ),
+              onChanged: (String newValue) {
+                setState(() {
+                  dropdownValue = newValue;
+                  print(dropdownValue);
+                });
+              },
+              items: <String>[
+                'อาทิตย์',
+                'จันทร์',
+                'อังคาร',
+                'พุธ',
+                'พฤหัสบดี',
+                "ศุกร์",
+                "เสาร์",
+              ].map<DropdownMenuItem<String>>((String value) {
+                return DropdownMenuItem<String>(
+                  value: value,
+                  child: Text(value),
+                );
+              }).toList(),
+            ),
+          ],
+        ),
+      );
+
+  Widget dropDownDate() => Container(
+        padding: EdgeInsets.all(16),
+        child: DropDownFormField(
+          titleText: 'My workout',
+          hintText: 'Please choose one',
+          value: _myActivity,
+          onSaved: (value) {
+            setState(() {
+              _myActivity = value;
+            });
+          },
+          onChanged: (value) {
+            setState(() {
+              _myActivity = value;
+            });
+          },
+          dataSource: [
+            {
+              "display": "Running",
+              "value": "Running",
+            },
+            {
+              "display": "Climbing",
+              "value": "Climbing",
+            },
+            {
+              "display": "Walking",
+              "value": "Walking",
+            },
+            {
+              "display": "Swimming",
+              "value": "Swimming",
+            },
+            {
+              "display": "Soccer Practice",
+              "value": "Soccer Practice",
+            },
+            {
+              "display": "Baseball Practice",
+              "value": "Baseball Practice",
+            },
+            {
+              "display": "Football Practice",
+              "value": "Football Practice",
+            },
+          ],
+          textField: 'display',
+          valueField: 'value',
         ),
       );
 

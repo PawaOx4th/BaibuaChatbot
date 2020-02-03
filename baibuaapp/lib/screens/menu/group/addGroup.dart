@@ -55,8 +55,9 @@ class _AddGroupState extends State<AddGroup> {
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
+      backgroundColor: Colors.grey[200],
       appBar: customsAppBar(),
-      body: Container(),
+      body: SubjectDetail(),
     ));
   }
 
@@ -89,63 +90,63 @@ class _AddGroupState extends State<AddGroup> {
                   width: MediaQuery.of(context).size.width * 0.9,
                   child: Row(
                     mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       //Working
-                      Padding(
-                        padding: EdgeInsets.only(left: 25.0),
-                        child: Stack(
-                          children: <Widget>[
-                            IconButton(
-                              icon: Icon(
-                                Icons.book,
-                                color: Color.fromRGBO(166, 188, 208, 1),
-                                size: 28,
-                              ),
-                              onPressed: () {},
-                            ),
-                            isWork ? working() : Container(),
-                          ],
-                        ),
-                      ),
+                      // Padding(
+                      //   padding: EdgeInsets.only(left: 25.0),
+                      //   child: Stack(
+                      //     children: <Widget>[
+                      //       IconButton(
+                      //         icon: Icon(
+                      //           Icons.book,
+                      //           color: Color.fromRGBO(166, 188, 208, 1),
+                      //           size: 28,
+                      //         ),
+                      //         onPressed: () {},
+                      //       ),
+                      //       isWork ? working() : Container(),
+                      //     ],
+                      //   ),
+                      // ),
 
                       //Name App BAr
                       titleAppbar(),
 
                       //Notification
-                      Container(
-                        child: Wrap(
-                          children: <Widget>[
-                            Stack(
-                              children: <Widget>[
-                                IconButton(
-                                  tooltip: "",
-                                  icon: Icon(
-                                    Icons.notification_important,
-                                    color: Color.fromRGBO(166, 188, 208, 1),
-                                    size: 28,
-                                  ),
-                                  onPressed: () {},
-                                ),
-                                isWorkDeadline ? workDeadline() : Container(),
-                              ],
-                            ),
-                            Stack(
-                              children: <Widget>[
-                                IconButton(
-                                  tooltip: "เพิ่มกลุ่ม",
-                                  icon: Icon(
-                                    Icons.queue,
-                                    color: Color.fromRGBO(166, 188, 208, 1),
-                                    size: 28,
-                                  ),
-                                  onPressed: () {},
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
+                      // Container(
+                      //   child: Wrap(
+                      //     children: <Widget>[
+                      //       Stack(
+                      //         children: <Widget>[
+                      //           IconButton(
+                      //             tooltip: "",
+                      //             icon: Icon(
+                      //               Icons.notification_important,
+                      //               color: Color.fromRGBO(166, 188, 208, 1),
+                      //               size: 28,
+                      //             ),
+                      //             onPressed: () {},
+                      //           ),
+                      //           isWorkDeadline ? workDeadline() : Container(),
+                      //         ],
+                      //       ),
+                      //       Stack(
+                      //         children: <Widget>[
+                      //           IconButton(
+                      //             tooltip: "เพิ่มกลุ่ม",
+                      //             icon: Icon(
+                      //               Icons.queue,
+                      //               color: Color.fromRGBO(166, 188, 208, 1),
+                      //               size: 28,
+                      //             ),
+                      //             onPressed: () {},
+                      //           ),
+                      //         ],
+                      //       ),
+                      //     ],
+                      //   ),
+                      // ),
                     ],
                   ),
                 ),
@@ -167,7 +168,7 @@ class _AddGroupState extends State<AddGroup> {
           width: 5,
         ),
         Text(
-          "กลุ่ม",
+          "เพิ่มกลุ่ม",
           style: _googleFontKaniTitle,
         ),
       ],
@@ -215,4 +216,186 @@ class _AddGroupState extends State<AddGroup> {
       ),
     );
   }
+}
+
+class SubjectDetail extends StatefulWidget {
+  const SubjectDetail({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  _SubjectDetailState createState() => _SubjectDetailState();
+}
+
+class _SubjectDetailState extends State<SubjectDetail> {
+  TextEditingController subJectName,
+      subJectId,
+      subJectSec,
+      subjectTime,
+      subJectDate,
+      subJectTeacher;
+
+  //! ***** TesxtStyle Section***** //
+  //TextStyle
+  TextStyle hitsTitle = GoogleFonts.kanit(
+    fontSize: 16.0,
+    fontWeight: FontWeight.w500,
+    textStyle: TextStyle(
+      color: Colors.grey[300],
+    ),
+  );
+
+  TextStyle textDetail = GoogleFonts.kanit(
+    fontSize: 16.0,
+    fontWeight: FontWeight.w500,
+    textStyle: TextStyle(
+      color: Color.fromRGBO(0, 147, 233, 1),
+    ),
+  );
+  //! ***************************** //
+
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+      // top: false,
+      child: Scaffold(
+        backgroundColor: Colors.grey[200],
+        body: SingleChildScrollView(
+          child: Container(
+            padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                nameSubject(),
+                SizedBox(
+                  height: 16.0,
+                ),
+                idSubject(),
+                SizedBox(
+                  height: 16.0,
+                ),
+                secSubject(),
+                SizedBox(
+                  height: 16.0,
+                ),
+                timeSubject(),
+                SizedBox(
+                  height: 16.0,
+                ),
+                dateSubject(),
+                SizedBox(
+                  height: 16.0,
+                ),
+                teacherSubject()
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  //~~~~~~~~~~~~~~~~~ Widget Section ~~~~~~~~~~~~~~~~~~~~~~//
+  Widget nameSubject() => Container(
+        // color: Colors.grey[300],
+        padding: EdgeInsets.all(14.0),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(15.0),
+          color: Colors.white,
+        ),
+        child: TextFormField(
+          decoration: InputDecoration(
+            hintText: "ชื่อวิชา",
+            hintStyle: hitsTitle,
+            border: InputBorder.none,
+          ),
+          style: textDetail,
+          controller: subJectName, //** => Name Subject controller */
+        ),
+      );
+
+  Widget idSubject() => Container(
+        padding: EdgeInsets.all(14.0),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(15.0),
+          color: Colors.white,
+        ),
+        child: TextFormField(
+          decoration: InputDecoration(
+            hintText: "รหัสวิชา",
+            hintStyle: hitsTitle,
+            border: InputBorder.none,
+          ),
+          style: textDetail,
+          controller: subJectId, //** => ID Subject controller */
+        ),
+      );
+
+  Widget secSubject() => Container(
+        padding: EdgeInsets.all(14.0),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(15.0),
+          color: Colors.white,
+        ),
+        child: TextFormField(
+          decoration: InputDecoration(
+            hintText: "กลุ่มเรียน",
+            hintStyle: hitsTitle,
+            border: InputBorder.none,
+          ),
+          style: textDetail,
+          controller: subJectSec, //** => ID Subject controller */
+        ),
+      );
+
+  Widget timeSubject() => Container(
+        padding: EdgeInsets.all(14.0),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(15.0),
+          color: Colors.white,
+        ),
+        child: TextFormField(
+          decoration: InputDecoration(
+            hintText: "เวลาเรียน",
+            hintStyle: hitsTitle,
+            border: InputBorder.none,
+          ),
+          style: textDetail,
+          controller: subjectTime, //** => ID Subject controller */
+        ),
+      );
+
+  Widget dateSubject() => Container(
+        padding: EdgeInsets.all(14.0),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(15.0),
+          color: Colors.white,
+        ),
+        child: TextFormField(
+          decoration: InputDecoration(
+            hintText: "วันเรียน",
+            hintStyle: hitsTitle,
+            border: InputBorder.none,
+          ),
+          style: textDetail,
+          controller: subJectDate, //** => ID Subject controller */
+        ),
+      );
+
+  Widget teacherSubject() => Container(
+        padding: EdgeInsets.all(14.0),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(15.0),
+          color: Colors.white,
+        ),
+        child: TextFormField(
+          decoration: InputDecoration(
+            hintText: "ชื่ออาจารย์ผู้สอน",
+            hintStyle: hitsTitle,
+            border: InputBorder.none,
+          ),
+          style: textDetail,
+          controller: subJectTeacher, //** => ID Subject controller */
+        ),
+      );
 }

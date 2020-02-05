@@ -270,12 +270,14 @@ class _GroupSubjectState extends State<GroupSubject> {
     print('Select Work');
     print("${groupId}");
     Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => Work(
-                  groupId: groupId,
-                  nameSubject: subJectName,
-                )));
+      context,
+      MaterialPageRoute(
+        builder: (context) => Work(
+          groupId: groupId,
+          nameSubject: subJectName,
+        ),
+      ),
+    );
   }
 
   @override

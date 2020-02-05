@@ -1,20 +1,18 @@
-import 'package:baibuaapp/REST%20API/fetchWork.dart';
-import 'package:baibuaapp/Screens/menu/work/workDetail.dart';
+import 'package:baibuaapp/REST%20API/fetchWorkDetial.dart';
+import 'package:baibuaapp/models/worksDetail.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:baibuaapp/models/workInGroup.dart';
 
-class Work extends StatefulWidget {
-  Work({Key key, this.groupId, this.nameSubject}) : super(key: key);
+class WorkDetail extends StatefulWidget {
+  WorkDetail({Key key, this.workId}) : super(key: key);
+
+  final String workId;
 
   @override
-  _WorkState createState() => _WorkState();
-
-  final String groupId;
-  final String nameSubject;
+  _WorkDetailState createState() => _WorkDetailState();
 }
 
-class _WorkState extends State<Work> {
+class _WorkDetailState extends State<WorkDetail> {
   //Variable
   final bool isWork = true;
   final bool isWorkDeadline = true;
@@ -61,8 +59,8 @@ class _WorkState extends State<Work> {
     return SafeArea(
       child: Scaffold(
         appBar: customsAppBar(context),
-        body: WorkGroup(
-          subjectid: widget.groupId,
+        body: Detail(
+          workDetailId: widget.workId,
         ),
       ),
     );
@@ -175,9 +173,9 @@ class _WorkState extends State<Work> {
       mainAxisSize: MainAxisSize.max,
       children: <Widget>[
         Container(
-          width: MediaQuery.of(context).size.width / 2,
+          // width: MediaQuery.of(context).size.width / 2,
           child: Text(
-            widget.nameSubject,
+            "ข้อมูลงาน",
             style: _googleFontKaniTitle,
             // softWrap: true,
             overflow: TextOverflow.ellipsis,
@@ -230,141 +228,200 @@ class _WorkState extends State<Work> {
   }
 }
 
-class WorkGroup extends StatefulWidget {
-  WorkGroup({Key key, this.subjectid}) : super(key: key);
+class Detail extends StatefulWidget {
+  const Detail({Key key, this.workDetailId}) : super(key: key);
 
-  final subjectid;
+  final String workDetailId;
 
   @override
-  _WorkGroupState createState() => _WorkGroupState();
+  _DetailState createState() => _DetailState();
 }
 
-class _WorkGroupState extends State<WorkGroup> {
-  ////Colors
-  List cardColor = [
-    Color.fromRGBO(60, 73, 92, 1).withOpacity(1), //Background Black
-    Color.fromRGBO(0, 147, 233, 1).withOpacity(1), // Background Blue
-    Color.fromRGBO(116, 138, 157, 1).withOpacity(1), // Background Gray
-  ];
-
-  //TextStyle 👺👺
-  TextStyle _workName = GoogleFonts.kanit(
-    fontSize: 22.0,
-    fontWeight: FontWeight.bold,
-    textStyle: TextStyle(
-      color: Colors.white,
-    ),
-  );
-  TextStyle _workDetail = GoogleFonts.kanit(
-    fontSize: 14.0,
-    // fontWeight: FontWeight.bold,
-    textStyle: TextStyle(
-      color: Colors.white,
-    ),
-  );
-
-  buildGotoworkDetail({String workID}) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => WorkDetail(
-          workId: workID,
-        ),
-      ),
-    );
-  }
-
+class _DetailState extends State<Detail> {
   @override
   Widget build(BuildContext context) {
+    var picUrl =
+        'https://images.unsplash.com/photo-1481627834876-b7833e8f5570?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1082&q=80';
+
     //? ----------------------------------------------- //
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
+    double height2 = height * 2;
     //? ----------------------------------------------- //
 
     return SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 22.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
+      scrollDirection: Axis.vertical,
+      child: Container(
+        width: width,
+        height: height2,
+        child: Stack(
+          fit: StackFit.expand,
           children: <Widget>[
-            Container(
-              height: height,
-              child: FutureBuilder(
-                future: FetchWork.fecthwork(subjectId: widget.subjectid),
-                builder: (BuildContext context, AsyncSnapshot snapshot) {
-                  if (snapshot.hasData) {
-                    List<WorkInGroup> workmodel = snapshot.data;
-
-                    return ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: workmodel.length,
-                      itemBuilder: (context, index) {
-                        int bgColor = index % 3;
-                        return Padding(
-                          padding: EdgeInsets.symmetric(vertical: 8.2),
-                          child: InkWell(
-                            child: Card(
-                              color: cardColor[bgColor],
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                              child: Container(
-                                height: 130,
-                                padding: EdgeInsets.only(left: 26.0, top: 16.0),
-                                child: Stack(
-                                  children: <Widget>[
-                                    Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: <Widget>[
-                                        Text(
-                                          workmodel[index].topic,
-                                          style: _workName,
-                                          overflow: TextOverflow.ellipsis,
-                                        ),
-                                        Text(
-                                          "สั่งเมื่อ : ${workmodel[index].createDate[0]} ${workmodel[index].createDate[1]} ${workmodel[index].createDate[2]}",
-                                          style: _workDetail,
-                                        ),
-                                        Text(
-                                          "กำหนดส่ง : ${workmodel[index].sendDate[0]} ${workmodel[index].sendDate[1]} ${workmodel[index].sendDate[2]}",
-                                          style: _workDetail,
-                                        ),
-                                      ],
-                                    ),
-                                    Positioned(
-                                      bottom: 20,
-                                      right: 16.0,
-                                      child: Icon(
-                                        Icons.account_circle,
-                                        size: 55,
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                            onTap: () {
-                              buildGotoworkDetail(workID: workmodel[index].id);
-                            },
-                          ),
-                        );
-                      },
-                    );
-                  } else {
-                    return Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  }
-                },
+            Positioned(
+              top: 0,
+              child: Container(
+                width: width,
+                height: height / 1.8,
+                // color: Colors.pink[200],
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: NetworkImage(picUrl),
+                    fit: BoxFit.cover,
+                    colorFilter: ColorFilter.mode(
+                      Colors.blue[100],
+                      BlendMode.modulate,
+                    ),
+                  ),
+                ),
               ),
             ),
+
+            //** Section Data */
+            Positioned(
+              top: 250,
+              // height: 1000,
+              child: SingleChildScrollView(
+                child: Container(
+                  width: width,
+                  height: height2,
+                  // color: Colors.orange,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(30),
+                      topRight: Radius.circular(30),
+                    ),
+                    color: Colors.blue,
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(18.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: <Widget>[
+                        DataDatail(
+                          workDetailId: widget.workDetailId,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            )
           ],
         ),
       ),
     );
   }
 }
+
+//* ************************************** DataDatail ************************************ **/
+class DataDatail extends StatefulWidget {
+  const DataDatail({Key key, this.workDetailId}) : super(key: key);
+
+  final String workDetailId;
+
+  @override
+  _DataDatailState createState() => _DataDatailState();
+}
+
+class _DataDatailState extends State<DataDatail> {
+  @override
+  Widget build(BuildContext context) {
+    //? ----------------------------------------------- //
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
+    double height2 = height * 2;
+    //? ----------------------------------------------- //
+
+    //TextStyle 👺👺
+    TextStyle _workName = GoogleFonts.kanit(
+      fontSize: 36.0,
+      fontWeight: FontWeight.bold,
+      textStyle: TextStyle(
+        color: Colors.white,
+      ),
+    );
+    TextStyle _workDetail = GoogleFonts.kanit(
+      fontSize: 18.0,
+      // fontWeight: FontWeight.bold,
+      textStyle: TextStyle(
+        color: Colors.white,
+      ),
+    );
+    TextStyle _menu = GoogleFonts.kanit(
+      fontSize: 22.0,
+      fontWeight: FontWeight.bold,
+      textStyle: TextStyle(
+        color: Colors.black,
+      ),
+    );
+
+    return Container(
+      width: width,
+      height: height,
+      // color: Colors.greenAccent,
+      child: FutureBuilder(
+        future:
+            FetchWorkDetial.fetchWorkData(workDetailId: widget.workDetailId),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            Work_Detail workDetail = snapshot.data;
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                //** Icon..
+                InkWell(
+                  onTap: () {},
+                  child: Icon(
+                    Icons.account_circle,
+                    size: 64,
+                    color: Colors.white,
+                  ),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+
+                //**  Topic..
+                Text(
+                  workDetail.topic,
+                  style: _workName,
+                  overflow: TextOverflow.ellipsis,
+                ),
+
+                //**  SendDate..
+                Text(
+                  "กำหนดส่ง: ${workDetail.sendDate[0]} ${workDetail.sendDate[1]} ${workDetail.sendDate[2]}",
+                  style: _workDetail,
+                ),
+                Text(
+                  "สั่งเมื่อ: ${workDetail.createDate[0]} ${workDetail.createDate[1]} ${workDetail.createDate[2]}",
+                  style: _workDetail,
+                ),
+                SizedBox(
+                  height: 36.00,
+                ),
+                Text(
+                  "รายละเอียด",
+                  style: _menu,
+                ),
+                Text(
+                  workDetail.description,
+                  style: _workDetail,
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 8,
+                ),
+              ],
+            );
+          } else {
+            return Center(
+                child: CircularProgressIndicator(
+              backgroundColor: Colors.transparent,
+            ));
+          }
+        },
+      ),
+    );
+  }
+}
+//* *********************************************************************************** **/

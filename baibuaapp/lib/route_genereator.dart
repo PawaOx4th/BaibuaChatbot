@@ -1,5 +1,6 @@
 import 'package:baibuaapp/Screens/menu/group/addGroup.dart';
 import 'package:baibuaapp/Screens/menu/group/group.dart';
+import 'package:baibuaapp/Screens/menu/work/work.dart';
 import 'package:baibuaapp/google_assistant.dart';
 import 'package:baibuaapp/screens/Authenticate/login.dart';
 import 'package:baibuaapp/screens/Bottomnavigation.dart';
@@ -45,6 +46,12 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => Group());
       case '/AddGroup-page':
         return MaterialPageRoute(builder: (_) => AddGroup());
+      case '/Work':
+        return MaterialPageRoute(
+            builder: (_) => Work(
+                  groupId: args,
+                  nameSubject: args,
+                ));
       case '/Bottomnavigation-page':
         return MaterialPageRoute(
             builder: (_) => BottomNavigation(

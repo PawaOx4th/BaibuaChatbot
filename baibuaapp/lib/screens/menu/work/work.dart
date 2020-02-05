@@ -1,18 +1,19 @@
 import 'package:baibuaapp/REST%20API/fetchWork.dart';
-import 'package:baibuaapp/REST%20API/getAllSubject.dart';
-import 'package:baibuaapp/Screens/menu/work/work.dart';
-import 'package:flutter/widgets.dart';
-import 'package:baibuaapp/models/groupMpdel.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:baibuaapp/models/workInGroup.dart';
 
-class Group extends StatefulWidget {
+class Work extends StatefulWidget {
+  Work({Key key, this.groupId, this.nameSubject}) : super(key: key);
+
   @override
-  _GroupState createState() => _GroupState();
+  _WorkState createState() => _WorkState();
+
+  final String groupId;
+  final String nameSubject;
 }
 
-class _GroupState extends State<Group> {
+class _WorkState extends State<Work> {
   //Variable
   final bool isWork = true;
   final bool isWorkDeadline = true;
@@ -57,10 +58,15 @@ class _GroupState extends State<Group> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-        child: Scaffold(appBar: customsAppBar(context), body: GroupSubject()));
+      child: Scaffold(
+        appBar: customsAppBar(context),
+        body: WorkGroup(
+          subjectid: widget.groupId,
+        ),
+      ),
+    );
   }
 
-  //***********************************************************************//
   //~ Widget
   Widget customsAppBar(context) {
     return PreferredSize(
@@ -111,7 +117,7 @@ class _GroupState extends State<Group> {
                       ),
 
                       //Name App BAr
-                      titleAppbar(),
+                      titleAppbar(context),
 
                       //Notification
                       Container(
@@ -162,14 +168,19 @@ class _GroupState extends State<Group> {
   }
 
   // Widget App Name
-  Widget titleAppbar() {
+  Widget titleAppbar(context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       mainAxisSize: MainAxisSize.max,
       children: <Widget>[
-        Text(
-          "กลุ่ม",
-          style: _googleFontKaniTitle,
+        Container(
+          width: MediaQuery.of(context).size.width / 2,
+          child: Text(
+            widget.nameSubject,
+            style: _googleFontKaniTitle,
+            // softWrap: true,
+            overflow: TextOverflow.ellipsis,
+          ),
         ),
       ],
     );
@@ -218,21 +229,16 @@ class _GroupState extends State<Group> {
   }
 }
 
-//! ************************************************************************************************ //
-//todo Class Group Subject  Return Subjects..
-class GroupSubject extends StatefulWidget {
+class WorkGroup extends StatefulWidget {
+  WorkGroup({Key key, this.subjectid}) : super(key: key);
+
+  final subjectid;
+
   @override
-  _GroupSubjectState createState() => _GroupSubjectState();
+  _WorkGroupState createState() => _WorkGroupState();
 }
 
-class _GroupSubjectState extends State<GroupSubject> {
-  //? Key
-  Key _singleChildScroll, _mainColumn, _cardId;
-
-  //? Variable 🎒
-  String iD = '';
-  String idGroup = '';
-
+class _WorkGroupState extends State<WorkGroup> {
   ////Colors
   List cardColor = [
     Color.fromRGBO(60, 73, 92, 1).withOpacity(1), //Background Black
@@ -241,14 +247,14 @@ class _GroupSubjectState extends State<GroupSubject> {
   ];
 
   //TextStyle 👺👺
-  TextStyle _subjectName = GoogleFonts.kanit(
+  TextStyle _workName = GoogleFonts.kanit(
     fontSize: 22.0,
     fontWeight: FontWeight.bold,
     textStyle: TextStyle(
       color: Colors.white,
     ),
   );
-  TextStyle _subjectDetail = GoogleFonts.kanit(
+  TextStyle _workDetail = GoogleFonts.kanit(
     fontSize: 14.0,
     // fontWeight: FontWeight.bold,
     textStyle: TextStyle(
@@ -256,182 +262,81 @@ class _GroupSubjectState extends State<GroupSubject> {
     ),
   );
 
-  Future<void> findDisplay() async {
-    FirebaseAuth firebaseAuth = FirebaseAuth.instance;
-    FirebaseUser firebaseUser = await firebaseAuth.currentUser();
-    String userId = firebaseUser.displayName;
-    setState(() {
-      iD = userId;
-    });
-    print("Displayname In Main Menu Page => " + userId);
-  }
-
-  callWork({String groupId, String subJectName}) {
-    print('Select Work');
-    print("${groupId}");
-    Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => Work(
-                  groupId: groupId,
-                  nameSubject: subJectName,
-                )));
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    findDisplay();
-  }
-
-  //? Build List Subjects...
   @override
   Widget build(BuildContext context) {
+    //? ----------------------------------------------- //
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
+    //? ----------------------------------------------- //
 
     return SingleChildScrollView(
-      key: _singleChildScroll,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 22.0),
         child: Column(
-          key: _mainColumn,
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             Container(
-              height: MediaQuery.of(context).size.height,
-
-              //! Build Call Data With REST API..
-              child: FutureBuilder<List<GroupModel>>(
-                //**  Call Function..
-                future: AllSubject.getAllGroup(userId: iD),
-
+              height: height,
+              child: FutureBuilder(
+                future: FetchWork.fecthwork(subjectId: widget.subjectid),
                 builder: (BuildContext context, AsyncSnapshot snapshot) {
-                  //** Check Data not Null..
                   if (snapshot.hasData) {
-                    List<GroupModel> groupModel = snapshot.data;
+                    List<WorkInGroup> workmodel = snapshot.data;
 
-                    //**  Set Build Data Show !!
                     return ListView.builder(
                       shrinkWrap: true,
-                      physics: BouncingScrollPhysics(),
-                      // scrollDirection: Axis.horizontal,
-                      itemCount: groupModel.length,
-                      itemBuilder: (BuildContext context, index) {
+                      itemCount: workmodel.length,
+                      itemBuilder: (context, index) {
                         int bgColor = index % 3;
-                        print(bgColor);
                         return Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 8.0),
-                          child: InkWell(
-                            child: Card(
-                              key: _cardId,
-                              color: cardColor[bgColor],
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-
-                              //** InkWell..
-
-                              child: Container(
-                                height: 160,
+                          padding: EdgeInsets.symmetric(vertical: 8.2),
+                          child: Card(
+                            color: cardColor[bgColor],
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            child: Container(
+                                height: 130,
+                                padding: EdgeInsets.only(left: 26.0, top: 16.0),
                                 child: Stack(
                                   children: <Widget>[
-                                    //?Name Subject
-                                    Positioned(
-                                      top: 20.0,
-                                      left: 16.0,
-                                      height: height / 15,
-                                      width: width / 1.5,
-                                      child: Text(
-                                        groupModel[index]
-                                            .sec
-                                            .subject, //** => Show Name Subject */
-                                        style: _subjectName,
-                                        overflow: TextOverflow.ellipsis,
-                                      ),
+                                    Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: <Widget>[
+                                        Text(
+                                          workmodel[index].topic,
+                                          style: _workName,
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                        Text(
+                                          "สั่งเมื่อ : ${workmodel[index].createDate[0]} ${workmodel[index].createDate[1]} ${workmodel[index].createDate[2]}",
+                                          style: _workDetail,
+                                        ),
+                                        Text(
+                                          "กำหนดส่ง : ${workmodel[index].sendDate[0]} ${workmodel[index].sendDate[1]} ${workmodel[index].sendDate[2]}",
+                                          style: _workDetail,
+                                        ),
+                                      ],
                                     ),
-
                                     Positioned(
-                                      top: 46,
-                                      left: 16.0,
-                                      height: height / 15,
-                                      width: width,
-                                      child: Row(
-                                        children: <Widget>[
-                                          //?Subject Code
-                                          Text(
-                                            "รหัสวิชา: 10101800",
-                                            style: _subjectDetail,
-                                          ),
-                                          SizedBox(
-                                            width: 10.0,
-                                          ),
-
-                                          //?Subject Group
-                                          Text(
-                                            "Sec: ${groupModel[index].sec.sec}",
-                                            style: _subjectDetail,
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-
-                                    Positioned(
-                                      top: 79,
-                                      left: 16.0,
-                                      height: height / 15,
-                                      width: width,
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: <Widget>[
-                                          //?Subject Time
-                                          Text(
-                                            "สร้างวันที่ : ${groupModel[index].sec.createDate[0]} ${groupModel[index].sec.createDate[1]} ${groupModel[index].sec.createDate[2]}",
-                                            style: _subjectDetail,
-                                          ),
-                                          SizedBox(
-                                            width: 10.0,
-                                          ),
-
-                                          //?Subject Date
-                                          Text(
-                                            "อัปเดตล่าสุด : ${groupModel[index].sec.updateDate[0]} ${groupModel[index].sec.updateDate[1]} ${groupModel[index].sec.updateDate[2]}",
-                                            style: _subjectDetail,
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-
-                                    Positioned(
-                                      top: 120,
-                                      left: 16.0,
-                                      height: height / 15,
-                                      width: width,
-                                      child: Text(
-                                        "${groupModel[index].teacher1}",
-                                        style: _subjectDetail,
+                                      bottom: 20,
+                                      right: 16.0,
+                                      child: Icon(
+                                        Icons.account_circle,
+                                        size: 55,
+                                        color: Colors.white,
                                       ),
                                     ),
                                   ],
-                                ),
-                              ),
-                            ),
-                            onTap: () => {
-                              callWork(
-                                  groupId: groupModel[index].id,
-                                  subJectName: groupModel[index].sec.subject)
-                            },
+                                )),
                           ),
                         );
                       },
                     );
-                  }
-
-                  //* Data has Null
-                  else {
+                  } else {
                     return Center(
                       child: CircularProgressIndicator(),
                     );
@@ -445,8 +350,3 @@ class _GroupSubjectState extends State<GroupSubject> {
     );
   }
 }
-
-// /setState(() {
-//                           idGroup = groupModel[index].id;
-//                           print("Set State ${idGroup}");
-//                         });

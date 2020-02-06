@@ -1,11 +1,11 @@
 import 'package:baibuaapp/Screens/menu/group/group.dart';
+import 'package:baibuaapp/Screens/menu/map.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'menu/mainmenu.dart';
-import 'package:baibuaapp/Screens/menu/group/addGroup.dart';
 import 'package:baibuaapp/screens/menu/baibuaChatroom.dart';
-import 'package:baibuaapp/screens/menu/map.dart';
+
 import 'package:baibuaapp/screens/menu/news/Newevent.dart';
 import 'package:baibuaapp/screens/menu/userdetail.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
@@ -40,7 +40,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
   final NewEvent newEvent = NewEvent();
   final Group group = Group();
   final UserDetailPage userDetailPage = UserDetailPage();
-  final Map map = Map();
+  final MapRoom mapRoom = MapRoom();
   final Mainmenu mainmenu = Mainmenu();
   final ChatroomBaibua chatroomBaibua = ChatroomBaibua();
 
@@ -56,7 +56,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
       case 2:
         return UserDetailPage();
       case 3:
-        return map;
+        return mapRoom;
       case 4:
         // return AddGroup();
         return mainmenu;

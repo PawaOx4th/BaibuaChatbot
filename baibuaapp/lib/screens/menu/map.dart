@@ -1,16 +1,21 @@
 import 'package:flutter/material.dart';
 
-class Map extends StatefulWidget {
+class MapRoom extends StatefulWidget {
   @override
-  _MapState createState() => _MapState();
+  _MapRoomState createState() => _MapRoomState();
 }
 
-class _MapState extends State<Map> {
+class _MapRoomState extends State<MapRoom> {
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Container(
-        child: Text("MAP PAGE"),
+    //? ----------------------------------------------------------- //
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
+    //? ----------------------------------------------------------- //
+
+    return Scaffold(
+      body: Stack(
+        children: <Widget>[],
       ),
     );
   }

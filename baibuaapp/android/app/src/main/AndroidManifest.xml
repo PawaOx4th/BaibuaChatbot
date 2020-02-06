@@ -15,6 +15,9 @@
 
         android:label="baibuaapp"
         android:icon="@mipmap/ic_launcher">
+        <!-- <meta-data android:name="com.google.android.geo.API_KEY"
+        android:value="AIzaSyBG2o534bXt67Z7hyOWmXn2xqQ9UZwxpVc"/> -->
+        
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"

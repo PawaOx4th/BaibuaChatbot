@@ -336,7 +336,7 @@ class _RegisterState extends State<Register> {
                       );
                     }
 
-                    (isRegister) ? _showDialogS() : Container();
+                    (isRegister) ? _showDialogS() : _showDialogSERROR();
                   },
                   elevation: 5,
                 ),
@@ -347,7 +347,8 @@ class _RegisterState extends State<Register> {
       );
 
 //  ****************************************************************************  //
-// Dialog Show Register Successfully
+
+//** Dialog Show Register Successfully
   _showDialogS() {
     showDialog(
         context: context,
@@ -374,6 +375,40 @@ class _RegisterState extends State<Register> {
                 Navigator.pushNamed(context, '/Login-page');
               },
               onlyOkButton: true,
+            ));
+  }
+
+//! Dialog Error ...
+  _showDialogSERROR() {
+    showDialog(
+        context: context,
+        builder: (_) => NetworkGiffyDialog(
+              key: keys[1],
+              image: Image.asset(
+                'img/error.gif',
+                fit: BoxFit.cover,
+              ),
+              entryAnimation: EntryAnimation.BOTTOM,
+              title: Text(
+                'Failed to Register ',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.red),
+              ),
+              description: Text(
+                'สมัครสมาชิกไม่สำเร็จ \n กรุณาตรวจสอบ รหัสนักศึกษา email  \n และรหัสผ่าน หรือติดต่อเจ้าหน้าที่',
+                textAlign: TextAlign.center,
+                style: GoogleFonts.kanit(
+                  textStyle: TextStyle(color: Colors.black38, fontSize: 16.0),
+                ),
+              ),
+              onOkButtonPressed: () {
+                Navigator.pushNamed(context, '/Login-page');
+              },
+              onlyOkButton: true,
+              buttonOkColor: Colors.red,
             ));
   }
 

@@ -172,12 +172,16 @@ class _NewEventDetailState extends State<NewEventDetail> {
                                   children: <Widget>[
                                     Hero(
                                       tag: widget.topic,
-                                      child: Text(
-                                        widget.topic,
-                                        style: _googleFontKanit,
-                                        maxLines: 3,
-                                        textAlign: TextAlign.left,
-                                        overflow: TextOverflow.ellipsis,
+                                      transitionOnUserGestures: true,
+                                      child: Material(
+                                        type: MaterialType.transparency,
+                                        child: Text(
+                                          widget.topic,
+                                          style: _googleFontKanit,
+                                          maxLines: 3,
+                                          textAlign: TextAlign.left,
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
                                       ),
                                     ),
                                     SizedBox(

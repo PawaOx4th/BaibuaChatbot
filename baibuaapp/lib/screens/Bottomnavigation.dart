@@ -104,10 +104,16 @@ class _BottomNavigationState extends State<BottomNavigation> {
               color: iconColor,
             ),
           ),
-          Icon(
-            Icons.map,
-            size: 30,
-            color: iconColor,
+          IconButton(
+            onPressed: () {
+              Navigator.pushNamed(context, '/map');
+              print("Go to Map");
+            },
+            icon: Icon(
+              Icons.map,
+              size: 30,
+              color: iconColor,
+            ),
           ),
           IconButton(
             onPressed: () {

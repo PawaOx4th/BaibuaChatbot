@@ -1,6 +1,7 @@
 import 'package:baibuaapp/Screens/menu/group/addGroup.dart';
 import 'package:baibuaapp/Screens/menu/group/group.dart';
 import 'package:baibuaapp/Screens/menu/map.dart';
+import 'package:baibuaapp/Screens/menu/setting.dart';
 import 'package:baibuaapp/Screens/menu/work/work.dart';
 import 'package:baibuaapp/Screens/menu/work/workDetail.dart';
 import 'package:baibuaapp/screens/Authenticate/login.dart';
@@ -64,6 +65,8 @@ class RouteGenerator {
             workId: args,
           ),
         );
+      case '/setting':
+        return MaterialPageRoute(builder: (_) => SettingPage());
       case '/Bottomnavigation-page':
         return MaterialPageRoute(
           builder: (_) => BottomNavigation(

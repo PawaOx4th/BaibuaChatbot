@@ -401,7 +401,7 @@ class _SettingPageState extends State<SettingPage> {
       onTap: () async {
         await _authService.signOut();
         print(_authService.toString());
-//                            Navigator.pushNamed(context, '/Login-page');
+//       Navigator.pushNamed(context, '/Login-page');
         MaterialPageRoute materialPageRoute =
             MaterialPageRoute(builder: (BuildContext) => LoginScreen());
         Navigator.of(context).pushAndRemoveUntil(

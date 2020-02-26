@@ -1,8 +1,8 @@
 import 'package:baibuaapp/Screens/menu/group/addGroup.dart';
 import 'package:baibuaapp/Screens/menu/group/group.dart';
+import 'package:baibuaapp/Screens/menu/map.dart';
 import 'package:baibuaapp/Screens/menu/work/work.dart';
 import 'package:baibuaapp/Screens/menu/work/workDetail.dart';
-import 'package:baibuaapp/google_assistant.dart';
 import 'package:baibuaapp/screens/Authenticate/login.dart';
 import 'package:baibuaapp/screens/Bottomnavigation.dart';
 import 'package:baibuaapp/screens/emty.dart';
@@ -12,7 +12,6 @@ import 'package:baibuaapp/screens/menu/news/Newevent.dart';
 import 'package:baibuaapp/screens/menu/news/Neweventsetail.dart';
 import 'package:baibuaapp/screens/menu/userdetail.dart';
 import 'package:flutter/material.dart';
-import 'main.dart';
 
 class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -54,6 +53,11 @@ class RouteGenerator {
             nameSubject: args,
           ),
         );
+      case '/map':
+        return MaterialPageRoute(
+          builder: (_) => MapRoom(),
+        );
+
       case '/WorkDetail':
         return MaterialPageRoute(
           builder: (_) => WorkDetail(

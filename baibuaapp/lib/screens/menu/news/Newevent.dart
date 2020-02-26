@@ -269,14 +269,19 @@ class _NewEventState extends State<NewEvent>
                                                 MainAxisAlignment.end,
                                             children: <Widget>[
                                               Hero(
+                                                transitionOnUserGestures: true,
                                                 tag: newsData[index]['Topic'],
-                                                child: Text(
-                                                  newsData[index]['Topic'],
-                                                  style: _googleFontKanit,
-                                                  maxLines: 3,
-                                                  textAlign: TextAlign.left,
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
+                                                child: Material(
+                                                  type:
+                                                      MaterialType.transparency,
+                                                  child: Text(
+                                                    newsData[index]['Topic'],
+                                                    style: _googleFontKanit,
+                                                    maxLines: 3,
+                                                    textAlign: TextAlign.left,
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                  ),
                                                 ),
                                               ),
                                             ],

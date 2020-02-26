@@ -1,3 +1,6 @@
+// import 'dart:js';
+
+import 'package:baibuaapp/Screens/menu/map.dart';
 import 'package:baibuaapp/screens/Authenticate/autu.dart';
 import 'package:baibuaapp/screens/Bottomnavigation.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -360,7 +363,9 @@ class _MainmenuState extends State<Mainmenu> {
                       ),
                       child: InkWell(
                         onTap: () {
-//                          Navigator.pushNamed(context, '/Chatroom-page');
+                          //  Navigator.pushNamed(context, '/Chatroom-page');
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => MapRoom()));
                         },
                         child: Center(
                           child: Column(

@@ -1,3 +1,8 @@
+import 'dart:convert';
+
+import 'package:baibuaapp/models/userdata.dart';
+import 'package:http/http.dart' as Http;
+
 import 'package:baibuaapp/REST%20API/fetchWork.dart';
 import 'package:baibuaapp/REST%20API/getAllSubject.dart';
 import 'package:baibuaapp/Screens/menu/work/work.dart';
@@ -19,6 +24,7 @@ class _GroupState extends State<Group> {
   String iD = '';
   String _countWorking = "2";
   String _countWorkDeadline = "20";
+
   List newsData;
   int indexS;
   var pictureDemo =
@@ -232,6 +238,7 @@ class _GroupSubjectState extends State<GroupSubject> {
   //? Variable 🎒
   String iD = '';
   String idGroup = '';
+  int userLavel = 0;
 
   ////Colors
   List cardColor = [
@@ -263,7 +270,7 @@ class _GroupSubjectState extends State<GroupSubject> {
     setState(() {
       iD = userId;
     });
-    print("Displayname In Main Menu Page => " + userId);
+    findLavel(userID: userId);
   }
 
   callWork({String groupId, String subJectName}) {
@@ -275,10 +282,24 @@ class _GroupSubjectState extends State<GroupSubject> {
         builder: (context) => Work(
           groupId: groupId,
           nameSubject: subJectName,
+          lavelUser: userLavel,
         ),
       ),
     );
   }
+
+  Future<void> findLavel({String userID}) async {
+    var url =
+        "https://us-central1-newagent-47c20.cloudfunctions.net/api/user/filterId/$userID";
+    var response = await Http.get(url);
+    Map map = jsonDecode(response.body);
+    Userdata userData = Userdata.fromJson(map);
+    setState(() {
+      userLavel = userData.level;
+    });
+  }
+
+  //Init State
 
   @override
   void initState() {
@@ -333,7 +354,6 @@ class _GroupSubjectState extends State<GroupSubject> {
                               ),
 
                               //** InkWell..
-
                               child: Container(
                                 height: 160,
                                 child: Stack(

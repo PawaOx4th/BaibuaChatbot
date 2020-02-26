@@ -2,6 +2,7 @@ import 'package:baibuaapp/Screens/menu/group/addGroup.dart';
 import 'package:baibuaapp/Screens/menu/group/group.dart';
 import 'package:baibuaapp/Screens/menu/map.dart';
 import 'package:baibuaapp/Screens/menu/setting.dart';
+import 'package:baibuaapp/Screens/menu/work/addWork.dart';
 import 'package:baibuaapp/Screens/menu/work/work.dart';
 import 'package:baibuaapp/Screens/menu/work/workDetail.dart';
 import 'package:baibuaapp/screens/Authenticate/login.dart';
@@ -52,8 +53,14 @@ class RouteGenerator {
           builder: (_) => Work(
             groupId: args,
             nameSubject: args,
+            lavelUser: args,
           ),
         );
+      case '/addwork':
+        return MaterialPageRoute(
+            builder: (_) => AddWork(
+                  groupId: args,
+                ));
       case '/map':
         return MaterialPageRoute(
           builder: (_) => MapRoom(),

@@ -1,17 +1,22 @@
+// import 'package:http/http.dart' as Http;
+
 import 'package:baibuaapp/REST%20API/fetchWork.dart';
+
 import 'package:baibuaapp/Screens/menu/work/workDetail.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:baibuaapp/models/workInGroup.dart';
 
 class Work extends StatefulWidget {
-  Work({Key key, this.groupId, this.nameSubject}) : super(key: key);
+  Work({Key key, this.groupId, this.nameSubject, this.lavelUser})
+      : super(key: key);
 
   @override
   _WorkState createState() => _WorkState();
 
   final String groupId;
   final String nameSubject;
+  final int lavelUser;
 }
 
 class _WorkState extends State<Work> {
@@ -21,6 +26,7 @@ class _WorkState extends State<Work> {
   String iD = '';
   String _countWorking = "2";
   String _countWorkDeadline = "20";
+
   List newsData;
   int indexS;
   var pictureDemo =
@@ -56,6 +62,8 @@ class _WorkState extends State<Work> {
   TextStyle _countwork =
       TextStyle(color: Colors.white70, fontWeight: FontWeight.bold);
 
+  final _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -64,6 +72,7 @@ class _WorkState extends State<Work> {
         body: WorkGroup(
           subjectid: widget.groupId,
         ),
+        floatingActionButton: (widget.lavelUser == 1) ? addWork() : null,
       ),
     );
   }
@@ -138,22 +147,6 @@ class _WorkState extends State<Work> {
                                 isWorkDeadline ? workDeadline() : Container(),
                               ],
                             ),
-                            // Stack(
-                            //   children: <Widget>[
-                            //     IconButton(
-                            //       tooltip: "เพิ่มกลุ่ม",
-                            //       icon: Icon(
-                            //         Icons.queue,
-                            //         color: Color.fromRGBO(166, 188, 208, 1),
-                            //         size: 28,
-                            //       ),
-                            //       onPressed: () {
-                            //         // AllSubject.getAllGroup();
-                            //         FetchWork.fecthwork();
-                            //       },
-                            //     ),
-                            //   ],
-                            // ),
                           ],
                         ),
                       ),
@@ -226,6 +219,17 @@ class _WorkState extends State<Work> {
           style: _countwork,
         ),
       ),
+    );
+  }
+
+  Widget addWork() {
+    return FloatingActionButton(
+      child: Icon(Icons.note_add),
+      onPressed: () {
+        // print("รหัสกลุ่ม ${widget.groupId}");
+
+        Navigator.of(context).pushNamed("/addwork", arguments: widget.groupId);
+      },
     );
   }
 }

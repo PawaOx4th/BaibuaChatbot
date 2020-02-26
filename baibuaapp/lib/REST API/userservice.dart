@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:baibuaapp/REST%20API/userdata.dart';
+import 'package:baibuaapp/models/userdata.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:http/http.dart' as Http;
 

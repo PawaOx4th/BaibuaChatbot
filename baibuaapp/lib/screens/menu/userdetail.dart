@@ -1,5 +1,5 @@
-import 'package:baibuaapp/REST%20API/userdata.dart';
 import 'package:baibuaapp/REST%20API/userservice.dart';
+import 'package:baibuaapp/models/userdata.dart';
 import 'package:baibuaapp/screens/Authenticate/autu.dart';
 import 'package:baibuaapp/screens/Authenticate/login.dart';
 import 'package:firebase_auth/firebase_auth.dart';

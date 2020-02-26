@@ -1,4 +1,4 @@
-import 'package:baibuaapp/REST%20API/userdata.dart';
+import 'package:baibuaapp/models/userdata.dart';
 import 'package:baibuaapp/screens/menu/baibuaChatroom.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -40,7 +40,6 @@ class _LoginScreenState extends State<LoginScreen> {
           SingleChildScrollView(
             child: Column(
               children: <Widget>[
-
                 Padding(
                   padding: const EdgeInsets.only(top: 0.1),
                   child: Container(
@@ -62,7 +61,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        SizedBox(height: 40,),
+                        SizedBox(
+                          height: 40,
+                        ),
                         Container(
                           width: 130.0,
                           height: 130.0,
@@ -110,49 +111,52 @@ class _LoginScreenState extends State<LoginScreen> {
                           child: Column(
                             children: <Widget>[
                               Container(
-                                  padding: EdgeInsets.all(30),
-                                  child: Column(
-                                    children: <Widget>[
-                                      Text(
-                                        "Sign in",
-                                        style: GoogleFonts.roboto(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 24.0,
-                                          textStyle: TextStyle(
-                                            color: Color.fromRGBO(
-                                                166, 188, 208, 1),
-                                          ),
+                                padding: EdgeInsets.all(30),
+                                child: Column(
+                                  children: <Widget>[
+                                    Text(
+                                      "Sign in",
+                                      style: GoogleFonts.roboto(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 24.0,
+                                        textStyle: TextStyle(
+                                          color:
+                                              Color.fromRGBO(166, 188, 208, 1),
                                         ),
                                       ),
-                                      SizedBox(
-                                        height: 25,
-                                      ),
-                                      idInput(),
-                                      SizedBox(height: 18.0),
-                                      passwordInput(),
-                                      SizedBox(height: 10.0),
-                                      InkWell(
-                                        onTap: () {
-                                          print("Click Forgot password");
-                                        },
-                                        child: Text(
-                                          "Forgot password?",
-                                          style: TextStyle(
-                                            fontSize: 14.0,
-                                            color: Color.fromRGBO(
-                                                166, 188, 208, 1),
-                                          ),
-                                        ),
-                                      ),
-                                      SizedBox(height: 70.0),
-                                      Text(
-                                        error,
+                                    ),
+                                    SizedBox(
+                                      height: 25,
+                                    ),
+                                    idInput(),
+                                    SizedBox(height: 18.0),
+                                    passwordInput(),
+                                    SizedBox(height: 10.0),
+                                    InkWell(
+                                      onTap: () {
+                                        print("Click Forgot password");
+                                      },
+                                      child: Text(
+                                        "Forgot password?",
                                         style: TextStyle(
-                                            color: Colors.red, fontSize: 16),
+                                          fontSize: 14.0,
+                                          color:
+                                              Color.fromRGBO(166, 188, 208, 1),
+                                        ),
                                       ),
-                                      loginBtn(),
-                                    ],
-                                  )),
+                                    ),
+                                    SizedBox(height: 16.0),
+                                    Text(
+                                      error,
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                          color: Colors.red, fontSize: 16),
+                                    ),
+                                    SizedBox(height: 50.0),
+                                    loginBtn(context),
+                                  ],
+                                ),
+                              ),
                             ],
                           ),
                         ),
@@ -187,6 +191,7 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
+  // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! Widget Section !!!!!!!!!!!!!!!!!!!!!!!!!!
   //**************************************************************************//
   // Note : Widget ID  TextFormFeild
   Widget idInput() => Container(
@@ -199,7 +204,7 @@ class _LoginScreenState extends State<LoginScreen> {
           padding: const EdgeInsets.only(left: 10, right: 10),
           child: TextFormField(
             onChanged: (val) {
-              setState(() => _email = val);
+              setState(() => _email = val.trim());
             },
             keyboardType: TextInputType.emailAddress,
             decoration: InputDecoration(
@@ -242,7 +247,7 @@ class _LoginScreenState extends State<LoginScreen> {
             maxLength: 6,
             keyboardType: TextInputType.number,
             onChanged: (val) {
-              setState(() => _password = val);
+              setState(() => _password = val.trim());
             },
             decoration: InputDecoration(
               counterText: "",
@@ -275,7 +280,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   //**************************************************************************//
   // Note : Widget Login Button TextFeild
-  Widget loginBtn() => Padding(
+  Widget loginBtn(BuildContext context) => Padding(
         padding: const EdgeInsets.only(
           left: 30.0,
           right: 30.0,
@@ -312,31 +317,26 @@ class _LoginScreenState extends State<LoginScreen> {
                       dynamic result = await _authService
                           .loginWithEmailAndPassword(_email, _password);
 
-                      final FirebaseUser user =
-                          await FirebaseAuth.instance.currentUser();
-                      final String uid = user.uid.toString();
-
                       if (result == null) {
                         print("Result Null");
-                        setState(() {
-                          error = 'please supply a valid email.';
-                        });
+                        print(result.toString());
+                        _showDialog(context);
                       } else {
+                        final FirebaseUser user =
+                            await FirebaseAuth.instance.currentUser();
+                        final String uid = user.uid.toString();
                         setState(() {
                           userId = userData.id;
                         });
-
                         setUpDisplayName(userID: userId);
+
                         MaterialPageRoute materialPageRoute = MaterialPageRoute(
-                            builder: (BuildContext) => ChatroomBaibua());
+                            builder: (BuildContext context) =>
+                                ChatroomBaibua());
                         Navigator.of(context).pushAndRemoveUntil(
                             materialPageRoute, (Route<dynamic> route) => false);
-
-//                        Navigator.pushNamed(
-//                            context, '/Chatroom-page');
-                        print("Get data With Email: ${userData.email}");
-                        print("Result NotNull: ${uid}");
-
+                        // print("Get data With Email: ${userData.email}");
+                        // print("Result NotNull: ${uid}");
                       }
                     } else {
                       print(response.statusCode.toString());
@@ -353,6 +353,34 @@ class _LoginScreenState extends State<LoginScreen> {
       );
 
   //**************************************************************************//
+  // Note : Alert Dialog
+  void _showDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("Login Fail"),
+          content: Text(
+              "The email or password is Invalid or the User does not have a  email or password"),
+          actions: <Widget>[
+            FlatButton(
+              onPressed: () {
+                Navigator.of(context, rootNavigator: true).pop("Discard");
+              },
+              child: Text(
+                "Yes",
+                style: TextStyle(fontSize: 20),
+              ),
+            )
+          ],
+        );
+      },
+    );
+  }
+
+  void _showSnackbar() {
+    Scaffold.of(context).showSnackBar(SnackBar(content: Text("Snack BAr")));
+  }
 
   callDataWithEmail({String email}) async {
     print("=> : " + email);
@@ -372,7 +400,7 @@ class _LoginScreenState extends State<LoginScreen> {
     FirebaseAuth firebaseAuth = FirebaseAuth.instance;
     await firebaseAuth.currentUser().then((response) {
       UserUpdateInfo userUpdateInfo = UserUpdateInfo();
-      userUpdateInfo.displayName = userID ;
+      userUpdateInfo.displayName = userID;
       response.updateProfile(userUpdateInfo);
       print("UserUpdateInfo: ${userUpdateInfo.displayName}");
     });
@@ -380,7 +408,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   //**************************************************************************//
   // Note : Widget ButtonBottom TextFeild
-  Widget buttonBottom() => Container(
+  Widget buttonBottom(BuildContext context) => Container(
         child: Padding(
           padding: const EdgeInsets.only(left: 20, right: 20),
           child: Row(
@@ -414,6 +442,6 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
         ),
       );
-//**************************************************************************//
-
+  //**************************************************************************//
+  // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! Widget Section !!!!!!!!!!!!!!!!!!!!!!!!!!
 }

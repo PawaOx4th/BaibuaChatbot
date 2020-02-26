@@ -1,15 +1,19 @@
-import 'package:baibuaapp/google_assistant.dart';
+import 'package:baibuaapp/Screens/menu/group/addGroup.dart';
+import 'package:baibuaapp/Screens/menu/group/group.dart';
+import 'package:baibuaapp/Screens/menu/map.dart';
+import 'package:baibuaapp/Screens/menu/setting.dart';
+import 'package:baibuaapp/Screens/menu/work/addWork.dart';
+import 'package:baibuaapp/Screens/menu/work/work.dart';
+import 'package:baibuaapp/Screens/menu/work/workDetail.dart';
 import 'package:baibuaapp/screens/Authenticate/login.dart';
 import 'package:baibuaapp/screens/Bottomnavigation.dart';
 import 'package:baibuaapp/screens/emty.dart';
-import 'package:baibuaapp/screens/menu/Group.dart';
 import 'package:baibuaapp/screens/menu/baibuaChatroom.dart';
 import 'package:baibuaapp/screens/menu/mainmenu.dart';
 import 'package:baibuaapp/screens/menu/news/Newevent.dart';
 import 'package:baibuaapp/screens/menu/news/Neweventsetail.dart';
 import 'package:baibuaapp/screens/menu/userdetail.dart';
 import 'package:flutter/material.dart';
-import 'main.dart';
 
 class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -42,13 +46,42 @@ class RouteGenerator {
                 ));
       case '/Group-page':
         return MaterialPageRoute(builder: (_) => Group());
+      case '/AddGroup-page':
+        return MaterialPageRoute(builder: (_) => AddGroup());
+      case '/Work':
+        return MaterialPageRoute(
+          builder: (_) => Work(
+            groupId: args,
+            nameSubject: args,
+            lavelUser: args,
+          ),
+        );
+      case '/addwork':
+        return MaterialPageRoute(
+            builder: (_) => AddWork(
+                  groupId: args,
+                ));
+      case '/map':
+        return MaterialPageRoute(
+          builder: (_) => MapRoom(),
+        );
+
+      case '/WorkDetail':
+        return MaterialPageRoute(
+          builder: (_) => WorkDetail(
+            workId: args,
+          ),
+        );
+      case '/setting':
+        return MaterialPageRoute(builder: (_) => SettingPage());
       case '/Bottomnavigation-page':
         return MaterialPageRoute(
-            builder: (_) => BottomNavigation(
-                  page: args,
-                ));
-      case '/Googleasistant-page':
-        return MaterialPageRoute(builder: (_) => GoogleAssistant());
+          builder: (_) => BottomNavigation(
+            page: args,
+          ),
+        );
+      // case '/Googleasistant-page':
+      //   return MaterialPageRoute(builder: (_) => GoogleAssistant());
 //      case '/onepage':
 //      // Validation of correct data type
 //        if (args is String) {

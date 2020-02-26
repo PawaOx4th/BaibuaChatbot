@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
           //******************************************************************//
         ),
         home: new SplashScreen(),
-        initialRoute: '/Chatroom-page',
+        // initialRoute: '/Chatroom-page',
         onGenerateRoute: RouteGenerator.generateRoute,
 
         //***********************************************//

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:baibuaapp/Screens/menu/group/addGroup.dart';
 import 'package:baibuaapp/screens/menu/news/Neweventsetail.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -118,7 +119,6 @@ class _NewEventState extends State<NewEvent>
           child: Column(
             children: <Widget>[
               AppBar(
-                title: titleAppbar(),
                 leading: IconButton(
                   icon: Icon(
                     Icons.arrow_back_ios,
@@ -135,41 +135,75 @@ class _NewEventState extends State<NewEvent>
                 actions: [
                   Padding(
                     padding: EdgeInsets.only(right: 16.0),
-                    child: Row(
-                      children: <Widget>[
-                        Stack(
-                          children: <Widget>[
-                            IconButton(
-                              icon: Icon(
-                                Icons.book,
-                                color: Color.fromRGBO(166, 188, 208, 1),
-                                size: 28,
-                              ),
-                              onPressed: () {},
+                    child: Container(
+                      color: Colors.transparent,
+                      width: MediaQuery.of(context).size.width * 0.9,
+                      child: Row(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          //Working
+                          Padding(
+                            padding: EdgeInsets.only(left: 20.0),
+                            child: Stack(
+                              children: <Widget>[
+                                IconButton(
+                                  icon: Icon(
+                                    Icons.book,
+                                    color: Color.fromRGBO(166, 188, 208, 1),
+                                    size: 28,
+                                  ),
+                                  onPressed: () {},
+                                ),
+                                isWork ? working() : Container(),
+                              ],
                             ),
-                            isWork ? working() : Container(),
-                          ],
-                        ),
-                        SizedBox(
-                          width: 2.00,
-                        ),
-                        Stack(
-                          children: <Widget>[
-                            IconButton(
-                              tooltip: "",
-                              icon: Icon(
-                                Icons.notification_important,
-                                color: Color.fromRGBO(166, 188, 208, 1),
-                                size: 28,
-                              ),
-                              onPressed: () {
-                                print(height.toString());
-                              },
+                          ),
+
+                          //Name App BAr
+                          titleAppbar(),
+
+                          //Notification
+                          Container(
+                            child: Wrap(
+                              children: <Widget>[
+                                Stack(
+                                  children: <Widget>[
+                                    IconButton(
+                                      tooltip: "",
+                                      icon: Icon(
+                                        Icons.notification_important,
+                                        color: Color.fromRGBO(166, 188, 208, 1),
+                                        size: 28,
+                                      ),
+                                      onPressed: () {},
+                                    ),
+                                    isWorkDeadline
+                                        ? workDeadline()
+                                        : Container(),
+                                  ],
+                                ),
+                                // Stack(
+                                //   children: <Widget>[
+                                //     IconButton(
+                                //       tooltip: "เพิ่มกลุ่ม",
+                                //       icon: Icon(
+                                //         Icons.queue,
+                                //         color: Color.fromRGBO(166, 188, 208, 1),
+                                //         size: 28,
+                                //       ),
+                                //       onPressed: () {
+                                //         // AllSubject.getAllGroup();
+                                //         FetchWork.fecthwork();
+                                //       },
+                                //     ),
+                                //   ],
+                                // ),
+                              ],
                             ),
-                            isWorkDeadline ? workDeadline() : Container(),
-                          ],
-                        ),
-                      ],
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ],
@@ -235,14 +269,19 @@ class _NewEventState extends State<NewEvent>
                                                 MainAxisAlignment.end,
                                             children: <Widget>[
                                               Hero(
+                                                transitionOnUserGestures: true,
                                                 tag: newsData[index]['Topic'],
-                                                child: Text(
-                                                  newsData[index]['Topic'],
-                                                  style: _googleFontKanit,
-                                                  maxLines: 3,
-                                                  textAlign: TextAlign.left,
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
+                                                child: Material(
+                                                  type:
+                                                      MaterialType.transparency,
+                                                  child: Text(
+                                                    newsData[index]['Topic'],
+                                                    style: _googleFontKanit,
+                                                    maxLines: 3,
+                                                    textAlign: TextAlign.left,
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                  ),
                                                 ),
                                               ),
                                             ],

@@ -1,3 +1,11 @@
+// import 'dart:js';
+
+import 'dart:convert';
+
+import 'package:http/http.dart' as Http;
+
+import 'package:baibuaapp/Screens/menu/map.dart';
+import 'package:baibuaapp/models/userdata.dart';
 import 'package:baibuaapp/screens/Authenticate/autu.dart';
 import 'package:baibuaapp/screens/Bottomnavigation.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -16,6 +24,7 @@ class _MainmenuState extends State<Mainmenu> {
   final bool isWorkDeadline = false;
   String _countWorking = "2";
   String _countWorkDeadline = "20";
+  int userLavel;
 
   //TextStyle
   TextStyle _googleFontRoboto = GoogleFonts.roboto(
@@ -49,7 +58,20 @@ class _MainmenuState extends State<Mainmenu> {
     FirebaseUser firebaseUser = await firebaseAuth.currentUser();
     String name = firebaseUser.displayName;
 
+    findLavel(userID: name);
+
     print("Displayname In Main Menu Page => " + name);
+  }
+
+  Future<void> findLavel({String userID}) async {
+    var url =
+        "https://us-central1-newagent-47c20.cloudfunctions.net/api/user/filterId/$userID";
+    var response = await Http.get(url);
+    Map map = jsonDecode(response.body);
+    Userdata userData = Userdata.fromJson(map);
+    setState(() {
+      userLavel = userData.level;
+    });
   }
 
   //Init State
@@ -58,6 +80,7 @@ class _MainmenuState extends State<Mainmenu> {
     // TODO: implement initState
     super.initState();
     findDisplay();
+    // findLavel();
   }
 
   final AuthService _authService = AuthService();
@@ -196,10 +219,7 @@ class _MainmenuState extends State<Mainmenu> {
                       ),
                       child: InkWell(
                         onTap: () {
-//                          Navigator.pushNamed(
-//                            context,
-//                            '/Userdetail-page',arguments: _userID
-//                          );
+                          // Navigator.pushNamed(context, '/Userdetail-page');
                           Navigator.of(context).push(MaterialPageRoute(
                             builder: (context) => BottomNavigation(
                               page: 2,
@@ -305,7 +325,11 @@ class _MainmenuState extends State<Mainmenu> {
                       ),
                       child: InkWell(
                         onTap: () {
-                          Navigator.pushNamed(context, '/Group-page');
+                          Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => BottomNavigation(
+                              page: 1,
+                            ),
+                          ));
                         },
                         child: Center(
                           child: Column(
@@ -359,7 +383,9 @@ class _MainmenuState extends State<Mainmenu> {
                       ),
                       child: InkWell(
                         onTap: () {
-//                          Navigator.pushNamed(context, '/Chatroom-page');
+                          //  Navigator.pushNamed(context, '/Chatroom-page');
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => MapRoom()));
                         },
                         child: Center(
                           child: Column(
@@ -400,7 +426,7 @@ class _MainmenuState extends State<Mainmenu> {
                       ),
                       child: InkWell(
                         onTap: () {
-//                          Navigator.pushNamed(context, '/Chatroom-page');
+                          Navigator.pushNamed(context, '/setting');
                         },
                         child: Center(
                           child: Column(

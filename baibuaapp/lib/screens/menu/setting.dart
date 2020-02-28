@@ -1,4 +1,6 @@
 import 'package:baibuaapp/Screens/Authenticate/login.dart';
+import 'package:baibuaapp/Widgets/customAppBar.dart';
+import 'package:baibuaapp/models/statWorkCount.dart';
 import 'package:flutter/material.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
@@ -6,6 +8,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:custom_switch/custom_switch.dart';
 
 import 'package:baibuaapp/Screens/Authenticate/autu.dart';
+import 'package:provider/provider.dart';
 
 class SettingPage extends StatefulWidget {
   SettingPage({Key key}) : super(key: key);
@@ -86,23 +89,26 @@ class _SettingPageState extends State<SettingPage> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-        child: Scaffold(
-      backgroundColor: bgMenuColor,
-      appBar: appBarCustom(),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: ListView(
-          children: <Widget>[
-            alertCheck(),
-            SizedBox(height: 8),
-            useApp(),
-            SizedBox(height: 8),
-            feedBack(),
-            SizedBox(height: 8),
-            aboutApp(),
-            SizedBox(height: 32),
-            logOutButton(),
-          ],
+        child: ChangeNotifierProvider(
+      create: (_) => WorkCount(),
+      child: Scaffold(
+        backgroundColor: bgMenuColor,
+        appBar: appBarCustom(),
+        body: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: ListView(
+            children: <Widget>[
+              alertCheck(),
+              SizedBox(height: 8),
+              useApp(),
+              SizedBox(height: 8),
+              feedBack(),
+              SizedBox(height: 8),
+              aboutApp(),
+              SizedBox(height: 32),
+              logOutButton(),
+            ],
+          ),
         ),
       ),
     ));
@@ -111,64 +117,10 @@ class _SettingPageState extends State<SettingPage> {
 //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! Widget Section !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   Widget appBarCustom() {
     return PreferredSize(
-      preferredSize: Size.fromHeight(80),
+      preferredSize: Size.fromHeight(59),
       child: Column(
         children: <Widget>[
-          AppBar(
-            title: titleAppbar(),
-            leading: IconButton(
-              icon: Icon(
-                Icons.arrow_back_ios,
-                color: Colors.black,
-              ),
-              onPressed: () => Navigator.pop(context),
-            ),
-            backgroundColor: Colors.white,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.vertical(
-                bottom: Radius.circular(25),
-              ),
-            ),
-            actions: [
-              Padding(
-                padding: EdgeInsets.only(right: 16.0),
-                child: Row(
-                  children: <Widget>[
-                    Stack(
-                      children: <Widget>[
-                        IconButton(
-                          icon: Icon(
-                            Icons.book,
-                            color: Color.fromRGBO(166, 188, 208, 1),
-                            size: 28,
-                          ),
-                          onPressed: () {},
-                        ),
-                        isWork ? working() : Container(),
-                      ],
-                    ),
-                    SizedBox(
-                      width: 2.00,
-                    ),
-                    Stack(
-                      children: <Widget>[
-                        IconButton(
-                          tooltip: "",
-                          icon: Icon(
-                            Icons.notification_important,
-                            color: Color.fromRGBO(166, 188, 208, 1),
-                            size: 28,
-                          ),
-                          onPressed: () {},
-                        ),
-                        isWorkDeadline ? workDeadline() : Container(),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
+          CustomAppBarr('ตั้งค่า'),
         ],
       ),
     );

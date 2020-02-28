@@ -129,9 +129,13 @@ class _UserDetailPageState extends State<UserDetailPage> {
                                     flex: 1,
                                     child: CircleAvatar(
                                       radius: 50.00,
+                                      child: Icon(
+                                        Icons.person,
+                                        size: 60,
+                                      ),
                                       // backgroundColor: Colors.black,
-                                      backgroundImage: NetworkImage(
-                                          'https://images.unsplash.com/flagged/photo-1574164908900-6275ca361157?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=675&q=80'),
+                                      // backgroundImage: NetworkImage(
+                                      //     'https://images.unsplash.com/flagged/photo-1574164908900-6275ca361157?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=675&q=80'),
                                     ),
                                   ),
                                   SizedBox(

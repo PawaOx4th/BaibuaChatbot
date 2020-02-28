@@ -8,33 +8,38 @@ class NotificationAlert extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(right: 16.0),
-      child: Row(
-        children: <Widget>[
-          SizedBox(
-            width: 2.00,
-          ),
-          Stack(
-            children: <Widget>[
-              IconButton(
-                icon: Icon(
-                  Icons.notification_important,
-                  color: Color.fromRGBO(166, 188, 208, 1),
-                  size: 28,
+    return Consumer<WorkCount>(
+      builder: (BuildContext context, value, _) => Padding(
+        padding: EdgeInsets.only(right: 16.0),
+        child: Row(
+          children: <Widget>[
+            SizedBox(
+              width: 2.00,
+            ),
+            Stack(
+              children: <Widget>[
+                IconButton(
+                  icon: Icon(
+                    Icons.notification_important,
+                    color: Color.fromRGBO(166, 188, 208, 1),
+                    size: 28,
+                  ),
+                  onPressed: () {
+                    Navigator.of(context)
+                        .pushNamed('/Bottomnavigation-page', arguments: 1);
+                  },
                 ),
-                onPressed: () {},
-              ),
-              workDeadline(),
-            ],
-          ),
-        ],
+                workCount(),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
 
   //Widget  work Deadline
-  Widget workDeadline() {
+  Widget workCount() {
     return Consumer<WorkCount>(
       builder: (BuildContext context, WorkCount value, _) => Positioned(
         bottom: 5,

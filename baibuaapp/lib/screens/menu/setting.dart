@@ -98,7 +98,7 @@ class _SettingPageState extends State<SettingPage> {
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: ListView(
             children: <Widget>[
-              alertCheck(),
+              // alertCheck(),
               SizedBox(height: 8),
               useApp(),
               SizedBox(height: 8),

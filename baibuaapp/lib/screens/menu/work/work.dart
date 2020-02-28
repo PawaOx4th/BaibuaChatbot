@@ -154,90 +154,78 @@ class _WorkGroupState extends State<WorkGroup> {
     double width = MediaQuery.of(context).size.width;
     //? ----------------------------------------------- //
 
-    return SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 22.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            Container(
-              height: height,
-              child: FutureBuilder(
-                future: FetchWork.fecthwork(subjectId: widget.subjectid),
-                builder: (BuildContext context, AsyncSnapshot snapshot) {
-                  if (snapshot.hasData) {
-                    List<WorkInGroup> workmodel = snapshot.data;
+    return FutureBuilder(
+      future: FetchWork.fecthwork(subjectId: widget.subjectid),
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        if (snapshot.hasData) {
+          List<WorkInGroup> workmodel = snapshot.data;
 
-                    return ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: workmodel.length,
-                      itemBuilder: (context, index) {
-                        int bgColor = index % 3;
-                        return Padding(
-                          padding: EdgeInsets.symmetric(vertical: 8.2),
-                          child: InkWell(
-                            child: Card(
-                              color: cardColor[bgColor],
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                              child: Container(
-                                height: 130,
-                                padding: EdgeInsets.only(left: 26.0, top: 16.0),
-                                child: Stack(
-                                  children: <Widget>[
-                                    Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: <Widget>[
-                                        Text(
-                                          workmodel[index].topic,
-                                          style: _workName,
-                                          overflow: TextOverflow.ellipsis,
-                                        ),
-                                        Text(
-                                          "สั่งเมื่อ : ${workmodel[index].createDate[0]} ${workmodel[index].createDate[1]} ${workmodel[index].createDate[2]}",
-                                          style: _workDetail,
-                                        ),
-                                        Text(
-                                          "กำหนดส่ง : ${workmodel[index].sendDate[0]} ${workmodel[index].sendDate[1]} ${workmodel[index].sendDate[2]}",
-                                          style: _workDetail,
-                                        ),
-                                      ],
-                                    ),
-                                    Positioned(
-                                      bottom: 20,
-                                      right: 16.0,
-                                      child: Icon(
-                                        Icons.account_circle,
-                                        size: 55,
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                  ],
+          return Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: ListView.builder(
+              shrinkWrap: true,
+              itemCount: workmodel.length,
+              itemBuilder: (context, index) {
+                int bgColor = index % 3;
+                return Padding(
+                  padding: EdgeInsets.symmetric(vertical: 8.2),
+                  child: InkWell(
+                    child: Card(
+                      color: cardColor[bgColor],
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: Container(
+                        height: 130,
+                        padding: EdgeInsets.only(left: 26.0, top: 16.0),
+                        child: Stack(
+                          children: <Widget>[
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Text(
+                                  workmodel[index].topic,
+                                  style: _workName,
+                                  overflow: TextOverflow.ellipsis,
                                 ),
+                                Text(
+                                  "สั่งเมื่อ : ${workmodel[index].createDate[0]} ${workmodel[index].createDate[1]} ${workmodel[index].createDate[2]}",
+                                  style: _workDetail,
+                                ),
+                                Text(
+                                  "กำหนดส่ง : ${workmodel[index].sendDate[0]} ${workmodel[index].sendDate[1]} ${workmodel[index].sendDate[2]}",
+                                  style: _workDetail,
+                                ),
+                              ],
+                            ),
+                            Positioned(
+                              bottom: 20,
+                              right: 16.0,
+                              child: Icon(
+                                Icons.account_circle,
+                                size: 55,
+                                color: Colors.white,
                               ),
                             ),
-                            onTap: () {
-                              buildGotoworkDetail(workID: workmodel[index].id);
-                            },
-                          ),
-                        );
-                      },
-                    );
-                  } else {
-                    return Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  }
-                },
-              ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    onTap: () {
+                      buildGotoworkDetail(workID: workmodel[index].id);
+                    },
+                  ),
+                );
+              },
             ),
-          ],
-        ),
-      ),
+          );
+        } else {
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+      },
     );
   }
 }

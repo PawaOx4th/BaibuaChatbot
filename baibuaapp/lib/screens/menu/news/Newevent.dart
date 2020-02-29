@@ -120,189 +120,112 @@ class _NewEventState extends State<NewEvent>
         create: (_) => WorkCount(),
         child: Scaffold(
           appBar: PreferredSize(
-            preferredSize: Size.fromHeight(80),
+            preferredSize: Size.fromHeight(59),
             child: Column(
               children: <Widget>[CustomAppBarr("ข่าวสาร")],
             ),
           ),
-          body: SingleChildScrollView(
-//          scrollDirection: Axis.vertical,
-            child: Container(
-              child: Column(
-                mainAxisSize: MainAxisSize.max,
-                children: <Widget>[
-                  Container(
-                    child: Container(
-                      padding: EdgeInsets.symmetric(horizontal: 16.0),
-                      height: MediaQuery.of(context).size.height * 0.83,
-                      child: ListView.builder(
-                        itemCount: newsData == null ? 0 : newsData.length,
-                        itemBuilder: (context, index) {
-                          // Set Card Color
-                          int countColor = index % 3;
+          body: ChangeNotifierProvider(
+            create: (_) => WorkCount(),
+            child: ListView.builder(
+              itemCount: newsData == null ? 0 : newsData.length,
+              itemBuilder: (context, index) {
+                // Set Card Color
+                int countColor = index % 3;
 
-                          //Show News  =>  newsData[index]['Topic'],
-                          return Container(
-                            margin: EdgeInsets.symmetric(vertical: 8.00),
-                            height: height * 0.28,
-                            child: GestureDetector(
-                              onTap: () => {
-//                              print(index + 1),
-//                              print(newsData[index]["Description"]),
-                                _passarguments(newsData, index, countColor),
-                              },
-                              child: Card(
-                                color: cardColor[countColor],
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(12.0),
-                                ),
-                                elevation: 1,
+                //Show News  =>  newsData[index]['Topic'],
+                return Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                    margin: EdgeInsets.symmetric(vertical: 8.00),
+                    height: height * 0.28,
+                    child: GestureDetector(
+                      onTap: () => {
+                        _passarguments(newsData, index, countColor),
+                      },
+                      child: Card(
+                        color: cardColor[countColor],
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12.0),
+                        ),
+                        elevation: 1,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(12.0),
+                            image: DecorationImage(
+                              image: NetworkImage(pictureDemo),
+                              fit: BoxFit.cover,
+                              colorFilter: ColorFilter.mode(
+                                  cardColor[countColor], BlendMode.modulate),
+                            ),
+                          ),
+                          child: Stack(
+                            children: <Widget>[
+                              //Topic
+                              Positioned(
+                                top: 40,
+                                left: 16,
                                 child: Container(
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(12.0),
-                                    image: DecorationImage(
-                                      image: NetworkImage(pictureDemo),
-                                      fit: BoxFit.cover,
-                                      colorFilter: ColorFilter.mode(
-                                          cardColor[countColor],
-                                          BlendMode.modulate),
-                                    ),
-                                  ),
-                                  child: Stack(
-                                    children: <Widget>[
-                                      //Topic
-                                      Positioned(
-                                        top: 40,
-                                        left: 16,
-                                        child: Container(
-                                            alignment: Alignment.bottomLeft,
-                                            width: 300,
-                                            height: 80,
-                                            child: Column(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.end,
-                                              children: <Widget>[
-                                                Hero(
-                                                  transitionOnUserGestures:
-                                                      true,
-                                                  tag: newsData[index]['Topic'],
-                                                  child: Material(
-                                                    type: MaterialType
-                                                        .transparency,
-                                                    child: Text(
-                                                      newsData[index]['Topic'],
-                                                      style: _googleFontKanit,
-                                                      maxLines: 3,
-                                                      textAlign: TextAlign.left,
-                                                      overflow:
-                                                          TextOverflow.ellipsis,
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
-                                            )),
-                                      ),
-
-                                      //Date
-                                      Positioned(
-                                        bottom: 20,
-                                        left: 16,
-                                        child: Container(
-                                          width: 300,
-                                          height: 50,
-                                          child: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.start,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: <Widget>[
-                                              Text(
-                                                "โพสต์เมื่อวันที่  ${newsData[index]['Month']} " +
-                                                    " ${newsData[index]['Day']}," +
-                                                    " ${newsData[index]['Year']}",
-                                                style: _dateFontKanit,
-                                              ),
-                                              Text(
-                                                "ข่าวประชาสัมพันธ์  ${newsData[index]['Type']} ",
-                                                style: _typeFontKanit,
-                                              ),
-                                            ],
+                                    alignment: Alignment.bottomLeft,
+                                    width: 300,
+                                    height: 80,
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: <Widget>[
+                                        Hero(
+                                          transitionOnUserGestures: true,
+                                          tag: newsData[index]['Topic'],
+                                          child: Material(
+                                            type: MaterialType.transparency,
+                                            child: Text(
+                                              newsData[index]['Topic'],
+                                              style: _googleFontKanit,
+                                              maxLines: 3,
+                                              textAlign: TextAlign.left,
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
                                           ),
                                         ),
+                                      ],
+                                    )),
+                              ),
+
+                              //Date
+                              Positioned(
+                                bottom: 20,
+                                left: 16,
+                                child: Container(
+                                  width: 300,
+                                  height: 50,
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: <Widget>[
+                                      Text(
+                                        "โพสต์เมื่อวันที่  ${newsData[index]['Month']} " +
+                                            " ${newsData[index]['Day']}," +
+                                            " ${newsData[index]['Year']}",
+                                        style: _dateFontKanit,
+                                      ),
+                                      Text(
+                                        "ข่าวประชาสัมพันธ์  ${newsData[index]['Type']} ",
+                                        style: _typeFontKanit,
                                       ),
                                     ],
                                   ),
                                 ),
                               ),
-                            ),
-                          );
-                        },
+                            ],
+                          ),
+                        ),
                       ),
                     ),
                   ),
-                ],
-              ),
+                );
+              },
             ),
           ),
-        ),
-      ),
-    );
-  }
-
-  // Widget App Name
-  Widget titleAppbar() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      mainAxisSize: MainAxisSize.max,
-      children: <Widget>[
-        SizedBox(
-          width: 5,
-        ),
-        Text(
-          "ข่าวสาร",
-          style: _googleFontKaniTitle,
-        ),
-      ],
-    );
-  }
-
-  //Widget Count Working
-  Widget working() {
-    return Positioned(
-      bottom: 5,
-      left: 3,
-      child: Container(
-        alignment: Alignment.center,
-        width: 22,
-        height: 20,
-        decoration: BoxDecoration(
-          color: Colors.red,
-          borderRadius: BorderRadius.circular(40),
-        ),
-        child: Text(
-          _countWorking,
-          style: _countwork,
-        ),
-      ),
-    );
-  }
-
-  //Widget  work Deadline
-  Widget workDeadline() {
-    return Positioned(
-      bottom: 5,
-      left: 3,
-      child: Container(
-        alignment: Alignment.center,
-        width: 22,
-        height: 20,
-        decoration: BoxDecoration(
-          color: Colors.red,
-          borderRadius: BorderRadius.circular(40),
-        ),
-        child: Text(
-          _countWorkDeadline,
-          style: _countwork,
         ),
       ),
     );

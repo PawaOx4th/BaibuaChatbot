@@ -1,3 +1,4 @@
+import 'package:baibuaapp/sizeConfig.dart';
 import 'package:flutter/material.dart';
 import 'package:baibuaapp/models/mapDetail.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -112,7 +113,7 @@ class _MapRoomState extends State<MapRoom> {
                         mainAxisSize: MainAxisSize.max,
                         children: [
                           Container(
-                            width: 180.0,
+                            width: 40 * SizeConfig.widthMultiplier,
                             child: Text(
                               mapDetail[index].namefacultyTH,
                               overflow: TextOverflow.ellipsis,

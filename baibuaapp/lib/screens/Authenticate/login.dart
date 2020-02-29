@@ -1,9 +1,11 @@
 import 'package:baibuaapp/models/userdata.dart';
 import 'package:baibuaapp/screens/menu/baibuaChatroom.dart';
+import 'package:baibuaapp/sizeConfig.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:baibuaapp/screens/Authenticate/register.dart';
+import 'package:giffy_dialog/giffy_dialog.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'autu.dart';
 import 'dart:convert';
@@ -22,16 +24,32 @@ class _LoginScreenState extends State<LoginScreen> {
 
   //  ****************************************************** //
   final formKey = GlobalKey<FormState>();
+  final scaffoldKey = GlobalKey<ScaffoldState>();
   String _email, _password;
   String userId;
 
   // มี new  หรือ ไม่มีก็ได้ หรือใช้ "var" แทน TextEditingController ก็ได้
-  TextEditingController _id = TextEditingController();
-  TextEditingController _pass = TextEditingController();
+  TextEditingController _emailController = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
+
+  static const List<Key> keys = [
+    Key("Network"),
+    Key("NetworkDialog"),
+    Key("Flare"),
+    Key("FlareDialog"),
+    Key("Asset"),
+    Key("AssetDialog")
+  ];
+
+  //Size
 
   @override
   Widget build(BuildContext context) {
+    double _height = MediaQuery.of(context).size.height;
+    double _width = MediaQuery.of(context).size.width;
+
     return Scaffold(
+      key: scaffoldKey,
 //        resizeToAvoidBottomPadding: false,
       backgroundColor: Colors.white,
       body: Stack(
@@ -191,6 +209,77 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
+  void _submit() {
+    final form = formKey.currentState;
+
+    if (form.validate()) {
+      form.save();
+      _checkLogin();
+    }
+  }
+
+  void perfomLogin() {
+    SnackBar snackBer = SnackBar(
+      backgroundColor: Colors.blueAccent,
+      content: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          Text(
+            "Email: ${_emailController.text}",
+          ),
+          CircleAvatar(
+            maxRadius: 8,
+            backgroundColor: Colors.greenAccent,
+          )
+        ],
+      ),
+    );
+    scaffoldKey.currentState.showSnackBar(snackBer);
+  }
+
+  void _checkLogin() async {
+    var url =
+        "https://us-central1-newagent-47c20.cloudfunctions.net/api/user/filterEm/${_email}";
+    var response = await Http.get(url);
+    Map map = jsonDecode(response.body);
+    Userdata userData = Userdata.fromJson(map);
+    print(_emailController.text);
+
+    // (response.body == null) ? print("true") : print("False");
+
+    if (response.statusCode == 200) {
+      perfomLogin();
+
+      dynamic result = await _authService.loginWithEmailAndPassword(
+          _emailController.text, _passwordController.text);
+
+      if (result == null) {
+        print("Result Null");
+        print(result.toString());
+        _showDialog(context);
+      } else {
+        final FirebaseUser user = await FirebaseAuth.instance.currentUser();
+        final String uid = user.uid.toString();
+        setState(() {
+          userId = userData.id;
+        });
+        setUpDisplayName(userID: userId);
+
+        MaterialPageRoute materialPageRoute = MaterialPageRoute(
+            builder: (BuildContext context) => ChatroomBaibua());
+        Navigator.of(context).pushAndRemoveUntil(
+            materialPageRoute, (Route<dynamic> route) => false);
+        // print("Get data With Email: ${userData.email}");
+        // print("Result NotNull: ${uid}");
+      }
+    } else {
+      print(response.statusCode.toString());
+      _showDialogSERROR();
+    }
+
+    //
+  }
+
   // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! Widget Section !!!!!!!!!!!!!!!!!!!!!!!!!!
   //**************************************************************************//
   // Note : Widget ID  TextFormFeild
@@ -203,9 +292,9 @@ class _LoginScreenState extends State<LoginScreen> {
         child: Padding(
           padding: const EdgeInsets.only(left: 10, right: 10),
           child: TextFormField(
-            onChanged: (val) {
-              setState(() => _email = val.trim());
-            },
+            // onChanged: (val) {
+            //   setState(() => _email = val.trim());
+            // },
             keyboardType: TextInputType.emailAddress,
             decoration: InputDecoration(
               hintText: "Email",
@@ -217,14 +306,18 @@ class _LoginScreenState extends State<LoginScreen> {
               hintStyle: TextStyle(
                   fontSize: 16.0, color: Color.fromRGBO(166, 188, 208, 1)),
             ),
-            controller: _id,
-            //** Validator ID
+            controller: _emailController,
+            //** Validator Email
+            // validator: (val) => !val.contains('@') ? 'Invalid Email' : null,
+            onSaved: (val) => _email = val.trim(),
             validator: (String value) {
               if (value.isEmpty) {
-                return "Please Email Format";
+                return "Invalid Email Format";
               } else {
                 if (value.contains("@") && value.contains(".com")) {
                   return null;
+                } else {
+                  return "Please Email Format";
                 }
               }
             },
@@ -243,12 +336,13 @@ class _LoginScreenState extends State<LoginScreen> {
         child: Padding(
           padding: const EdgeInsets.only(left: 10, right: 10),
           child: TextFormField(
+            onSaved: (val) => _password,
             obscureText: true,
             maxLength: 6,
             keyboardType: TextInputType.number,
-            onChanged: (val) {
-              setState(() => _password = val.trim());
-            },
+            // onChanged: (val) {
+            //   setState(() => _password = val.trim());
+            // },
             decoration: InputDecoration(
               counterText: "",
               counterStyle: TextStyle(
@@ -261,11 +355,11 @@ class _LoginScreenState extends State<LoginScreen> {
               hintStyle: TextStyle(
                   fontSize: 18.0, color: Color.fromRGBO(166, 188, 208, 1)),
             ),
-            controller: _pass,
+            controller: _passwordController,
 
             //** Validator ID
             // ignore: missing_return
-            validator: (String value) {
+            validator: (value) {
               if (value.isEmpty) {
                 return "Please input Password";
               } else {
@@ -282,15 +376,16 @@ class _LoginScreenState extends State<LoginScreen> {
   // Note : Widget Login Button TextFeild
   Widget loginBtn(BuildContext context) => Padding(
         padding: const EdgeInsets.only(
-          left: 30.0,
-          right: 30.0,
+          left: 1.0,
+          right: 1.0,
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Container(
-              width: 250.0,
-              height: 60.0,
+              width: 65 * SizeConfig.widthMultiplier,
+              // width: MediaQuery.of(context).size.height * 0.3,
+              height: 60,
               child: RaisedButton(
                 color: Color.fromRGBO(0, 147, 233, 1),
                 shape: new RoundedRectangleBorder(
@@ -304,47 +399,13 @@ class _LoginScreenState extends State<LoginScreen> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                onPressed: () async {
-                  var url =
-                      "https://us-central1-newagent-47c20.cloudfunctions.net/api/user/filterEm/${_email}";
-                  var response = await Http.get(url);
-                  Map map = jsonDecode(response.body);
-                  Userdata userData = Userdata.fromJson(map);
 
-                  if (formKey.currentState.validate()) {
-                    if (response.statusCode == 200) {
-                      formKey.currentState.save();
-                      dynamic result = await _authService
-                          .loginWithEmailAndPassword(_email, _password);
+                // ************************************
+                onPressed: _submit,
+                // ************************************
 
-                      if (result == null) {
-                        print("Result Null");
-                        print(result.toString());
-                        _showDialog(context);
-                      } else {
-                        final FirebaseUser user =
-                            await FirebaseAuth.instance.currentUser();
-                        final String uid = user.uid.toString();
-                        setState(() {
-                          userId = userData.id;
-                        });
-                        setUpDisplayName(userID: userId);
+                // onPressed: () async {
 
-                        MaterialPageRoute materialPageRoute = MaterialPageRoute(
-                            builder: (BuildContext context) =>
-                                ChatroomBaibua());
-                        Navigator.of(context).pushAndRemoveUntil(
-                            materialPageRoute, (Route<dynamic> route) => false);
-                        // print("Get data With Email: ${userData.email}");
-                        // print("Result NotNull: ${uid}");
-                      }
-                    } else {
-                      print(response.statusCode.toString());
-                    }
-                  } else {
-                    print("Validation fail");
-                  }
-                },
                 elevation: 5,
               ),
             ),
@@ -378,8 +439,37 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  void _showSnackbar() {
-    Scaffold.of(context).showSnackBar(SnackBar(content: Text("Snack BAr")));
+//! Dialog Error ...
+  void _showDialogSERROR() {
+    showDialog(
+      context: context,
+      builder: (_) => NetworkGiffyDialog(
+        key: keys[1],
+        image: Image.asset(
+          'img/error.gif',
+          fit: BoxFit.cover,
+        ),
+        entryAnimation: EntryAnimation.BOTTOM,
+        title: Text(
+          'Failed to Login ',
+          textAlign: TextAlign.center,
+          style: TextStyle(
+              fontSize: 20.0, fontWeight: FontWeight.bold, color: Colors.red),
+        ),
+        description: Text(
+          'เข้าสู่ระบบไม่สำเร็จ \n กรุณาตรวจสอบ email  \n และรหัสผ่าน หรือติดต่อเจ้าหน้าที่',
+          textAlign: TextAlign.center,
+          style: GoogleFonts.kanit(
+            textStyle: TextStyle(color: Colors.black38, fontSize: 16.0),
+          ),
+        ),
+        onOkButtonPressed: () {
+          Navigator.pop(context);
+        },
+        onlyOkButton: true,
+        buttonOkColor: Colors.red,
+      ),
+    );
   }
 
   callDataWithEmail({String email}) async {

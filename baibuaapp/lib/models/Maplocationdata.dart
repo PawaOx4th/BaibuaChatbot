@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 class MaplocationData {
   final String nameLocation;
 

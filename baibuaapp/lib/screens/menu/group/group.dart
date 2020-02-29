@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:baibuaapp/Widgets/customAppBar.dart';
+import 'package:baibuaapp/models/statWorkCount.dart';
 import 'package:baibuaapp/models/userdata.dart';
 import 'package:http/http.dart' as Http;
 
@@ -11,6 +13,7 @@ import 'package:baibuaapp/models/groupMpdel.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 class Group extends StatefulWidget {
   @override
@@ -63,106 +66,23 @@ class _GroupState extends State<Group> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-        child: Scaffold(appBar: customsAppBar(context), body: GroupSubject()));
+      child: ChangeNotifierProvider(
+        create: (_) => WorkCount(),
+        child: Scaffold(
+          appBar: customsAppBar(context),
+          body: GroupSubject(),
+        ),
+      ),
+    );
   }
 
   //***********************************************************************//
   //~ Widget
   Widget customsAppBar(context) {
     return PreferredSize(
-      preferredSize: Size.fromHeight(80),
+      preferredSize: Size.fromHeight(58),
       child: Column(
-        children: <Widget>[
-          AppBar(
-            // title: titleAppbar(),
-            leading: IconButton(
-              icon: Icon(
-                Icons.arrow_back_ios,
-                color: Colors.black,
-              ),
-              onPressed: () => Navigator.pop(context),
-            ),
-            backgroundColor: Colors.white,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.vertical(
-                bottom: Radius.circular(25),
-              ),
-            ),
-            actions: [
-              Padding(
-                padding: EdgeInsets.only(right: 16.0),
-                child: Container(
-                  color: Colors.transparent,
-                  width: MediaQuery.of(context).size.width * 0.9,
-                  child: Row(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      //Working
-                      Padding(
-                        padding: EdgeInsets.only(left: 20.0),
-                        child: Stack(
-                          children: <Widget>[
-                            IconButton(
-                              icon: Icon(
-                                Icons.book,
-                                color: Color.fromRGBO(166, 188, 208, 1),
-                                size: 28,
-                              ),
-                              onPressed: () {},
-                            ),
-                            isWork ? working() : Container(),
-                          ],
-                        ),
-                      ),
-
-                      //Name App BAr
-                      titleAppbar(),
-
-                      //Notification
-                      Container(
-                        child: Wrap(
-                          children: <Widget>[
-                            Stack(
-                              children: <Widget>[
-                                IconButton(
-                                  tooltip: "",
-                                  icon: Icon(
-                                    Icons.notification_important,
-                                    color: Color.fromRGBO(166, 188, 208, 1),
-                                    size: 28,
-                                  ),
-                                  onPressed: () {},
-                                ),
-                                isWorkDeadline ? workDeadline() : Container(),
-                              ],
-                            ),
-                            // Stack(
-                            //   children: <Widget>[
-                            //     IconButton(
-                            //       tooltip: "เพิ่มกลุ่ม",
-                            //       icon: Icon(
-                            //         Icons.queue,
-                            //         color: Color.fromRGBO(166, 188, 208, 1),
-                            //         size: 28,
-                            //       ),
-                            //       onPressed: () {
-                            //         // AllSubject.getAllGroup();
-                            //         FetchWork.fecthwork();
-                            //       },
-                            //     ),
-                            //   ],
-                            // ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ],
+        children: <Widget>[CustomAppBarr("กลุ่ม")],
       ),
     );
   }

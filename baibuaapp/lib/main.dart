@@ -29,6 +29,7 @@ class MyApp extends StatelessWidget {
             Theme.of(context)
                 .primaryTextTheme, // ถ้าไม่ใส่ มันจะตั้งค่า Default ทุกอย่างตาม ThemeData.light().textTheme
           ),
+
           //******************************************************************//
         ),
         home: new SplashScreen(),

@@ -1,7 +1,10 @@
 import 'package:baibuaapp/REST%20API/fetchWorkDetial.dart';
+import 'package:baibuaapp/Widgets/customAppBar.dart';
+import 'package:baibuaapp/models/statWorkCount.dart';
 import 'package:baibuaapp/models/worksDetail.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 class WorkDetail extends StatefulWidget {
   WorkDetail({Key key, this.workId}) : super(key: key);
@@ -57,10 +60,13 @@ class _WorkDetailState extends State<WorkDetail> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Scaffold(
-        appBar: customsAppBar(context),
-        body: Detail(
-          workDetailId: widget.workId,
+      child: ChangeNotifierProvider(
+        create: (_) => WorkCount(),
+        child: Scaffold(
+          appBar: customsAppBar(context),
+          body: Detail(
+            workDetailId: widget.workId,
+          ),
         ),
       ),
     );
@@ -69,160 +75,9 @@ class _WorkDetailState extends State<WorkDetail> {
   //~ Widget
   Widget customsAppBar(context) {
     return PreferredSize(
-      preferredSize: Size.fromHeight(80),
+      preferredSize: Size.fromHeight(60),
       child: Column(
-        children: <Widget>[
-          AppBar(
-            // title: titleAppbar(),
-            leading: IconButton(
-              icon: Icon(
-                Icons.arrow_back_ios,
-                color: Colors.black,
-              ),
-              onPressed: () => Navigator.pop(context),
-            ),
-            backgroundColor: Colors.white,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.vertical(
-                bottom: Radius.circular(25),
-              ),
-            ),
-            actions: [
-              Padding(
-                padding: EdgeInsets.only(right: 16.0),
-                child: Container(
-                  color: Colors.transparent,
-                  width: MediaQuery.of(context).size.width * 0.9,
-                  child: Row(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      //Working
-                      Padding(
-                        padding: EdgeInsets.only(left: 20.0),
-                        child: Stack(
-                          children: <Widget>[
-                            IconButton(
-                              icon: Icon(
-                                Icons.book,
-                                color: Color.fromRGBO(166, 188, 208, 1),
-                                size: 28,
-                              ),
-                              onPressed: () {},
-                            ),
-                            isWork ? working() : Container(),
-                          ],
-                        ),
-                      ),
-
-                      //Name App BAr
-                      titleAppbar(context),
-
-                      //Notification
-                      Container(
-                        child: Wrap(
-                          children: <Widget>[
-                            Stack(
-                              children: <Widget>[
-                                IconButton(
-                                  tooltip: "",
-                                  icon: Icon(
-                                    Icons.notification_important,
-                                    color: Color.fromRGBO(166, 188, 208, 1),
-                                    size: 28,
-                                  ),
-                                  onPressed: () {},
-                                ),
-                                isWorkDeadline ? workDeadline() : Container(),
-                              ],
-                            ),
-                            // Stack(
-                            //   children: <Widget>[
-                            //     IconButton(
-                            //       tooltip: "เพิ่มกลุ่ม",
-                            //       icon: Icon(
-                            //         Icons.queue,
-                            //         color: Color.fromRGBO(166, 188, 208, 1),
-                            //         size: 28,
-                            //       ),
-                            //       onPressed: () {
-                            //         // AllSubject.getAllGroup();
-                            //         FetchWork.fecthwork();
-                            //       },
-                            //     ),
-                            //   ],
-                            // ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-
-  // Widget App Name
-  Widget titleAppbar(context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      mainAxisSize: MainAxisSize.max,
-      children: <Widget>[
-        Container(
-          // width: MediaQuery.of(context).size.width / 2,
-          child: Text(
-            "ข้อมูลงาน",
-            style: _googleFontKaniTitle,
-            // softWrap: true,
-            overflow: TextOverflow.ellipsis,
-          ),
-        ),
-      ],
-    );
-  }
-
-  //Widget Count Working
-  Widget working() {
-    return Positioned(
-      bottom: 5,
-      left: 3,
-      child: Container(
-        alignment: Alignment.center,
-        width: 22,
-        height: 20,
-        decoration: BoxDecoration(
-          color: Colors.red,
-          borderRadius: BorderRadius.circular(40),
-        ),
-        child: Text(
-          _countWorking,
-          style: _countwork,
-        ),
-      ),
-    );
-  }
-
-  //Widget  work Deadline
-  Widget workDeadline() {
-    return Positioned(
-      bottom: 5,
-      left: 3,
-      child: Container(
-        alignment: Alignment.center,
-        width: 22,
-        height: 20,
-        decoration: BoxDecoration(
-          color: Colors.red,
-          borderRadius: BorderRadius.circular(40),
-        ),
-        child: Text(
-          _countWorkDeadline,
-          style: _countwork,
-        ),
+        children: <Widget>[CustomAppBarr('รายละเอียดงาน')],
       ),
     );
   }

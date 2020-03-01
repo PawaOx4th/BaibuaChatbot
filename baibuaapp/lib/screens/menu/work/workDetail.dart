@@ -135,28 +135,27 @@ class _DetailState extends State<Detail> {
             Positioned(
               top: 250,
               // height: 1000,
-              child: SingleChildScrollView(
-                child: Container(
-                  width: width,
-                  height: height2,
-                  // color: Colors.orange,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(30),
-                      topRight: Radius.circular(30),
-                    ),
-                    color: Colors.blue,
+
+              child: Container(
+                width: width,
+                height: height * 1.8,
+                // color: Colors.orange,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(30),
+                    topRight: Radius.circular(30),
                   ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(18.0),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: <Widget>[
-                        DataDatail(
-                          workDetailId: widget.workDetailId,
-                        ),
-                      ],
-                    ),
+                  color: Colors.blue,
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(18.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: <Widget>[
+                      DataDatail(
+                        workDetailId: widget.workDetailId,
+                      ),
+                    ],
                   ),
                 ),
               ),
@@ -213,68 +212,72 @@ class _DataDatailState extends State<DataDatail> {
     return Container(
       width: width,
       height: height,
-      // color: Colors.greenAccent,
-      child: FutureBuilder(
-        future:
-            FetchWorkDetial.fetchWorkData(workDetailId: widget.workDetailId),
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            Work_Detail workDetail = snapshot.data;
-            return Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                //** Icon..
-                InkWell(
-                  onTap: () {},
-                  child: Icon(
-                    Icons.account_circle,
-                    size: 64,
-                    color: Colors.white,
-                  ),
-                ),
-                SizedBox(
-                  height: 20,
-                ),
+      // color: Colors.redAccent,
+      child: ListView(
+        children: <Widget>[
+          FutureBuilder(
+            future: FetchWorkDetial.fetchWorkData(
+                workDetailId: widget.workDetailId),
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                Work_Detail workDetail = snapshot.data;
+                return Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    //** Icon..
+                    InkWell(
+                      onTap: () {},
+                      child: Icon(
+                        Icons.account_circle,
+                        size: 64,
+                        color: Colors.white,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
 
-                //**  Topic..
-                Text(
-                  workDetail.topic,
-                  style: _workName,
-                  overflow: TextOverflow.ellipsis,
-                ),
+                    //**  Topic..
+                    Text(
+                      workDetail.topic,
+                      style: _workName,
+                      overflow: TextOverflow.ellipsis,
+                    ),
 
-                //**  SendDate..
-                Text(
-                  "กำหนดส่ง: ${workDetail.sendDate[0]} ${workDetail.sendDate[1]} ${workDetail.sendDate[2]}",
-                  style: _workDetail,
-                ),
-                Text(
-                  "สั่งเมื่อ: ${workDetail.createDate[0]} ${workDetail.createDate[1]} ${workDetail.createDate[2]}",
-                  style: _workDetail,
-                ),
-                SizedBox(
-                  height: 36.00,
-                ),
-                Text(
-                  "รายละเอียด",
-                  style: _menu,
-                ),
-                Text(
-                  workDetail.description,
-                  style: _workDetail,
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 8,
-                ),
-              ],
-            );
-          } else {
-            return Center(
-                child: CircularProgressIndicator(
-              backgroundColor: Colors.transparent,
-            ));
-          }
-        },
+                    //**  SendDate..
+                    Text(
+                      "กำหนดส่ง: ${workDetail.sendDate[0]} ${workDetail.sendDate[1]} ${workDetail.sendDate[2]}",
+                      style: _workDetail,
+                    ),
+                    Text(
+                      "สั่งเมื่อ: ${workDetail.createDate[0]} ${workDetail.createDate[1]} ${workDetail.createDate[2]}",
+                      style: _workDetail,
+                    ),
+                    SizedBox(
+                      height: 36.00,
+                    ),
+                    Text(
+                      "รายละเอียด",
+                      style: _menu,
+                    ),
+                    Text(
+                      workDetail.description,
+                      style: _workDetail,
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 9,
+                    ),
+                  ],
+                );
+              } else {
+                return Center(
+                    child: CircularProgressIndicator(
+                  backgroundColor: Colors.transparent,
+                ));
+              }
+            },
+          )
+        ],
       ),
     );
   }

@@ -5,7 +5,6 @@ import 'package:baibuaapp/models/statWorkCount.dart';
 import 'package:baibuaapp/models/userdata.dart';
 import 'package:http/http.dart' as Http;
 
-import 'package:baibuaapp/REST%20API/fetchWork.dart';
 import 'package:baibuaapp/REST%20API/getAllSubject.dart';
 import 'package:baibuaapp/Screens/menu/work/work.dart';
 import 'package:flutter/widgets.dart';
@@ -40,24 +39,6 @@ class _GroupState extends State<Group> {
     textStyle: TextStyle(
       color: Color.fromRGBO(0, 147, 233, 1),
     ),
-  );
-
-  TextStyle _googleFontKanit = GoogleFonts.kanit(
-    fontSize: 16.0,
-    fontWeight: FontWeight.w500,
-    textStyle: TextStyle(color: Colors.white, height: 1.2),
-  );
-
-  TextStyle _dateFontKanit = GoogleFonts.kanit(
-    fontSize: 12.0,
-    fontWeight: FontWeight.w400,
-    textStyle: TextStyle(color: Colors.white),
-  );
-
-  TextStyle _typeFontKanit = GoogleFonts.kanit(
-    fontSize: 12.0,
-    fontWeight: FontWeight.w400,
-    textStyle: TextStyle(color: Colors.grey[300]),
   );
 
   TextStyle _countwork =
@@ -195,7 +176,7 @@ class _GroupSubjectState extends State<GroupSubject> {
 
   callWork({String groupId, String subJectName}) {
     print('Select Work');
-    print("${groupId}");
+    print("$groupId");
     Navigator.push(
       context,
       MaterialPageRoute(

@@ -12,7 +12,7 @@ class NewEventDetail extends StatefulWidget {
       this.day,
       this.type,
       this.year,
-      this.Colororder})
+      this.colororder})
       : super(key: key);
 
   // Topic, Month, Day, Year, Type, Description, Id
@@ -30,7 +30,7 @@ class NewEventDetail extends StatefulWidget {
 
   final String id;
 
-  final int Colororder;
+  final int colororder;
 
   @override
   _NewEventDetailState createState() => _NewEventDetailState();
@@ -67,8 +67,6 @@ class _NewEventDetailState extends State<NewEventDetail> {
     textStyle: TextStyle(color: Colors.grey[300]),
   );
 
-  TextStyle _countwork =
-      TextStyle(color: Colors.white70, fontWeight: FontWeight.bold);
 
   Color descriptionColor = Color.fromRGBO(60, 73, 92, 1);
 
@@ -83,7 +81,6 @@ class _NewEventDetailState extends State<NewEventDetail> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     print(widget.id);
   }
@@ -121,7 +118,7 @@ class _NewEventDetailState extends State<NewEventDetail> {
                             image: NetworkImage(pictureDemo),
                             fit: BoxFit.cover,
                             colorFilter: ColorFilter.mode(
-                                cardColor[widget.Colororder],
+                                cardColor[widget.colororder],
                                 BlendMode.modulate),
                           ),
                         ),

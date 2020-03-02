@@ -5,7 +5,7 @@ import 'package:http/http.dart' as Http;
 class FetchWorkDetial {
   static Future fetchWorkData({String workDetailId}) async {
     String url =
-        'https://us-central1-newagent-47c20.cloudfunctions.net/api/work/filterId/${workDetailId}';
+        'https://us-central1-newagent-47c20.cloudfunctions.net/api/work/filterId/$workDetailId';
     print(workDetailId);
 
     var res = await Http.get(url);
@@ -14,10 +14,10 @@ class FetchWorkDetial {
       print(res.body);
 
       Map map = jsonDecode(res.body);
-      Work_Detail work_detail = Work_Detail.fromJson(map);
+      Work_Detail workDetail = Work_Detail.fromJson(map);
       // List<dynamic> responsJson = jsonDecode(res.body);
 
-      return work_detail;
+      return workDetail;
       // return responsJson.map((m) => new Work_Detail.fromJson(m)).toList();
     } else {
       print(res.statusCode);

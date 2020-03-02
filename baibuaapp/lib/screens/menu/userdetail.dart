@@ -1,6 +1,5 @@
 import 'package:baibuaapp/REST%20API/userservice.dart';
 import 'package:baibuaapp/Widgets/customAppBar.dart';
-import 'package:baibuaapp/Widgets/notificationAlert.dart';
 import 'package:baibuaapp/models/statWorkCount.dart';
 import 'package:baibuaapp/models/userdata.dart';
 import 'package:baibuaapp/screens/Authenticate/autu.dart';
@@ -22,22 +21,8 @@ class _UserDetailPageState extends State<UserDetailPage> {
   final bool isWorkDeadline = false;
   String iD = '';
 
-  String _countWorking = "2";
-  String _countWorkDeadline = "20";
 
   //TextStyle
-  TextStyle _googleFontRoboto = GoogleFonts.roboto(
-    fontSize: 22.0,
-    fontWeight: FontWeight.bold,
-    textStyle: TextStyle(color: Color.fromRGBO(0, 147, 233, 1)),
-  );
-
-  TextStyle _googleFontKanit = GoogleFonts.kanit(
-    fontSize: 22.0,
-    fontWeight: FontWeight.w500,
-    textStyle: TextStyle(color: Color.fromRGBO(0, 147, 233, 1)),
-  );
-
   TextStyle _detailFontKanit = GoogleFonts.kanit(
     fontSize: 16.0,
     textStyle: TextStyle(color: Color.fromRGBO(81, 92, 111, 1)),
@@ -48,14 +33,12 @@ class _UserDetailPageState extends State<UserDetailPage> {
     textStyle: TextStyle(color: Colors.white),
   );
 
-  TextStyle _countwork =
-      TextStyle(color: Colors.white70, fontWeight: FontWeight.bold);
 
   //Color All
   Color iconColor = Color.fromRGBO(173, 197, 219, 1);
   Color borderRole = Color.fromRGBO(0, 147, 233, 1);
   Color bgMenuColor = Color.fromRGBO(237, 242, 247, 1);
-  Color ShadowMenuColor = Color.fromRGBO(11, 84, 194, 0.5);
+  Color shadowMenuColor = Color.fromRGBO(11, 84, 194, 0.5);
   Color nameColor = Color.fromRGBO(81, 93, 111, 1);
   Color btnSendAdminColor = Color.fromRGBO(166, 188, 208, 1);
   Color btnLogOutColor = Color.fromRGBO(255, 105, 105, 1);
@@ -479,7 +462,7 @@ class _UserDetailPageState extends State<UserDetailPage> {
 //                            Navigator.pushNamed(context, '/Login-page');
                                 MaterialPageRoute materialPageRoute =
                                     MaterialPageRoute(
-                                        builder: (BuildContext) =>
+                                        builder: (BuildContext context) =>
                                             LoginScreen());
                                 Navigator.of(context).pushAndRemoveUntil(
                                     materialPageRoute,

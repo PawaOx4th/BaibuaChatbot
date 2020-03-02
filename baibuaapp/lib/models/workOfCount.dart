@@ -4,50 +4,26 @@
 
 import 'dart:convert';
 
-List<WorkofCountModel> workofCountModelFromJson(String str) =>
-    List<WorkofCountModel>.from(
-        json.decode(str).map((x) => WorkofCountModel.fromJson(x)));
+WorkofCountModel workofCountModelFromJson(String str) => WorkofCountModel.fromJson(json.decode(str));
 
-String workofCountModelToJson(List<WorkofCountModel> data) =>
-    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+String workofCountModelToJson(WorkofCountModel data) => json.encode(data.toJson());
 
 class WorkofCountModel {
-  List<String> updateDate;
-  String id;
-  String topic;
-  String description;
-  String group;
-  List<String> createDate;
-  List<String> sendDate;
+    int status;
+    int data;
 
-  WorkofCountModel({
-    this.updateDate,
-    this.id,
-    this.topic,
-    this.description,
-    this.group,
-    this.createDate,
-    this.sendDate,
-  });
+    WorkofCountModel({
+        this.status,
+        this.data,
+    });
 
-  factory WorkofCountModel.fromJson(Map<String, dynamic> json) =>
-      WorkofCountModel(
-        updateDate: List<String>.from(json["UpdateDate"].map((x) => x)),
-        id: json["Id"],
-        topic: json["Topic"],
-        description: json["Description"],
-        group: json["Group"],
-        createDate: List<String>.from(json["CreateDate"].map((x) => x)),
-        sendDate: List<String>.from(json["SendDate"].map((x) => x)),
-      );
+    factory WorkofCountModel.fromJson(Map<String, dynamic> json) => WorkofCountModel(
+        status: json["status"],
+        data: json["data"],
+    );
 
-  Map<String, dynamic> toJson() => {
-        "UpdateDate": List<dynamic>.from(updateDate.map((x) => x)),
-        "Id": id,
-        "Topic": topic,
-        "Description": description,
-        "Group": group,
-        "CreateDate": List<dynamic>.from(createDate.map((x) => x)),
-        "SendDate": List<dynamic>.from(sendDate.map((x) => x)),
-      };
+    Map<String, dynamic> toJson() => {
+        "status": status,
+        "data": data,
+    };
 }

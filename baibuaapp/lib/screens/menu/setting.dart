@@ -28,12 +28,6 @@ class _SettingPageState extends State<SettingPage> {
   String _countWorkDeadline = "20";
 
   //TextStyle
-  TextStyle _googleFontRoboto = GoogleFonts.roboto(
-    fontSize: 22.0,
-    fontWeight: FontWeight.bold,
-    textStyle: TextStyle(color: Color.fromRGBO(0, 147, 233, 1)),
-  );
-
   TextStyle _googleFontKanit = GoogleFonts.kanit(
     fontSize: 22.0,
     fontWeight: FontWeight.w500,
@@ -51,10 +45,6 @@ class _SettingPageState extends State<SettingPage> {
     textStyle: TextStyle(color: Colors.white),
   );
 
-  TextStyle _btnFontKanit = GoogleFonts.kanit(
-    fontSize: 16.0,
-    textStyle: TextStyle(color: Colors.white),
-  );
 
   TextStyle _countwork =
       TextStyle(color: Colors.white70, fontWeight: FontWeight.bold);
@@ -63,7 +53,7 @@ class _SettingPageState extends State<SettingPage> {
   Color iconColor = Color.fromRGBO(173, 197, 219, 1);
   Color borderRole = Color.fromRGBO(0, 147, 233, 1);
   Color bgMenuColor = Color.fromRGBO(237, 242, 247, 1);
-  Color ShadowMenuColor = Color.fromRGBO(11, 84, 194, 0.5);
+  Color shadowMenuColor = Color.fromRGBO(11, 84, 194, 0.5);
   Color nameColor = Color.fromRGBO(81, 93, 111, 1);
   Color btnSendAdminColor = Color.fromRGBO(166, 188, 208, 1);
   Color btnLogOutColor = Color.fromRGBO(255, 105, 105, 1);
@@ -355,7 +345,7 @@ class _SettingPageState extends State<SettingPage> {
         print(_authService.toString());
 //       Navigator.pushNamed(context, '/Login-page');
         MaterialPageRoute materialPageRoute =
-            MaterialPageRoute(builder: (BuildContext) => LoginScreen());
+            MaterialPageRoute(builder: (BuildContext context) => LoginScreen());
         Navigator.of(context).pushAndRemoveUntil(
             materialPageRoute, (Route<dynamic> route) => false);
       },

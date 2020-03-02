@@ -23,8 +23,6 @@ class _AddWorkState extends State<AddWork> {
   final bool isWork = true;
   final bool isWorkDeadline = true;
   String iD = '';
-  String _countWorking = "2";
-  String _countWorkDeadline = "20";
   String errWorkName = "";
   String errSendDate = "";
   String errWorkDes = "";

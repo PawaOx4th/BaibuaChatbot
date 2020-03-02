@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:baibuaapp/Screens/menu/group/addGroup.dart';
+
 import 'package:baibuaapp/Widgets/customAppBar.dart';
 import 'package:baibuaapp/models/statWorkCount.dart';
 import 'package:baibuaapp/screens/menu/news/Neweventsetail.dart';
@@ -20,22 +20,12 @@ class _NewEventState extends State<NewEvent>
   final bool isWork = true;
   final bool isWorkDeadline = true;
   String iD = '';
-  String _countWorking = "2";
-  String _countWorkDeadline = "20";
   List newsData;
   int indexS;
   var pictureDemo =
       "https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80";
 
   //TextStyle
-  TextStyle _googleFontKaniTitle = GoogleFonts.kanit(
-    fontSize: 22.0,
-    fontWeight: FontWeight.w500,
-    textStyle: TextStyle(
-      color: Color.fromRGBO(0, 147, 233, 1),
-    ),
-  );
-
   TextStyle _googleFontKanit = GoogleFonts.kanit(
     fontSize: 16.0,
     fontWeight: FontWeight.w500,
@@ -54,14 +44,10 @@ class _NewEventState extends State<NewEvent>
     textStyle: TextStyle(color: Colors.grey[300]),
   );
 
-  TextStyle _countwork =
-      TextStyle(color: Colors.white70, fontWeight: FontWeight.bold);
-
   //Color All
   Color iconColor = Color.fromRGBO(173, 197, 219, 1);
   Color borderRole = Color.fromRGBO(0, 147, 233, 1);
   Color bgMenuColor = Color.fromRGBO(237, 242, 247, 1);
-  Color ShadowMenuColor = Color.fromRGBO(11, 84, 194, 0.5);
   Color nameColor = Color.fromRGBO(81, 93, 111, 1);
   Color btnSendAdminColor = Color.fromRGBO(166, 188, 208, 1);
   Color btnLogOutColor = Color.fromRGBO(255, 105, 105, 1);
@@ -91,12 +77,12 @@ class _NewEventState extends State<NewEvent>
         builder: (context) => NewEventDetail(
           topic: newsData[indexS]['Topic'],
           description: newsData[indexS]['Description'],
-          day: newsData[indexS]['Day'],
+          day: newsData[indexS]["Date"][0],
           type: newsData[indexS]['Type'],
           id: newsData[indexS]['Id'],
-          month: newsData[indexS]['Month'],
-          year: newsData[indexS]['Year'],
-          Colororder: countColor,
+          month: newsData[indexS]["Date"][1],
+          year: newsData[indexS]["Date"][2],
+          colororder: countColor,
         ),
       ),
     );
@@ -104,7 +90,6 @@ class _NewEventState extends State<NewEvent>
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     getNews();
   }
@@ -203,9 +188,9 @@ class _NewEventState extends State<NewEvent>
                                         CrossAxisAlignment.start,
                                     children: <Widget>[
                                       Text(
-                                        "โพสต์เมื่อวันที่  ${newsData[index]['Month']} " +
-                                            " ${newsData[index]['Day']}," +
-                                            " ${newsData[index]['Year']}",
+                                        "โพสต์เมื่อวันที่ ${newsData[index]["Date"][0]} " +
+                                            "${newsData[index]["Date"][1]}" +
+                                            " ${newsData[index]["Date"][2]}",
                                         style: _dateFontKanit,
                                       ),
                                       Text(

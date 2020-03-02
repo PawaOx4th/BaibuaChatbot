@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:baibuaapp/models/userdata.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:http/http.dart' as Http;
 
 class UserDataService {
@@ -9,7 +8,7 @@ class UserDataService {
     print(userID);
 
     var url =
-        "https://us-central1-newagent-47c20.cloudfunctions.net/api/user/filterId/${userID}";
+        "https://us-central1-newagent-47c20.cloudfunctions.net/api/user/filterId/$userID";
     var response = await Http.get(url);
 
     if (response.statusCode == 200) {

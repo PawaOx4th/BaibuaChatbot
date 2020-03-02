@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:http/http.dart' as Http;
 
 import 'package:baibuaapp/models/workOfCount.dart';
@@ -12,7 +13,7 @@ class WorkCount with ChangeNotifier {
   int get workCount => _workCount;
 
   WorkCount() {
-    fetchConut();
+    findDisplay();
   }
 
   set workCount(int value) {
@@ -24,20 +25,28 @@ class WorkCount with ChangeNotifier {
     workCount = lenght;
   }
 
-  Future<int> fetchConut() async {
+  Future<void> findDisplay() async {
+    FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+    FirebaseUser firebaseUser = await firebaseAuth.currentUser();
+    String name = firebaseUser.displayName;
+    fetchConut(userId: name);
+  }
+
+  Future<int> fetchConut({String userId}) async {
     //
     //
     String url =
-        "https://us-central1-newagent-47c20.cloudfunctions.net/api/work/filterGr/76cdcbc7-d542-42b2-9fcd-ef18c7ffff46";
+        "https://us-central1-newagent-47c20.cloudfunctions.net/api/work/filterNm/${userId}";
 
     var res = await Http.get(url);
     print("11111");
 
-    List<dynamic> responJson = jsonDecode(res.body);
-    var resMap = responJson.map((m) => WorkofCountModel.fromJson(m)).toList();
+    Map map = jsonDecode(res.body);
 
-    setWorkCount(resMap.length);
+    WorkofCountModel workofCountModel = WorkofCountModel.fromJson(map);
 
-    return resMap.length;
+    setWorkCount(workofCountModel.data);
+
+    return workofCountModel.data;
   }
 }

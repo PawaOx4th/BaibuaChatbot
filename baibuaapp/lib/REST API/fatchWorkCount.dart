@@ -1,10 +1,8 @@
 import 'dart:convert';
 
 import 'package:baibuaapp/models/statWorkCount.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as Http;
 import 'package:baibuaapp/models/workOfCount.dart';
-import 'package:provider/provider.dart';
 
 class WorkOfCount {
   static Future<int> fetchConut() async {

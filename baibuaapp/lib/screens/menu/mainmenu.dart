@@ -3,14 +3,12 @@
 import 'dart:convert';
 
 import 'package:baibuaapp/Widgets/customAppBar.dart';
-import 'package:baibuaapp/Widgets/notificationAlert.dart';
 import 'package:http/http.dart' as Http;
 
 import 'package:baibuaapp/REST%20API/fatchWorkCount.dart';
 import 'package:baibuaapp/models/statWorkCount.dart';
 import 'package:baibuaapp/Screens/menu/map.dart';
 import 'package:baibuaapp/models/userdata.dart';
-import 'package:baibuaapp/screens/Authenticate/autu.dart';
 import 'package:baibuaapp/screens/Bottomnavigation.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -71,19 +69,18 @@ class _MainmenuState extends State<Mainmenu> {
   //Init State
   @override
   void initState() {
-    // TODO: implement initState
+  
     super.initState();
     findDisplay();
     WorkOfCount.fetchConut();
     // findLavel();
   }
 
-  final AuthService _authService = AuthService();
 
   @override
   Widget build(BuildContext context) {
     double _widthScreen = MediaQuery.of(context).size.width;
-    String userId = ModalRoute.of(context).settings.arguments;
+    
 
     return ChangeNotifierProvider(
       create: (_) => WorkCount(),

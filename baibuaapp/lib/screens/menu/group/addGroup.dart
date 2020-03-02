@@ -29,24 +29,6 @@ class _AddGroupState extends State<AddGroup> {
     ),
   );
 
-  TextStyle _googleFontKanit = GoogleFonts.kanit(
-    fontSize: 16.0,
-    fontWeight: FontWeight.w500,
-    textStyle: TextStyle(color: Colors.white, height: 1.2),
-  );
-
-  TextStyle _dateFontKanit = GoogleFonts.kanit(
-    fontSize: 12.0,
-    fontWeight: FontWeight.w400,
-    textStyle: TextStyle(color: Colors.white),
-  );
-
-  TextStyle _typeFontKanit = GoogleFonts.kanit(
-    fontSize: 12.0,
-    fontWeight: FontWeight.w400,
-    textStyle: TextStyle(color: Colors.grey[300]),
-  );
-
   TextStyle _countwork =
       TextStyle(color: Colors.white70, fontWeight: FontWeight.bold);
 

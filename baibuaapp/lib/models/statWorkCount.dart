@@ -9,7 +9,6 @@ import 'package:flutter/material.dart';
 // State With Provider
 class WorkCount with ChangeNotifier {
   int _workCount = 0;
-
   int get workCount => _workCount;
 
   WorkCount() {
@@ -33,13 +32,10 @@ class WorkCount with ChangeNotifier {
   }
 
   Future<int> fetchConut({String userId}) async {
-    //
-    //
     String url =
         "https://us-central1-newagent-47c20.cloudfunctions.net/api/work/filterNm/${userId}";
 
     var res = await Http.get(url);
-    print("11111");
 
     Map map = jsonDecode(res.body);
 

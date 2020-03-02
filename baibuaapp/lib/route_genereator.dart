@@ -5,6 +5,8 @@ import 'package:baibuaapp/Screens/menu/setting.dart';
 import 'package:baibuaapp/Screens/menu/work/addWork.dart';
 import 'package:baibuaapp/Screens/menu/work/work.dart';
 import 'package:baibuaapp/Screens/menu/work/workDetail.dart';
+import 'package:baibuaapp/Screens/roomCheck.dart';
+import 'package:baibuaapp/Screens/classSchedule.dart';
 import 'package:baibuaapp/screens/Authenticate/login.dart';
 import 'package:baibuaapp/screens/Bottomnavigation.dart';
 import 'package:baibuaapp/screens/emty.dart';
@@ -33,6 +35,12 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => UserDetailPage());
       case '/Newevent-page':
         return MaterialPageRoute(builder: (_) => NewEvent());
+      case '/roomcheck':
+        return MaterialPageRoute(builder: (_) => RoomCheck());
+
+      case '/classschedule':
+        return MaterialPageRoute(builder: (_) => ClassSchedule());
+
       case '/Neweventdetail-page':
         return MaterialPageRoute(
             builder: (_) => NewEventDetail(

@@ -69,18 +69,15 @@ class _MainmenuState extends State<Mainmenu> {
   //Init State
   @override
   void initState() {
-  
     super.initState();
     findDisplay();
     WorkOfCount.fetchConut();
     // findLavel();
   }
 
-
   @override
   Widget build(BuildContext context) {
     double _widthScreen = MediaQuery.of(context).size.width;
-    
 
     return ChangeNotifierProvider(
       create: (_) => WorkCount(),
@@ -385,7 +382,7 @@ class _MainmenuState extends State<Mainmenu> {
                                   ),
                                 ),
                                 Text(
-                                  "ตั้งค่า",
+                                  "เพิ่มเติม",
                                   style: _textMenuTH,
                                 )
                               ],

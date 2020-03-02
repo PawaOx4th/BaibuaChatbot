@@ -1,4 +1,5 @@
 import 'package:baibuaapp/Screens/Authenticate/login.dart';
+import 'package:baibuaapp/Screens/roomCheck.dart';
 import 'package:baibuaapp/Widgets/customAppBar.dart';
 import 'package:baibuaapp/models/statWorkCount.dart';
 import 'package:flutter/material.dart';
@@ -45,7 +46,6 @@ class _SettingPageState extends State<SettingPage> {
     textStyle: TextStyle(color: Colors.white),
   );
 
-
   TextStyle _countwork =
       TextStyle(color: Colors.white70, fontWeight: FontWeight.bold);
 
@@ -89,6 +89,10 @@ class _SettingPageState extends State<SettingPage> {
           child: ListView(
             children: <Widget>[
               // alertCheck(),
+              SizedBox(height: 16),
+              btnClassSchedule(),
+              SizedBox(height: 8),
+              btnRoom(),
               SizedBox(height: 8),
               useApp(),
               SizedBox(height: 8),
@@ -337,6 +341,81 @@ class _SettingPageState extends State<SettingPage> {
     );
   }
 
+  // Widget list Menu => Feed Back`
+  Widget btnRoom() {
+    return InkWell(
+      onTap: () {
+        Navigator.pushNamed(context, '/roomcheck');
+      },
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 16),
+        height: 60,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10), color: Colors.white),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Container(
+              child: Row(
+                children: <Widget>[
+                  Icon(
+                    Icons.local_library,
+                    color: Colors.blueAccent,
+                    size: 32,
+                  ),
+                  SizedBox(
+                    width: 16,
+                  ),
+                  Text(
+                    "ตารางการใช้งานห้องเรียน",
+                    style: _detailFontKanit,
+                  )
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget btnClassSchedule() {
+    return InkWell(
+      onTap: () {
+        Navigator.pushNamed(context, '/classschedule');
+      },
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 16),
+        height: 60,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10), color: Colors.white),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Container(
+              child: Row(
+                children: <Widget>[
+                  Icon(
+                    Icons.school,
+                    color: Colors.blueAccent,
+                    size: 32,
+                  ),
+                  SizedBox(
+                    width: 16,
+                  ),
+                  Text(
+                    "ตารางเรียน",
+                    style: _detailFontKanit,
+                  )
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   // Widget list Menu => Feed Back
   Widget logOutButton() {
     return InkWell(
@@ -367,3 +446,5 @@ class _SettingPageState extends State<SettingPage> {
 //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 }
+
+//

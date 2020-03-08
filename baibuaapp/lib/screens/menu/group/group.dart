@@ -12,6 +12,7 @@ import 'package:baibuaapp/models/groupMpdel.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:provider/provider.dart';
 
 class Group extends StatefulWidget {
@@ -52,6 +53,12 @@ class _GroupState extends State<Group> {
         child: Scaffold(
           appBar: customsAppBar(context),
           body: GroupSubject(),
+          floatingActionButton: FloatingActionButton(
+            child: Icon(MdiIcons.inboxArrowDown),
+            onPressed: () {
+              Navigator.of(context).pushNamed('/AddGroup-page');
+            },
+          ),
         ),
       ),
     );

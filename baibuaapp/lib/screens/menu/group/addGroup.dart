@@ -75,61 +75,8 @@ class _AddGroupState extends State<AddGroup> {
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      //Working
-                      // Padding(
-                      //   padding: EdgeInsets.only(left: 25.0),
-                      //   child: Stack(
-                      //     children: <Widget>[
-                      //       IconButton(
-                      //         icon: Icon(
-                      //           Icons.book,
-                      //           color: Color.fromRGBO(166, 188, 208, 1),
-                      //           size: 28,
-                      //         ),
-                      //         onPressed: () {},
-                      //       ),
-                      //       isWork ? working() : Container(),
-                      //     ],
-                      //   ),
-                      // ),
-
                       //Name App BAr
                       titleAppbar(),
-
-                      //Notification
-                      // Container(
-                      //   child: Wrap(
-                      //     children: <Widget>[
-                      //       Stack(
-                      //         children: <Widget>[
-                      //           IconButton(
-                      //             tooltip: "",
-                      //             icon: Icon(
-                      //               Icons.notification_important,
-                      //               color: Color.fromRGBO(166, 188, 208, 1),
-                      //               size: 28,
-                      //             ),
-                      //             onPressed: () {},
-                      //           ),
-                      //           isWorkDeadline ? workDeadline() : Container(),
-                      //         ],
-                      //       ),
-                      //       Stack(
-                      //         children: <Widget>[
-                      //           IconButton(
-                      //             tooltip: "เพิ่มกลุ่ม",
-                      //             icon: Icon(
-                      //               Icons.queue,
-                      //               color: Color.fromRGBO(166, 188, 208, 1),
-                      //               size: 28,
-                      //             ),
-                      //             onPressed: () {},
-                      //           ),
-                      //         ],
-                      //       ),
-                      //     ],
-                      //   ),
-                      // ),
                     ],
                   ),
                 ),

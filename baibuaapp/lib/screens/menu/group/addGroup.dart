@@ -1,6 +1,16 @@
+import 'dart:io';
+
+import 'package:baibuaapp/REST%20API/fetchGroup.dart';
+
+import 'package:baibuaapp/models/group.dart';
+import 'package:baibuaapp/models/studentGroup.dart';
+import 'package:http/http.dart' as Http;
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:dropdown_formfield/dropdown_formfield.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 class AddGroup extends StatefulWidget {
   @override
@@ -31,17 +41,34 @@ class _AddGroupState extends State<AddGroup> {
 
   TextStyle _countwork =
       TextStyle(color: Colors.white70, fontWeight: FontWeight.bold);
-
 //**********************************************************************************************/ /
+
+  Future<void> findDisplay() async {
+    FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+    FirebaseUser firebaseUser = await firebaseAuth.currentUser();
+    String userId = firebaseUser.displayName;
+    setState(() {
+      iD = userId;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    findDisplay();
+  }
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-        child: Scaffold(
-      backgroundColor: Colors.grey[200],
-      appBar: customsAppBar(),
-      body: SubjectDetail(),
-    ));
+      child: Scaffold(
+        backgroundColor: Colors.grey[200],
+        appBar: customsAppBar(),
+        body: ShowGroup(
+          userId: iD,
+        ),
+      ),
+    );
   }
 
   //~ Widget
@@ -148,28 +175,18 @@ class _AddGroupState extends State<AddGroup> {
   }
 }
 
-class SubjectDetail extends StatefulWidget {
-  const SubjectDetail({
-    Key key,
-  }) : super(key: key);
+class ShowGroup extends StatefulWidget {
+  //
+  ShowGroup({Key key, this.userId}) : super(key: key);
+  //
+  String userId = "";
 
   @override
-  _SubjectDetailState createState() => _SubjectDetailState();
+  _ShowGroupState createState() => _ShowGroupState();
 }
 
-class _SubjectDetailState extends State<SubjectDetail> {
-  TextEditingController subJectName,
-      subJectId,
-      subJectSec,
-      subjectTime,
-      subJectDate,
-      subJectTeacher;
-
-  String _myActivity;
-  String dropdownValue = 'จันทร์';
-
-  //! ***** TesxtStyle Section***** //
-  //TextStyle
+class _ShowGroupState extends State<ShowGroup> {
+  //   //! ******************* TesxtStyle Section *************************** //
   TextStyle hitsTitle = GoogleFonts.kanit(
     fontSize: 16.0,
     fontWeight: FontWeight.w500,
@@ -185,237 +202,198 @@ class _SubjectDetailState extends State<SubjectDetail> {
       color: Color.fromRGBO(0, 147, 233, 1),
     ),
   );
-  //! ***************************** //
+
+  TextStyle subjectName = GoogleFonts.kanit(
+    fontSize: 20.0,
+    fontWeight: FontWeight.bold,
+    textStyle: TextStyle(
+      color: Colors.white,
+    ),
+  );
+  TextStyle subjectDetail = GoogleFonts.kanit(
+    fontSize: 16.0,
+    // fontWeight: FontWeight.bold,
+    textStyle: TextStyle(
+      color: Colors.white,
+    ),
+  );
+  TextStyle subjectDetailGroup = GoogleFonts.kanit(
+    fontSize: 18.0,
+    fontWeight: FontWeight.bold,
+    textStyle: TextStyle(
+      color: Colors.white,
+    ),
+  );
+  //   //! *******************************************************************//
+
+  //  //! ********************* Colors ************************************** //
+  List cardColor = [
+    Color.fromRGBO(60, 73, 92, 1), //Background Black
+    Color.fromRGBO(0, 147, 233, 1), // Background Blue
+    Color.fromRGBO(116, 138, 157, 1) // Background Gray
+  ];
+  // //! *********************************************************************//
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      // top: false,
-      child: Scaffold(
-        backgroundColor: Colors.grey[200],
-        body: SingleChildScrollView(
-          child: Container(
-            padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                nameSubject(),
-                SizedBox(
-                  height: 16.0,
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
+
+    return FutureBuilder<List<Group>>(
+      future: GetGroup.getGroup(),
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        if (snapshot.hasData) {
+          List<Group> groupData = snapshot.data;
+          return ListView.builder(
+            itemCount: groupData.length,
+            itemBuilder: (BuildContext context, index) {
+              int bgColor = index % 3;
+
+              return Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16.0, vertical: 5.0),
+                child: Card(
+                  color: cardColor[bgColor],
+                  child: Container(
+                    height: height * 0.15,
+                    padding: EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        Container(
+                          // color: Colors.white70,
+                          width: width * 0.6,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Text(
+                                "รหัสวิชา : " + groupData[index].sec.subject,
+                                style: subjectName,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                              Text(
+                                groupData[index].sec.studyTime[0] +
+                                    "  " +
+                                    groupData[index].sec.studyTime[1] +
+                                    "-" +
+                                    groupData[index].sec.studyTime[2],
+                                style: subjectDetail,
+                              ),
+                              Row(
+                                children: <Widget>[
+                                  Icon(
+                                    MdiIcons.folderAccount,
+                                    color: Colors.white,
+                                    size: 30,
+                                  ),
+                                  SizedBox(
+                                    width: 5,
+                                  ),
+                                  Text(
+                                    "กลุ่ม : ${groupData[index].sec.sec} ",
+                                    style: subjectDetailGroup,
+                                  )
+                                ],
+                              )
+                            ],
+                          ),
+                        ),
+                        IconButton(
+                          icon: Icon(
+                            MdiIcons.tagPlus,
+                            // folder-account
+                            size: 50,
+                            color: Colors.white,
+                          ),
+                          onPressed: () {
+                            print("ADD GROUP $index");
+                            addStudentToGroup(
+                                groupId: groupData[index].id,
+                                id: widget.userId,
+                                context: context);
+                          },
+                        )
+                      ],
+                    ),
+                  ),
                 ),
-                idSubject(),
-                SizedBox(
-                  height: 16.0,
-                ),
-                secSubject(),
-                SizedBox(
-                  height: 16.0,
-                ),
-                timeSubject(),
-                SizedBox(
-                  height: 16.0,
-                ),
-                dateSubject(),
-                SizedBox(
-                  height: 16.0,
-                ),
-                teacherSubject(),
-                SizedBox(
-                  height: 16.0,
-                ),
-                // dropDownDate()
-              ],
-            ),
-          ),
-        ),
-      ),
+              );
+            },
+          );
+        } else {
+          return Center(child: CircularProgressIndicator());
+        }
+      },
     );
   }
 
-  //~~~~~~~~~~~~~~~~~ Widget Section ~~~~~~~~~~~~~~~~~~~~~~//
-  Widget nameSubject() => Container(
-        // color: Colors.grey[300],
-        padding: EdgeInsets.all(14.0),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(15.0),
-          color: Colors.white,
-        ),
-        child: TextFormField(
-          decoration: InputDecoration(
-            hintText: "ชื่อวิชา",
-            hintStyle: hitsTitle,
-            border: InputBorder.none,
+  addStudentToGroup({String groupId, String id, BuildContext context}) async {
+    ////////////////////////////////////////////////////////////////////////////
+    var studentTogroup = StudentGroup();
+    studentTogroup.id = groupId;
+    studentTogroup.student = id;
+    var studentTogroupJson = studentGroupToJson(studentTogroup);
+    print(studentTogroupJson);
+    ////////////////////////////////////////////////////////////////////////////
+    String url =
+        "https://us-central1-newagent-47c20.cloudfunctions.net/api/group/student";
+    var addApi = await Http.post(
+      url,
+      body: studentTogroupJson,
+      headers: {HttpHeaders.contentTypeHeader: 'application/json'},
+    );
+    ////////////////////////////////////////////////////////////////////////////
+    if (addApi.statusCode == 201) {
+      print(" Student in Group Success");
+      print("${addApi.body}");
+      _showDialogComplete(context);
+    } else {
+      print("ERROR");
+      print("${addApi.body}");
+      _showDialogError(context);
+    }
+    ////////////////////////////////////////////////////////////////////////////
+  }
+
+  void _showDialogComplete(BuildContext context) {
+    Alert(
+      context: context,
+      type: AlertType.success,
+      title: "สำเร็จ",
+      desc: "เพิ่มเข้ากลุ่มสำเร็จ",
+      buttons: [
+        DialogButton(
+          color: Colors.green,
+          child: Text(
+            "ปิด",
+            style: TextStyle(color: Colors.white, fontSize: 20),
           ),
-          style: textDetail,
-          controller: subJectName, //** => Name Subject controller */
-        ),
-      );
+          onPressed: () => Navigator.pop(context),
+          width: 120,
+        )
+      ],
+    ).show();
+  }
 
-  Widget idSubject() => Container(
-        padding: EdgeInsets.all(14.0),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(15.0),
-          color: Colors.white,
-        ),
-        child: TextFormField(
-          decoration: InputDecoration(
-            hintText: "รหัสวิชา",
-            hintStyle: hitsTitle,
-            border: InputBorder.none,
+  void _showDialogError(BuildContext context) {
+    Alert(
+      context: context,
+      type: AlertType.warning,
+      title: "เกิดข้อผิดพลาด",
+      desc: "ไม่สามารถเข้ากลุ่มได้",
+      buttons: [
+        DialogButton(
+          color: Colors.redAccent,
+          child: Text(
+            "ปิด",
+            style: TextStyle(color: Colors.white, fontSize: 20),
           ),
-          style: textDetail,
-          controller: subJectId, //** => ID Subject controller */
-        ),
-      );
-
-  Widget secSubject() => Container(
-        padding: EdgeInsets.all(14.0),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(15.0),
-          color: Colors.white,
-        ),
-        child: TextFormField(
-          decoration: InputDecoration(
-            hintText: "กลุ่มเรียน",
-            hintStyle: hitsTitle,
-            border: InputBorder.none,
-          ),
-          style: textDetail,
-          controller: subJectSec, //** => ID Subject controller */
-        ),
-      );
-
-  Widget timeSubject() => Container(
-        padding: EdgeInsets.all(14.0),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(15.0),
-          color: Colors.white,
-        ),
-        child: TextFormField(
-          decoration: InputDecoration(
-            hintText: "เวลาเรียน",
-            hintStyle: hitsTitle,
-            border: InputBorder.none,
-          ),
-          style: textDetail,
-          controller: subjectTime, //** => ID Subject controller */
-        ),
-      );
-
-  Widget dateSubject() => Container(
-        width: MediaQuery.of(context).size.width,
-        padding: EdgeInsets.all(14.0),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(15.0),
-          color: Colors.white,
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            Text(
-              "วันเรียน",
-              style: hitsTitle,
-            ),
-            DropdownButton<String>(
-              value: dropdownValue,
-              icon: Icon(Icons.arrow_downward),
-              iconSize: 24,
-              elevation: 16,
-              style: textDetail,
-              underline: Container(
-                height: 2,
-                color: Colors.blue,
-              ),
-              onChanged: (String newValue) {
-                setState(() {
-                  dropdownValue = newValue;
-                  print(dropdownValue);
-                });
-              },
-              items: <String>[
-                'อาทิตย์',
-                'จันทร์',
-                'อังคาร',
-                'พุธ',
-                'พฤหัสบดี',
-                "ศุกร์",
-                "เสาร์",
-              ].map<DropdownMenuItem<String>>((String value) {
-                return DropdownMenuItem<String>(
-                  value: value,
-                  child: Text(value),
-                );
-              }).toList(),
-            ),
-          ],
-        ),
-      );
-
-  Widget dropDownDate() => Container(
-        padding: EdgeInsets.all(16),
-        child: DropDownFormField(
-          titleText: 'My workout',
-          hintText: 'Please choose one',
-          value: _myActivity,
-          onSaved: (value) {
-            setState(() {
-              _myActivity = value;
-            });
-          },
-          onChanged: (value) {
-            setState(() {
-              _myActivity = value;
-            });
-          },
-          dataSource: [
-            {
-              "display": "Running",
-              "value": "Running",
-            },
-            {
-              "display": "Climbing",
-              "value": "Climbing",
-            },
-            {
-              "display": "Walking",
-              "value": "Walking",
-            },
-            {
-              "display": "Swimming",
-              "value": "Swimming",
-            },
-            {
-              "display": "Soccer Practice",
-              "value": "Soccer Practice",
-            },
-            {
-              "display": "Baseball Practice",
-              "value": "Baseball Practice",
-            },
-            {
-              "display": "Football Practice",
-              "value": "Football Practice",
-            },
-          ],
-          textField: 'display',
-          valueField: 'value',
-        ),
-      );
-
-  Widget teacherSubject() => Container(
-        padding: EdgeInsets.all(14.0),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(15.0),
-          color: Colors.white,
-        ),
-        child: TextFormField(
-          decoration: InputDecoration(
-            hintText: "ชื่ออาจารย์ผู้สอน",
-            hintStyle: hitsTitle,
-            border: InputBorder.none,
-          ),
-          style: textDetail,
-          controller: subJectTeacher, //** => ID Subject controller */
-        ),
-      );
+          onPressed: () => Navigator.pop(context),
+          width: 120,
+        )
+      ],
+    ).show();
+  }
 }

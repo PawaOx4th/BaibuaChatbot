@@ -143,7 +143,7 @@ class _GroupSubjectState extends State<GroupSubject> {
   //? Key
   Key _singleChildScroll, _mainColumn, _cardId;
 
-  //? Variable 🎒
+  //? Variable
   String iD = '';
   String idGroup = '';
   int userLavel = 0;

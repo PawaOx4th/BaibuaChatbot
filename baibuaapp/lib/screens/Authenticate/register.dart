@@ -305,27 +305,49 @@ class _RegisterState extends State<Register> {
                         response.statusCode.toString() +
                         response.body);
                     if (response.statusCode == 201) {
-                      if (formKeyRegister.currentState.validate()) {
-                        formKeyRegister.currentState.save();
-                        dynamic result =
-                            await _authService.registerWithEmailAndPassword(
-                                _emailRegister, _passwordRegister);
-                        if (result == null) {
-                          setState(
-                            () {
-                              error = "please supply a valid email";
-                              isRegister = false;
-                            },
-                          );
-                        } else {
-                          print('else result not Null');
-                          setState(
-                            () {
-                              isRegister = true;
-                            },
-                          );
-                        }
+                      print("xxxxx");
+
+                      dynamic result =
+                          await _authService.registerWithEmailAndPassword(
+                              _emailRegister, _passwordRegister);
+                      if (result == null) {
+                        setState(
+                          () {
+                            error = "please supply a valid email";
+                            isRegister = false;
+                          },
+                        );
+                      } else {
+                        print('else result not Null');
+                        setState(
+                          () {
+                            isRegister = true;
+                          },
+                        );
                       }
+
+                      // if (formKeyRegister.currentState.validate()) {
+                      //   formKeyRegister.currentState.save();
+                      //   print("xxxx");
+                      //   dynamic result =
+                      //       await _authService.registerWithEmailAndPassword(
+                      //           _emailRegister, _passwordRegister);
+                      //   if (result == null) {
+                      //     setState(
+                      //       () {
+                      //         error = "please supply a valid email";
+                      //         isRegister = false;
+                      //       },
+                      //     );
+                      //   } else {
+                      //     print('else result not Null');
+                      //     setState(
+                      //       () {
+                      //         isRegister = true;
+                      //       },
+                      //     );
+                      //   }
+                      // }
                     } else {
                       print('else');
                       setState(

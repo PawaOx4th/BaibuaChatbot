@@ -324,7 +324,7 @@ class _AddWorkState extends State<AddWork> {
                 style: TextStyle(fontSize: 22.0, fontWeight: FontWeight.w600),
               ),
               description: Text(
-                'เพิ่มงานเข้าสู้ระบบสำเร็จ',
+                'เพิ่มงานเข้าสู่ระบบสำเร็จ',
                 textAlign: TextAlign.center,
                 style: GoogleFonts.kanit(
                   textStyle: TextStyle(color: Colors.black38, fontSize: 14.0),

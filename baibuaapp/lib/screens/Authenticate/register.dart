@@ -52,6 +52,7 @@ class _RegisterState extends State<Register> {
     ScreenUtil.instance =
         ScreenUtil(width: 1080, height: 2160, allowFontScaling: true)
           ..init(context);
+    var height2 = 8;
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.white,
@@ -95,6 +96,14 @@ class _RegisterState extends State<Register> {
                                   SizedBox(
                                     height: 16,
                                   ),
+                                  Text(
+                                    error,
+                                    style: TextStyle(
+                                        color: Colors.red, fontSize: 14.0),
+                                  ),
+                                  SizedBox(
+                                    height: 8,
+                                  ),
                                   studentIdInput(),
                                   SizedBox(
                                     height: 16,
@@ -110,11 +119,6 @@ class _RegisterState extends State<Register> {
                                   re_passwordInput(),
                                   SizedBox(
                                     height: 16,
-                                  ),
-                                  Text(
-                                    error,
-                                    style: TextStyle(
-                                        color: Colors.red, fontSize: 14.0),
                                   ),
                                   registerBtn(btnname: "Sign Up"),
                                   SizedBox(
@@ -150,7 +154,7 @@ class _RegisterState extends State<Register> {
                   height: double.minPositive,
                 ),
                 counterText: "",
-                hintText: "รหัสนักศึกษา",
+                hintText: "รหัสนักศึกษา ไม่ต้องใส่ขีด**",
                 prefixIcon: Icon(Icons.payment),
 //              border: InputBorder.none,
                 hintStyle: GoogleFonts.kanit(
@@ -292,68 +296,93 @@ class _RegisterState extends State<Register> {
                     String jsonRegister = registeruserToJson(register);
                     print(jsonRegister);
 
-                    String _postUrl =
-                        'https://us-central1-newagent-47c20.cloudfunctions.net/api/user';
-                    var response = await Http.post(
-                      _postUrl,
-                      headers: {
-                        HttpHeaders.contentTypeHeader: 'application/json'
-                      },
-                      body: jsonRegister,
-                    );
-                    print("Status: " +
-                        response.statusCode.toString() +
-                        response.body);
-                    if (response.statusCode == 201) {
-                      print("xxxxx");
+                    /////////////////////////////////////////////////////////////////////
+                    /////////////////////////////////////////////////////////////////////
+                    ///  **** Register  ****
+                    /// [1] Validate Form Regieter
+                    /// [2] Varify User with Database => Check Student ID in Student Database
+                    /// [3] Register with Firebase Authenticate
+                    /// [4] Save User Data in User Database
+                    /////////////////////////////////////////////////////////////////////
+                    /// *Validate Form Regieter
+                    if (formKeyRegister.currentState.validate()) {
+                      formKeyRegister.currentState.save();
 
-                      dynamic result =
-                          await _authService.registerWithEmailAndPassword(
-                              _emailRegister, _passwordRegister);
-                      if (result == null) {
+                      // *Varify User with Database
+                      // Return Status 200 Ok / 404 Not Found
+                      final varifyUser = await Http.get(
+                          "https://us-central1-newagent-47c20.cloudfunctions.net/api/student/filterId/${_stuIdRegister}");
+
+                      if (varifyUser.statusCode == 200) {
+                        //
+                        print(varifyUser.statusCode);
+                        //
+                        /////////////////////////////////////////////////////////////////////
+                        /// *Register User Authentication
+                        ///
+                        var registerFirebase =
+                            await _authService.registerWithEmailAndPassword(
+                                _emailRegister, _passwordRegister);
+                        /////////////////////////////////////////////////////////////////////
+                        /// *Condition check result Register Firebase Autheticate
+                        ///
+                        if (registerFirebase == null) {
+                          print('***** Register with Firebase fail ! *******');
+                          setState(
+                            () {
+                              // isRegister = false;
+                              error = "E-mail นี้ถูกใช้งานแล้ว";
+                            },
+                          );
+                        }
+                        /////////////////////////////////////////////////////////////////////
+                        else {
+                          //
+                          print(
+                              '** Register with Firebase Autheticate  Complate **');
+                          //////////////////////////////////////////////////////////////////////
+                          /// Save user Data in User Collaction
+                          ///
+                          String _postUrl =
+                              'https://us-central1-newagent-47c20.cloudfunctions.net/api/user';
+                          var response = await Http.post(
+                            _postUrl,
+                            headers: {
+                              HttpHeaders.contentTypeHeader: 'application/json'
+                            },
+                            body: jsonRegister,
+                          );
+                          // print(response.statusCode);
+                          if (response.statusCode == 200) {
+                            print(
+                                '****** Register with Firebase  Complate ******');
+                            setState(() {
+                              isRegister = true;
+                            });
+                          } else {
+                            setState(() {
+                              isRegister = false;
+                            });
+                          }
+                          /////////////////////////////////////////////////////////////////////
+                        }
+                      } else {
+                        print(varifyUser.statusCode);
                         setState(
                           () {
-                            error = "please supply a valid email";
+                            error = "กรุณาตรวจสอบรหัสนักศึกษา";
                             isRegister = false;
                           },
                         );
-                      } else {
-                        print('else result not Null');
-                        setState(
-                          () {
-                            isRegister = true;
-                          },
-                        );
                       }
-
-                      // if (formKeyRegister.currentState.validate()) {
-                      //   formKeyRegister.currentState.save();
-                      //   print("xxxx");
-                      //   dynamic result =
-                      //       await _authService.registerWithEmailAndPassword(
-                      //           _emailRegister, _passwordRegister);
-                      //   if (result == null) {
-                      //     setState(
-                      //       () {
-                      //         error = "please supply a valid email";
-                      //         isRegister = false;
-                      //       },
-                      //     );
-                      //   } else {
-                      //     print('else result not Null');
-                      //     setState(
-                      //       () {
-                      //         isRegister = true;
-                      //       },
-                      //     );
-                      //   }
-                      // }
+                      /////////////////////////////////////////////////////////////////////
+                      /////////////////////////////////////////////////////////////////////
                     } else {
                       print('else');
                       setState(
                         () {
-                          isRegister = false;
-                          print(response.statusCode.toString());
+                          // isRegister = false;
+                          error = "กรุณาตรวจสอบข้อมูลให้ถูกต้อง";
                         },
                       );
                     }
